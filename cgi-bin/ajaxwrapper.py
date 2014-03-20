@@ -10,7 +10,7 @@ from subprocess import Popen, PIPE, STDOUT
 SCRIPTDIR = 'javaprolog'
 # SCRIPT = ['/usr/bin/java', '-cp', 'json-simple-1.1.1.jar:gnuprologjava-0.2.6.jar:.', 'Shrdlite']
 
-SCRIPT = ['java', '-cp', 'json-simple-1.1.1.jar:gnuprologjava-0.2.6.jar:.', 'Shrdlite']
+SCRIPT = ['java', '-cp', 'json-simple-1.1.1.jar;gnuprologjava-0.2.6.jar;.', 'Shrdlite']
 
 # # SWI Prolog
 # SCRIPTDIR = 'javaprolog'
