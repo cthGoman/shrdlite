@@ -10,7 +10,12 @@ from subprocess import Popen, PIPE, STDOUT
 SCRIPTDIR = 'javaprolog'
 # SCRIPT = ['/usr/bin/java', '-cp', 'json-simple-1.1.1.jar:gnuprologjava-0.2.6.jar:.', 'Shrdlite']
 
-SCRIPT = ['java', '-cp', 'json-simple-1.1.1.jar;gnuprologjava-0.2.6.jar;.', 'Shrdlite']
+import platform
+if platform.system()=='Windows':
+    SCRIPT = ['java', '-cp', 'json-simple-1.1.1.jar;gnuprologjava-0.2.6.jar;.', 'Shrdlite']
+else:
+    SCRIPT = ['java', '-cp', 'json-simple-1.1.1.jar:gnuprologjava-0.2.6.jar:.', 'Shrdlite']
+
 
 # # SWI Prolog
 # SCRIPTDIR = 'javaprolog'
@@ -27,6 +32,7 @@ SCRIPT = ['java', '-cp', 'json-simple-1.1.1.jar;gnuprologjava-0.2.6.jar;.', 'Shr
 while not os.path.isdir(SCRIPTDIR):
     SCRIPTDIR = os.path.join("..", SCRIPTDIR)
 
+
 print('Content-type:text/plain')
 print()
 
@@ -37,6 +43,7 @@ try:
     out, err = script.communicate(data)
 
     print(out)
+    
     if err:
         raise Exception(err)
 
