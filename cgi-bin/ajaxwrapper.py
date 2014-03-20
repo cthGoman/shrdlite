@@ -6,9 +6,11 @@ import os
 import cgi
 from subprocess import Popen, PIPE, STDOUT
 
-# # Java
-# SCRIPTDIR = 'javaprolog'
-# SCRIPT = ['/usr/bin/java', '-cp', 'json-simple-1.1.1.jar:gnuprologjava-0.2.6.jar:.', 'Shrdlite']
+# Java
+SCRIPTDIR = 'javaprolog'
+SCRIPT = ['/usr/bin/java', '-cp', 'json-simple-1.1.1.jar:gnuprologjava-0.2.6.jar:.', 'Shrdlite']
+
+# SCRIPT = ['java', '-cp', 'json-simple-1.1.1.jar:gnuprologjava-0.2.6.jar:.', 'Shrdlite']
 
 # # SWI Prolog
 # SCRIPTDIR = 'javaprolog'
@@ -19,8 +21,8 @@ from subprocess import Popen, PIPE, STDOUT
 # SCRIPT = ['/usr/bin/runhaskell', 'Shrdlite.hs']
 
 # Python
-SCRIPTDIR = 'python'
-SCRIPT = ['/usr/bin/python', 'shrdlite.py']
+# SCRIPTDIR = 'python'
+# SCRIPT = ['/usr/bin/python', 'shrdlite.py']
 
 while not os.path.isdir(SCRIPTDIR):
     SCRIPTDIR = os.path.join("..", SCRIPTDIR)
