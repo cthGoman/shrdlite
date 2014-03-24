@@ -1,12 +1,52 @@
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Planner{
-	public Planner(JSONArray world, String holding, JSONObject objects){
-		
+   
+   private JSONArray world;
+   private String holding;
+   private JSONObject objects;
+
+	public Planner(JSONArray worldIn, String holdingIn, JSONObject objectsIn){
+		world=worldIn;
+      holding=holdingIn;
+      objects=objectsIn;
 	}
 	public Plan solve(Goal g){
-		return new Plan();
+      Plan plan=new Plan();
+      
+      
+
+      
+      for (int i=0; i<world.size(); i++)
+      {
+   
+         JSONArray columnTemp = (JSONArray) world.get(i);
+         
+         if (columnTemp.contains(g.pddl.get(0).get(0).arguments[0]))
+         {
+            plan.add("pick " + i);
+         }
+
+      }
+      
+      for (int i=0; i<world.size(); i++)
+      {
+   
+         JSONArray columnTemp = (JSONArray) world.get(i);
+         
+         if (columnTemp.isEmpty())
+         {
+            plan.add("drop " + i);
+            break;
+         }
+
+      }
+
+   
+		return plan;
 	}
 }
