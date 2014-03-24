@@ -66,6 +66,20 @@ public class Shrdlite {
             //    }  
             //}
             
+            JSONArray goalWorld =  world;
+            JSONArray goalColTemp = new JSONArray();
+            goalWorld.add(1,goalColTemp);
+            goalColTemp = new JSONArray();
+            goalColTemp.add("g");
+            goalWorld.add(2,goalColTemp);
+            goalColTemp = new JSONArray();
+            goalColTemp.add("l");
+            goalWorld.add(4,goalColTemp);           
+            String goalHolding = null;
+            int cost = Heuristic.heuristic(world,holding,goalWorld,goalHolding);
+            System.out.println(cost);
+            goals.add(new Goal(row));
+            
             
             goals.add(new Goal(row));
             
@@ -99,7 +113,7 @@ public class Shrdlite {
             }
         }
 
-       System.out.print(result);
+       // System.out.print(result);
         
     }
 
