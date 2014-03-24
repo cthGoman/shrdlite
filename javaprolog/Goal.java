@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Goal{
     
     //private ArrayList<ArrayList<Statement>>  = new ArrayList<new ArrayList<Statement>()>()
-    private ArrayList<ArrayList<Statement>> PDDL;
+    private ArrayList<ArrayList<Statement>> pddl;
     public Goal() {
         
     }
