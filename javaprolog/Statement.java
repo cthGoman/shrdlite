@@ -7,8 +7,8 @@ public class Statement{
 	
 	public Statement(StatementOperator so,String arg1,String arg2){
 		operator = so;
-		arguments[1] = arg1;
-		arguments[2] = arg2;
+		arguments[0] = arg1;
+		arguments[1] = arg2;
 	}
 	
 	

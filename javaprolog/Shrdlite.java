@@ -27,6 +27,8 @@ public class Shrdlite {
         JSONArray  world     = (JSONArray)  jsinput.get("world");
         String     holding   = (String)     jsinput.get("holding");
         JSONObject objects   = (JSONObject) jsinput.get("objects");
+        
+        
 
         JSONObject result = new JSONObject();
         result.put("utterance", utterance);
@@ -51,13 +53,23 @@ public class Shrdlite {
         } else {
             List<Goal> goals = new ArrayList<Goal>();
             Interpreter interpreter = new Interpreter(world, holding, objects);
-            for (Term tree : trees) {
-                for (Goal goal : interpreter.interpret(tree)) {
-                    goals.add(goal);
-                }
-                goals.add(new Goal());
-            }
+            
+            ArrayList<Statement> row= new ArrayList<Statement>();
+            
+            row.add(new Statement(Statement.StatementOperator.ONTOPOF,"e","floor_1"));
+            row.add(new Statement(Statement.StatementOperator.ONTOPOF,"g","e"));
+            
+            //for (Term tree : trees) {
+            //    for (Goal goal : interpreter.interpret(tree)) {
+            //        goals.add(goal);
+            //    }  
+            //}
+            
+            
+            goals.add(new Goal(row));
+            
             result.put("goals", goals);
+            System.out.print(goals);
 
             if (goals.isEmpty()) {
                 result.put("output", "Interpretation error!");
@@ -82,10 +94,12 @@ public class Shrdlite {
                 } else {
                     result.put("output", "Success!");
                 }
+                System.out.print(plan);
             }
         }
 
-        System.out.print(result);
+       //System.out.print(result);
+        
     }
 
     public static String readFromStdin() throws IOException {
