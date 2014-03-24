@@ -15,7 +15,7 @@ public class Node{
       children.add(newchild);
       return newchild;
 	}
-   public Node getParrent(){
+   public Node getParent(){
       return parent;
    }
 }
