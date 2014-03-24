@@ -11,6 +11,6 @@ public class Interpreter{
 		
 	}
 	public List<Goal> interpret(Term tree){
-		return null;
+		return new LinkedList<Goal>();
 	}
 }
