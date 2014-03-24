@@ -9,7 +9,7 @@ public class Goal{
     public Goal() {
         
     }
-    public String ToString()
+    public String toString()
     {
       return "true";
     }
