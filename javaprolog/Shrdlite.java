@@ -50,11 +50,11 @@ public class Shrdlite {
 
         } else {
             List goals = new ArrayList();
-            // Interpreter interpreter = new Interpreter(world, holding, objects);
+            Interpreter interpreter = new Interpreter(world, holding, objects);
             for (Term tree : trees) {
-                // for (Goal goal : interpreter.interpret(tree)) {
-                //     goals.add(goal);
-                // }
+                for (Goal goal : interpreter.interpret(tree)) {
+                    goals.add(goal);
+                }
                 goals.add(true);
             }
             result.put("goals", goals);
