@@ -8,14 +8,7 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
 
       this.add(newRow);
           
-    }
-    public String toString()
-    {
-      String output;
-      
-      return "true";
-    }
-    
+    }  
     public void addRow(ArrayList<Statement> newRow){
       this.add(newRow);
     }
