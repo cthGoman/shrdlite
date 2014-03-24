@@ -1,14 +1,13 @@
 
 import java.util.*;
 
-public class Statement{
-	StatementOperator operator;
-	String[] arguments = new String[2];
+public class Statement extends ArrayList<String>{
+
 	
 	public Statement(StatementOperator so,String arg1,String arg2){
-		operator = so;
-		arguments[0] = arg1;
-		arguments[1] = arg2;
+      this.add(so.toString());
+		this.add(arg1);
+		this.add(arg2);
 	}
 	
 	
