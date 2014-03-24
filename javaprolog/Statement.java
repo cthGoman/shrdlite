@@ -2,20 +2,20 @@
 import java.util.*;
 
 public class Statement{
-	final StatementOperator operator;
-	final ArrayList<String> arguments = new ArrayList<String>();
+	StatementOperator operator;
+	String[] arguments = new String[2];
 	
-	public Statement(StatementOperator so,ArrayList<String> arg){
+	public Statement(StatementOperator so,String arg1,String arg2){
 		operator = so;
-		for(String s:arg){
-			arguments.add(s);
-		}
+		arguments[1] = arg1;
+		arguments[2] = arg2;
 	}
 	
 	
 	
 	
+	
 	public static enum StatementOperator{
-		ONTOPOF,ABOVE,UNDER,BESIDE,LEFTOF,RIGHTOF;
+		ONTOPOF,ABOVE,UNDER,BESIDE,LEFTOF,RIGHTOF,HOLD;
 	}
 }
