@@ -56,8 +56,9 @@ public class Shrdlite {
             
             ArrayList<Statement> row= new ArrayList<Statement>();
             
-            row.add(new Statement(Statement.StatementOperator.ONTOPOF,"e","floor_1"));
-            row.add(new Statement(Statement.StatementOperator.ONTOPOF,"g","e"));
+            row.add(new Statement("ONTOP","m","e"));
+            row.add(new Statement("ONTOP","l","floor_1"));
+            row.add(new Statement("ONTOP","e","g"));
             
             //for (Term tree : trees) {
             //    for (Goal goal : interpreter.interpret(tree)) {
@@ -69,7 +70,7 @@ public class Shrdlite {
             goals.add(new Goal(row));
             
             result.put("goals", goals);
-            System.out.print(goals);
+            // System.out.print(goals);
 
             if (goals.isEmpty()) {
                 result.put("output", "Interpretation error!");
@@ -80,25 +81,25 @@ public class Shrdlite {
             } else {
                 Planner planner = new Planner(world, holding, objects);
                 Plan plan = planner.solve(goals.get(0));
-                int column = 0;
-                while (((JSONArray)world.get(column)).isEmpty()) column++;
-                //List plan = new ArrayList(); 
-                plan.add("I pick up . . ."); 
-                plan.add("pick " + column);
-                plan.add(". . . and then I drop down"); 
-                plan.add("drop " + column);
-                result.put("plan", plan);
+                // int column = 0;
+//                 while (((JSONArray)world.get(column)).isEmpty()) column++;
+//                 //List plan = new ArrayList(); 
+//                 plan.add("I pick up . . ."); 
+//                 plan.add("pick " + column);
+//                 plan.add(". . . and then I drop down"); 
+//                 plan.add("drop " + column);
+                 result.put("plan", plan);
 					 
                 if (plan.isEmpty()) {
                     result.put("output", "Planning error!");
                 } else {
                     result.put("output", "Success!");
                 }
-                System.out.print(plan);
+               //  System.out.print(plan);
             }
         }
 
-       //System.out.print(result);
+       System.out.print(result);
         
     }
 
