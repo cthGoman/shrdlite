@@ -13,4 +13,8 @@ public class Goal{
     {
       return "true";
     }
+    
+    public void addRow(ArrayList<Statement> newRow){
+         pddl.add(newRow);
+    }
 }
