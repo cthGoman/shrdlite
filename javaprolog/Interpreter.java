@@ -11,6 +11,7 @@ public class Interpreter{
 		
 	}
 	public List<Goal> interpret(Term tree){
+		Tree t = new Tree(tree.toString().replace("(-)","-"));
 		return new LinkedList<Goal>();
 	}
 }
