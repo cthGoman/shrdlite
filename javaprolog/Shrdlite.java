@@ -49,13 +49,13 @@ public class Shrdlite {
             result.put("output", "Parse error!");
 
         } else {
-            List goals = new ArrayList();
+            List<Goal> goals = new ArrayList<Goal>();
             Interpreter interpreter = new Interpreter(world, holding, objects);
             for (Term tree : trees) {
                 for (Goal goal : interpreter.interpret(tree)) {
                     goals.add(goal);
                 }
-                goals.add(true);
+                goals.add(new Goal());
             }
             result.put("goals", goals);
 
@@ -66,17 +66,17 @@ public class Shrdlite {
                 result.put("output", "Ambiguity error!");
 
             } else {
-                // Planner planner = new Planner(world, holding, objects);
-                // Plan plan = planner.solve(goals.get(0));
+                Planner planner = new Planner(world, holding, objects);
+                Plan plan = planner.solve(goals.get(0));
                 int column = 0;
                 while (((JSONArray)world.get(column)).isEmpty()) column++;
-                List plan = new ArrayList(); 
+                //List plan = new ArrayList(); 
                 plan.add("I pick up . . ."); 
                 plan.add("pick " + column);
                 plan.add(". . . and then I drop down"); 
                 plan.add("drop " + column);
                 result.put("plan", plan);
-
+					 
                 if (plan.isEmpty()) {
                     result.put("output", "Planning error!");
                 } else {
