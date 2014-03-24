@@ -32,10 +32,10 @@ public class Shrdlite {
         result.put("utterance", utterance);
 
         // This is how to get information about the top object in column 1:
-        JSONArray column1 = (JSONArray) world.get(0);
-        String topobject = (String) column1.get(column1.size() - 1);
-        JSONObject objectinfo = (JSONObject) objects.get(topobject);
-        String form = (String) objectinfo.get("form");
+        //JSONArray column1 = (JSONArray) world.get(0);
+        //String topobject = (String) column1.get(column1.size() - 1);
+        //JSONObject objectinfo = (JSONObject) objects.get(topobject);
+        //String form = (String) objectinfo.get("form");
 
         DCGParser parser = new DCGParser("shrdlite_grammar.pl");
         List<Term> trees = parser.parseSentence("command", utterance);
