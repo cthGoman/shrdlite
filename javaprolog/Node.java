@@ -1,19 +1,18 @@
-
+import java.util.ArrayList;
 
 
 public class Node{
 	String value;
 	Node parent;
-	ArrayList<Node> children;
+	ArrayList<Node> children = new ArrayList<Node>();
 	
 	public Node(String s, Node p){
 		value = s;
 		parent = p;
 	}
-	public void addChild(String s){
-		
-	}
-	public void addChild(Node n){
-		
+	public Node addChild(String s){
+		Node newchild = new Node(s,this);
+      children.add(newchild);
+      return newchild;
 	}
 }
