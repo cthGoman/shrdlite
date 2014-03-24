@@ -26,7 +26,7 @@ public class Planner{
    
          JSONArray columnTemp = (JSONArray) world.get(i);
          
-         if (columnTemp.contains(g.pddl.get(0).get(0).arguments[0]))
+         if (columnTemp.contains(g.get(0).get(0).arguments[0]))
          {
             plan.add("pick " + i);
          }
