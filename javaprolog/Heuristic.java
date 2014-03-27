@@ -15,25 +15,33 @@ public class Heuristic{
             int tempCost = 0;
             for (int i=0;i<worldColTemp.size();i++){
                            
-            
-               if(tempCost==0 && worldColTemp.get(i)==goalColTemp.get(i)){
-                  tempCost+=0;
-               } else if (tempCost!=0 && worldColTemp.get(i).equals(goalColTemp.get(i))){
-                  tempCost+=4;
-               } else if (goalColTemp.contains(worldColTemp.get(i))) {
-                  tempCost+=4;                  
-               } else{
-                  tempCost+=2;
+               if(goalColTemp.contains(worldColTemp.get(i))){
+                  if(tempCost!=0){
+                     tempCost+=4;
+                  }
+                  else if(worldColTemp.size()>=i){
+                     if(worldColTemp.get(i)!=goalColTemp.get(i)){
+                        tempCost+=4;
+                     }
+                  }
+               
                }
+              else if(!goalHolding.isEmpty()){ 
+                   if(goalHolding.equals(worldColTemp.get(i))){
+                  tempCost+=1;
+                   }   
+               }
+              else{
+                  tempCost+=2;
+              }
+            
             }
             cost += tempCost;
          
           }
       
       }
-      if(holding!=goalHolding){
-         cost++;
-      } 
+
       
 		return cost;
 		
