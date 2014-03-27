@@ -64,7 +64,7 @@ public class Shrdlite {
             
                 
             //Setup the goalWorld  
-            String goalHolding = null;       
+            String goalHolding = "";       
             JSONArray  goalWorld     = new JSONArray();
             
             for(int i=0;i<world.size();i++){
