@@ -66,18 +66,21 @@ public class Shrdlite {
             //    }  
             //}
             
-            JSONArray goalWorld =  world;
+            JSONArray  goalWorld     = (JSONArray)  new JSONArray();
             JSONArray goalColTemp = new JSONArray();
-            goalWorld.add(1,goalColTemp);
-            goalColTemp = new JSONArray();
+            for(int i=0;i<world.size();i++){
+               goalWorld.add(world.get(i));
+               }
             goalColTemp.add("g");
-            goalWorld.add(2,goalColTemp);
-            goalColTemp = new JSONArray();
-            goalColTemp.add("l");
-            goalWorld.add(4,goalColTemp);           
+            goalWorld.set(4,goalColTemp);
+            goalColTemp.add("l");          
             String goalHolding = null;
+            goalWorld.set(1,world.get(3));
             int cost = Heuristic.heuristic(world,holding,goalWorld,goalHolding);
             System.out.println(cost);
+            System.out.println(world);
+            System.out.println(goalWorld);
+
             goals.add(new Goal(row));
             
             

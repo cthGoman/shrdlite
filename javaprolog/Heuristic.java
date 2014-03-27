@@ -7,9 +7,8 @@ public class Heuristic{
 		int cost = 0;
       
       for (int j=0; j<world.size();	j++){	
-         System.out.println("ho1");
-        //  if (!world.get(j).equals(goalWorld.get(j))){
-            System.out.println("ho2");
+      
+          if (!world.get(j).equals(goalWorld.get(j))){
             JSONArray worldColTemp = (JSONArray) world.get(j);
             JSONArray goalColTemp = (JSONArray) goalWorld.get(j);
          
@@ -19,7 +18,7 @@ public class Heuristic{
             
                if(tempCost==0 && worldColTemp.get(i)==goalColTemp.get(i)){
                   tempCost+=0;
-                  } else if (tempCost!=0 && worldColTemp.get(i)==goalColTemp.get(i)){
+                  } else if (tempCost!=0 && worldColTemp.get(i).equals(goalColTemp.get(i))){
                   tempCost+=4;
                   } else if (goalColTemp.contains(worldColTemp.get(i))) {
                   tempCost+=4;                  
@@ -32,7 +31,7 @@ public class Heuristic{
          
             }
          
-         // }
+          }
       
       }
       if(holding!=goalHolding){
