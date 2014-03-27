@@ -1,11 +1,17 @@
 import org.json.simple.JSONArray;
+import java.util.List;
+import java.util.ArrayList;
 
-public class Heuristic{
+public class Heuristic extends ArrayList<Integer>{
+   private int cost;
+   private int colCost;
 
-	public static int heuristic(JSONArray world, String holding, JSONArray goalWorld, String goalHolding) {
+	public Heuristic(JSONArray world, String holding, JSONArray goalWorld, String goalHolding) {
 		
-		int cost = 0;
-      
+		cost = 0;
+      colCost = 0;
+      ArrayList<Integer> heuristic = new ArrayList(2);
+                  
       for (int j=0; j<world.size();	j++){	
       
           if (!world.get(j).equals(goalWorld.get(j))){
@@ -13,6 +19,7 @@ public class Heuristic{
             JSONArray goalColTemp = (JSONArray) goalWorld.get(j);
          
             int tempCost = 0;
+            
             for (int i=0;i<worldColTemp.size();i++){
                            
                if(goalColTemp.contains(worldColTemp.get(i))){
@@ -36,14 +43,36 @@ public class Heuristic{
               }
             
             }
+            
+            if(tempCost>colCost){
+               colCost=tempCost;
+            }
             cost += tempCost;
          
           }
       
       }
 
-      
-		return cost;
 		
 	}
+   
+   public int cost(){
+      return cost;
+   }
+   
+   public int colCost(){
+      return colCost;
+   }
+   
+   public boolean isMin(Heuristic compHeu){
+   
+      if ((compHeu.cost()<cost) ||(compHeu.cost()==cost && compHeu.colCost()<colCost)){
+         return true;
+      }
+      else{
+         return false;
+      }
+   
+   
+   }
 }
