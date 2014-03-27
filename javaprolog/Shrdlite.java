@@ -54,11 +54,7 @@ public class Shrdlite {
             List<Goal> goals = new ArrayList<Goal>();
             Interpreter interpreter = new Interpreter(world, holding, objects);
             
-            ArrayList<Statement> row= new ArrayList<Statement>();
-            
-            row.add(new Statement("ONTOP","m","e"));
-            row.add(new Statement("ONTOP","l","floor_1"));
-            row.add(new Statement("ONTOP","e","g"));
+
             
             //for (Term tree : trees) {
             //    for (Goal goal : interpreter.interpret(tree)) {
@@ -66,24 +62,45 @@ public class Shrdlite {
             //    }  
             //}
             
-            JSONArray  goalWorld     = (JSONArray)  new JSONArray();
-            JSONArray goalColTemp = new JSONArray();
+                
+            //Setup the goalWorld  
+            String goalHolding = null;       
+            JSONArray  goalWorld     = new JSONArray();
+            
             for(int i=0;i<world.size();i++){
-               goalWorld.add(world.get(i));
-               }
-            goalColTemp.add("g");
-            goalWorld.set(4,goalColTemp);
-            goalColTemp.add("l");          
-            String goalHolding = null;
-            goalWorld.set(1,world.get(3));
-            int cost = Heuristic.heuristic(world,holding,goalWorld,goalHolding);
-            System.out.println(cost);
+              
+               JSONArray goalColTemp= new JSONArray();
+               goalColTemp.addAll((JSONArray) world.get(i));
+    
+               goalWorld.add(goalColTemp);
+    
+            }
+            
+            ((JSONArray) goalWorld.get(0)).add("l");
+            ((JSONArray) goalWorld.get(1)).remove(1);        
+            
+            
+            //Print the two worlds
             System.out.println(world);
             System.out.println(goalWorld);
+            
+            
+ 
+            
+            
+            //Calculate the cost
+            int cost = Heuristic.heuristic(world,holding,goalWorld,goalHolding);
+            System.out.println(cost);
 
+            
+            //Generate a test goal
+            ArrayList<Statement> row= new ArrayList<Statement>();
+            
+            row.add(new Statement("ONTOP","m","e"));
+            row.add(new Statement("ONTOP","l","floor_1"));
+            row.add(new Statement("ONTOP","e","g"));
+            
             goals.add(new Goal(row));
-            
-            
             goals.add(new Goal(row));
             
             result.put("goals", goals);
