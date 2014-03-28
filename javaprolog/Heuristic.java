@@ -1,9 +1,17 @@
 import org.json.simple.JSONArray;
+import java.util.List;
+import java.util.ArrayList;
+
 
 public class Heuristic{
    private int cost;
    private int colCost;
-
+   private ArrayList<Integer> tempColCostList = new ArrayList<Integer>();
+   
+   public Heuristic(int costIn,int colCostIn){
+      cost=costIn;
+      colCost=colCostIn;
+   }
 
 	public Heuristic(JSONArray world, String holding, JSONArray goalWorld, String goalHolding) {
 		
@@ -28,8 +36,8 @@ public class Heuristic{
                   if(tempCost!=0){
                      tempCost+=4; //If something below the object needs to be moved
                   }
-                  else if(worldColTemp.size()>=i){
-                     if(worldColTemp.get(i)!=goalColTemp.get(i)){
+                  else if(worldColTemp.size()>i){
+                     if(!worldColTemp.get(i).equals(goalColTemp.get(i))){
                         tempCost+=4; //If the object is in the right column but in the wrong place
                      }
                   }
@@ -51,31 +59,47 @@ public class Heuristic{
             }
             
             cost += tempCost; //Add the column cost to the total cost
-         
+            tempColCostList.add(tempCost);
+          } else {
+            tempColCostList.add(0);
           }
+      
+      
+      
+      
+      
+      }
       
       if(!holding.isEmpty()){
          
-      }
-      
-      
-      
+         for (int j=0; j<goalWorld.size(); j++){
+            for (int i=0; i< ((JSONArray) goalWorld.get(j)).size(); i++){
+               if (     ((JSONArray) goalWorld.get(j)).get(i).equals(holding)   ){
+                  if (tempColCostList.get(j)==0 && ((JSONArray) world.get(j)).size() == i ){
+                     cost += 1;
+                  }else {
+                     cost += 3;
+                  }
+               }
+            }
+         }
+         
       }
 
 		
 	}
    
-   public int cost(){
+   public int getCost(){
       return cost;
    }
    
-   public int colCost(){
+   public int getColCost(){
       return colCost;
    }
    
-   public boolean isMin(Heuristic compHeu){
+   public boolean isBetter(Heuristic compHeu){
    
-      if ((compHeu.cost()<cost) ||(compHeu.cost()==cost && compHeu.colCost()<colCost)){
+      if ((compHeu.getCost()>cost) ||(compHeu.getCost()==cost && compHeu.getColCost()>colCost)){
          return true;
       }
       else{

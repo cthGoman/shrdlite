@@ -76,21 +76,23 @@ public class Shrdlite {
     
             }
             
-            ((JSONArray) goalWorld.get(0)).add("l");
+            ((JSONArray) goalWorld.get(4)).add("l");
+            ((JSONArray) goalWorld.get(4)).add("e");
+            ((JSONArray) goalWorld.get(0)).remove(0); 
             ((JSONArray) goalWorld.get(1)).remove(1);        
             
             
             //Print the two worlds
-            System.out.println(world);
-            System.out.println(goalWorld);
+//             System.out.println(world);
+//             System.out.println(goalWorld);
             
             
  
             
             
             //Calculate the cost
-            int cost = Heuristic.heuristic(world,holding,goalWorld,goalHolding);
-            System.out.println(cost);
+            // int cost = Heuristic.heuristic(world,holding,goalWorld,goalHolding);
+            // System.out.println(cost);
 
             
             //Generate a test goal
@@ -101,7 +103,7 @@ public class Shrdlite {
             row.add(new Statement("ONTOP","e","g"));
             
             goals.add(new Goal(row));
-            goals.add(new Goal(row));
+            // goals.add(new Goal(row));
             
             result.put("goals", goals);
             // System.out.print(goals);
@@ -114,7 +116,7 @@ public class Shrdlite {
 
             } else {
                 Planner planner = new Planner(world, holding, objects);
-                Plan plan = planner.solve(goals.get(0));
+                Plan plan = planner.solve(goals.get(0),goalWorld);
                 // int column = 0;
 //                 while (((JSONArray)world.get(column)).isEmpty()) column++;
 //                 //List plan = new ArrayList(); 
@@ -129,11 +131,11 @@ public class Shrdlite {
                 } else {
                     result.put("output", "Success!");
                 }
-               //  System.out.print(plan);
+                // System.out.print(plan);
             }
         }
 
-       // System.out.print(result);
+        System.out.print(result);
         
     }
 
