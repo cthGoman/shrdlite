@@ -7,6 +7,7 @@ public class Heuristic{
    private int cost;
    private int colCost;
    private ArrayList<Integer> tempColCostList = new ArrayList<Integer>();
+   private int misplaced;
    
    public Heuristic(int costIn,int colCostIn){
       cost=costIn;
@@ -17,6 +18,7 @@ public class Heuristic{
 		
 		cost = 0;
       colCost = 0;
+      misplaced = 0;
       
       //Loop over all columns                 
       for (int j=0; j<world.size();	j++){	
@@ -35,10 +37,12 @@ public class Heuristic{
                if(goalColTemp.contains(worldColTemp.get(i))){
                   if(tempCost!=0){
                      tempCost+=4; //If something below the object needs to be moved
+                     misplaced++;
                   }
                   else if(worldColTemp.size()>i){
                      if(!worldColTemp.get(i).equals(goalColTemp.get(i))){
                         tempCost+=4; //If the object is in the right column but in the wrong place
+                        misplaced++;
                      }
                   }
                
@@ -46,10 +50,12 @@ public class Heuristic{
               else if(!goalHolding.isEmpty()){ 
                    if(goalHolding.equals(worldColTemp.get(i))){
                   tempCost+=1; //If the object should be in holding
+                  misplaced++;
                    }   
                }
               else{
                   tempCost+=2; //If the object is in the wrong column
+                  misplaced++;
               }
             
             }
@@ -77,8 +83,10 @@ public class Heuristic{
                if (     ((JSONArray) goalWorld.get(j)).get(i).equals(holding)   ){
                   if (tempColCostList.get(j)==0 && ((JSONArray) world.get(j)).size() == i ){
                      cost += 1;
+                     misplaced++;
                   }else {
                      cost += 3;
+                     misplaced++;
                   }
                }
             }
@@ -97,9 +105,15 @@ public class Heuristic{
       return colCost;
    }
    
+   public int getMisplaced(){
+      return misplaced;
+   }
+   
    public boolean isBetter(Heuristic compHeu){
    
-      if ((compHeu.getCost()>cost) ||(compHeu.getCost()==cost && compHeu.getColCost()>colCost)){
+      if ((compHeu.getCost()>cost) ||
+      (compHeu.getCost()==cost && compHeu.getMisplaced()>misplaced) ||
+      (compHeu.getCost()==cost && compHeu.getMisplaced()==misplaced && compHeu.getColCost()>colCost)){
          return true;
       }
       else{

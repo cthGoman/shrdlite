@@ -40,7 +40,7 @@ public class Planner{
          for (int i=0;i<horizon;i++){
             
             int bestPickColumn = 0;
-            Heuristic bestPick = new Heuristic(10,10);
+            Heuristic bestPick = new Heuristic(100,100);
             
             for (int j=0;j<world.size();j++){
                //Loop over columns
@@ -99,7 +99,7 @@ public class Planner{
              
              
             int bestDropColumn = 0;
-            Heuristic bestDrop = new Heuristic(10,10);
+            Heuristic bestDrop = new Heuristic(100,100);
             
             for (int j=0;j<world.size();j++){
                //Loop over columns
@@ -157,9 +157,12 @@ public class Planner{
              
              plan.add("drop " + bestDropColumn);
              
+             // System.out.println(plan);
              if (actWorld.equals(goalWorld)){
                break;
              }
+             
+             
             
             
          }

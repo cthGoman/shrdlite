@@ -3,7 +3,7 @@
 // javac -cp gnuprologjava-0.2.6.jar:json-simple-1.1.1.jar:. Shrdlite.java
 
 // Then test from the command line:
-// java -cp gnuprologjava-0.2.6.jar:json-simple-1.1.1.jar:. Shrdlite < ../examples/medium.json
+// java -cp gnuprologjava-0.2.6.jar;json-simple-1.1.1.jar;. Shrdlite < ../examples/small.json
 
 import java.util.List;
 import java.util.ArrayList;
@@ -76,10 +76,14 @@ public class Shrdlite {
     
             }
             
+            ((JSONArray) goalWorld.get(1)).remove(1);
             ((JSONArray) goalWorld.get(4)).add("l");
-            ((JSONArray) goalWorld.get(4)).add("e");
-            ((JSONArray) goalWorld.get(0)).remove(0); 
-            ((JSONArray) goalWorld.get(1)).remove(1);        
+            
+            ((JSONArray) goalWorld.get(3)).remove(0);
+            ((JSONArray) goalWorld.get(1)).add("k");
+             
+            ((JSONArray) goalWorld.get(0)).remove(0);
+            ((JSONArray) goalWorld.get(4)).add("e");     
             
             
             //Print the two worlds
