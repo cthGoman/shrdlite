@@ -14,4 +14,7 @@ public class Statement extends ArrayList<String>{
 	public boolean add(String s){
 		return false;
 	}
+	public Object clone(){
+		return new Statement(get(0),get(1),get(2));
+	}
 }
