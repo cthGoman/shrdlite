@@ -68,15 +68,15 @@ public class Planner{
                   
                   ((JSONArray) tempWorld.get(j)).remove(((JSONArray) tempWorld.get(j)).size()-1);
                   
-                  System.out.println("goalWorld " + goalWorld);
-                  System.out.println("goalHolding " + goalHolding);
-                  
-                  System.out.println("tempWorld " + tempWorld);
-                  System.out.println("tempHolding " + tempHolding);
+//                   System.out.println("goalWorld " + goalWorld);
+//                   System.out.println("goalHolding " + goalHolding);
+//                   
+//                   System.out.println("tempWorld " + tempWorld);
+//                   System.out.println("tempHolding " + tempHolding);
                   
                   Heuristic currPick = new Heuristic(tempWorld,tempHolding,goalWorld,goalHolding);
-                  
-                  System.out.println("currPick cost " + currPick.getCost());
+//                   
+//                   System.out.println("currPick cost " + currPick.getCost());
                   
                   
                   if (currPick.isBetter(bestPick)){
@@ -143,7 +143,7 @@ public class Planner{
                   Heuristic currDrop = new Heuristic(tempWorld,tempHolding,goalWorld,goalHolding);
 
                   
-                  if (currDrop.isBetter(bestDrop) && j!=bestPickColumn){
+                  if (currDrop.isBetter(bestDrop) && j!=bestPickColumn && Constraints.isWorldAllowed(tempWorld,tempHolding,objects)){
                      bestDropColumn=j;
                      bestDrop=currDrop;
                   }
@@ -169,7 +169,7 @@ public class Planner{
              
              plan.add("drop " + bestDropColumn);
              
-             System.out.println(plan);
+//              System.out.println(plan);
              if (actWorld.equals(goalWorld)){
                break;
              }
