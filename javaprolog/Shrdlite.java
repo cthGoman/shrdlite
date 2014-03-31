@@ -51,17 +51,25 @@ public class Shrdlite {
             result.put("output", "Parse error!");
 
         } else {
-            List<Goal> goals = new ArrayList<Goal>();
-            Interpreter interpreter = new Interpreter(world, holding, objects);
             
-
             
+// //             List<Goal> goals = new ArrayList<Goal>();
+// //             Interpreter interpreter = new Interpreter(world, holding, objects);
+                       
             //for (Term tree : trees) {
             //    for (Goal goal : interpreter.interpret(tree)) {
             //        goals.add(goal);
             //    }  
             //}
             
+            
+            List<Goal> goals = new ArrayList<Goal>();
+            InterpreterStupid interpreter = new InterpreterStupid(world, holding, objects);
+            for (Term tree : trees) {
+	            for (Goal goal : interpreter.interpret(tree)) {
+		            goals.add(goal);
+	            }
+            }
                 
             //Setup the goalWorld  
             String goalHolding = "";       
@@ -71,7 +79,6 @@ public class Shrdlite {
               
                JSONArray goalColTemp= new JSONArray();
                goalColTemp.addAll((JSONArray) world.get(i));
-    
                goalWorld.add(goalColTemp);
     
             }
