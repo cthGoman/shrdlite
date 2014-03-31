@@ -76,16 +76,20 @@ public class Heuristic{
       
       }
       
+      //Cost for the object in holding
       if(!holding.isEmpty()){
          
-         for (int j=0; j<goalWorld.size(); j++){
-            for (int i=0; i< ((JSONArray) goalWorld.get(j)).size(); i++){
-               if (     ((JSONArray) goalWorld.get(j)).get(i).equals(holding)   ){
+         for (int j=0; j<goalWorld.size(); j++){ //loop over columns in goal world
+         
+            for (int i=0; i< ((JSONArray) goalWorld.get(j)).size(); i++){ //loop over objects in the column
+            
+               if (     ((JSONArray) goalWorld.get(j)).get(i).equals(holding)   ){ //Check if the object in goal world is the same as in holding
+               
                   if (tempColCostList.get(j)==0 && ((JSONArray) world.get(j)).size() == i ){
-                     cost += 1;
+                     cost += 1; //add cost for object can directly be dropped in the right position
                      misplaced++;
                   }else {
-                     cost += 3;
+                     cost += 3; //add cost if the object has to be dropped in the wrong position
                      misplaced++;
                   }
                }
