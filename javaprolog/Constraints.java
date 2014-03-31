@@ -9,7 +9,7 @@ public class Constraints{
 
       boolean isAllowed = true;
       isAllowed = (holding==null || holding.length()<2);
-      //System.out.println(world);
+      System.out.println(world);
       for(int i=0; i<world.size(); i++){
          JSONArray column = (JSONArray) world.get(i);
          if(column.size()>1){
@@ -17,12 +17,16 @@ public class Constraints{
                String object = (String) column.get(j);
                JSONObject objectinfo = (JSONObject) objects.get(object);
                String form = (String) objectinfo.get("form");
-           
+               String size = (String) objectinfo.get("size");
+              
                if(form.contains("ball")){
                   if(j+1<column.size()){
+                     System.out.println("FAIL, ball can not hold objects");
                      return false;
-                     //System.out.println("FAIL, ball can not hold objects");
                   }
+               if(size.contains("small")){
+               
+               }   
                }
             }
          }
