@@ -10,7 +10,7 @@ public class Statement extends ArrayList<String>{
 		super.add(arg2);
 	}
 	// This prevents anyone from adding an additional string to the statement.
-	// Should also be done for a lot of other methods in arraylist, but nevermind
+	// Should also be done for a lot of other methods in arraylist, but nevermind.
 	public boolean add(String s){
 		return false;
 	}
