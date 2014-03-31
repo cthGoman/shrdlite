@@ -23,6 +23,15 @@ public class Constraints{
                   if(j+1<column.size()){
                      return false;
                   }
+                  if(j-1>=0){
+                     String objectBelow = (String) column.get(j-1);
+                     JSONObject objectBelowinfo = (JSONObject) objects.get(objectBelow);
+                     String formBelow = (String) objectBelowinfo.get("form");
+                     
+                     if(!formBelow.contains("box")){
+                        return false;
+                     }
+                  }
                }
                if(size.contains("small")){
                   if(j+1<column.size()){
