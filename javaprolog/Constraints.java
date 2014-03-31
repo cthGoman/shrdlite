@@ -21,13 +21,12 @@ public class Constraints{
               
                if(form.contains("ball")){
                   if(j+1<column.size()){
-                     //System.out.println("FAIL, ball can not hold objects");
                      return false;
                   }
                }
                if(size.contains("small")){
                   if(j+1<column.size()){
-                     String objectAbove = (String) column.get(j);
+                     String objectAbove = (String) column.get(j+1);
                      JSONObject objectAboveinfo = (JSONObject) objects.get(objectAbove);
                      String sizeAbove = (String) objectAboveinfo.get("size");
                      if(sizeAbove.contains("large")){
