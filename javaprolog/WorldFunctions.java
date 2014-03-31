@@ -33,4 +33,39 @@ public class WorldFunctions{
    public static boolean worldColumnContains(JSONArray world, String object, int column){
      return ((JSONArray) world.get(column)).contains(object);
    }
+   
+   public static int getColumnNumber(JSONArray world, String object){
+     for(int k=0;k<world.size();k++){
+      if (((JSONArray) world.get(k)).contains(object)){
+         return k;
+      }
+     }
+     return -1;
+   }
+   
+   public static int getPlaceInColumn(JSONArray world, String object){
+     for(int k=0;k<world.size();k++){
+      if (((JSONArray) world.get(k)).contains(object)){
+         return ((JSONArray) world.get(k)).indexOf(object);
+      }
+     }
+     return -1;
+   }
+   
+   public static String getObjectBelow(JSONArray world, String object){
+     for(int k=0;k<world.size();k++){
+      if (((JSONArray) world.get(k)).contains(object)){
+         
+         int place=((JSONArray) world.get(k)).indexOf(object);
+         
+         if (place==0){
+            return "floor-"+k;
+         }else{
+            return (String) ((JSONArray) world.get(k)).get(place-1);
+         }
+         
+      }
+     }
+     return "";
+   }
 }

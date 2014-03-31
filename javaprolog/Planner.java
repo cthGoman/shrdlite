@@ -15,11 +15,13 @@ public class Planner{
       holding=holdingIn;
       objects=objectsIn;
 	}
-	public Plan solve(Goal g,JSONArray goalWorld, String goalHolding){
+	public Plan solve(Goal goal,JSONArray goalWorld, String goalHolding){
       Plan plan=new Plan();
       
+//       JSONArray goalWorld = GenerateAndTest.generateWorld(goal,world,objects);
+//       String goalHolding = GenerateAndTest.generateGoalHolding(goal);
+
       String actHolding = holding;
-      
       JSONArray actWorld = WorldFunctions.copy(world);
             
       int bestPickColumn = 0;

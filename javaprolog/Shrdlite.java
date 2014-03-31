@@ -70,6 +70,8 @@ public class Shrdlite {
 		            goals.add(goal);
 	            }
             }
+            
+            // System.out.println(goals);
                 
             //Setup the goalWorld  
             String goalHolding = "";       
@@ -96,21 +98,7 @@ public class Shrdlite {
             goalHolding = "f";            
             
             
-            
-            
-            //Print the two worlds
-//             System.out.println(world);
-//             System.out.println(goalWorld);
-            
-            
- 
-            
-            
-            //Calculate the cost
-            // int cost = Heuristic.heuristic(world,holding,goalWorld,goalHolding);
-            // System.out.println(cost);
 
-            
             //Generate a test goal
             ArrayList<Statement> row= new ArrayList<Statement>();
             
@@ -118,11 +106,10 @@ public class Shrdlite {
             row.add(new Statement("ONTOP","l","floor_1"));
             row.add(new Statement("ONTOP","e","g"));
             
-             //   goals.add(new Goal(row));
+
             // goals.add(new Goal(row));
             
             result.put("goals", goals);
-            // System.out.print(goals);
 
             if (goals.isEmpty()) {
                 result.put("output", "Interpretation error!");
@@ -147,7 +134,6 @@ public class Shrdlite {
                 } else {
                     result.put("output", "Success!");
                 }
-                // System.out.print(plan);
             }
         }
 
