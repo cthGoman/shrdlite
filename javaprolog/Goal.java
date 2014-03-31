@@ -23,10 +23,9 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
 	}
    
    public boolean fulfiled(JSONArray world){
-      boolean fulfilled = true;
       
       for (ArrayList<Statement> listOfStatement : this){//Loop over all rows 
-         fulfilled = true;
+         boolean tempFulfilled = true;
          
          for (Statement statement : listOfStatement) {//Loop over every statement in row
          
@@ -35,18 +34,28 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
                int place = WorldFunctions.getPlaceInColumn(world,statement.get(1));
 
                if (!WorldFunctions.getObjectBelow(world,statement.get(1)).equals(statement.get(2))){
-                  fulfilled = false;
+                  tempFulfilled = false;
                }
-               
             }
-
-         }        
-         
-      
-      
+            if (statement.get(0).equals("above")){
+               int column = WorldFunctions.getColumnNumber(world,statement.get(1));
+               int place = WorldFunctions.getPlaceInColumn(world,statement.get(1));
+               
+               int placeSecondObject=WorldFunctions.getPlaceInColumn(world,statement.get(2));
+               
+               if (placeSecondObject<0 || place<=placeSecondObject){
+                 tempFulfilled = false; 
+               }
+            }
+            
+            
+         }
+         if (tempFulfilled){
+            return tempFulfilled;
+         }         
       }
       
-      return fulfilled;
+      return false;
    }
    
    
