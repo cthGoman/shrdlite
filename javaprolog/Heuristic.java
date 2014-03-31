@@ -96,6 +96,12 @@ public class Heuristic{
             }
          }
          
+         if(holding.equals(goalHolding)){ //correct object in holding
+            if(cost>0){ //other objects needs to be moved
+               cost += 2;
+            }
+         }
+         
       }
 
 		
