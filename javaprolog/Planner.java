@@ -15,12 +15,12 @@ public class Planner{
       holding=holdingIn;
       objects=objectsIn;
 	}
-	public Plan solve(Goal g,JSONArray goalWorld){
+	public Plan solve(Goal g,JSONArray goalWorld, String goalHolding){
       Plan plan=new Plan();
       // plan.add("test");
       
       String actHolding = holding;
-      String goalHolding = "";
+      
       int horizon = 1;
       
       JSONArray actWorld = new JSONArray();
@@ -68,7 +68,15 @@ public class Planner{
                   
                   ((JSONArray) tempWorld.get(j)).remove(((JSONArray) tempWorld.get(j)).size()-1);
                   
+                  System.out.println("goalWorld " + goalWorld);
+                  System.out.println("goalHolding " + goalHolding);
+                  
+                  System.out.println("tempWorld " + tempWorld);
+                  System.out.println("tempHolding " + tempHolding);
+                  
                   Heuristic currPick = new Heuristic(tempWorld,tempHolding,goalWorld,goalHolding);
+                  
+                  System.out.println("currPick cost " + currPick.getCost());
                   
                   
                   if (currPick.isBetter(bestPick)){
@@ -95,7 +103,11 @@ public class Planner{
              
              plan.add("pick " + bestPickColumn);
              
-             
+            
+            
+            if (actWorld.equals(goalWorld) && actHolding.equals(goalHolding)){
+               break;
+             }
              
              
             int bestDropColumn = 0;
@@ -131,7 +143,7 @@ public class Planner{
                   Heuristic currDrop = new Heuristic(tempWorld,tempHolding,goalWorld,goalHolding);
 
                   
-                  if (currDrop.isBetter(bestDrop)){
+                  if (currDrop.isBetter(bestDrop) && j!=bestPickColumn){
                      bestDropColumn=j;
                      bestDrop=currDrop;
                   }
@@ -157,7 +169,7 @@ public class Planner{
              
              plan.add("drop " + bestDropColumn);
              
-             // System.out.println(plan);
+             System.out.println(plan);
              if (actWorld.equals(goalWorld)){
                break;
              }

@@ -86,6 +86,9 @@ public class Shrdlite {
             ((JSONArray) goalWorld.get(1)).remove(1);
             ((JSONArray) goalWorld.get(4)).add("l");
             
+            ((JSONArray) goalWorld.get(3)).remove(2);
+            goalHolding = "f";
+            
             ((JSONArray) goalWorld.get(3)).remove(0);
             ((JSONArray) goalWorld.get(1)).add("k");
              
@@ -113,7 +116,7 @@ public class Shrdlite {
             row.add(new Statement("ONTOP","l","floor_1"));
             row.add(new Statement("ONTOP","e","g"));
             
-            goals.add(new Goal(row));
+             //   goals.add(new Goal(row));
             // goals.add(new Goal(row));
             
             result.put("goals", goals);
@@ -127,7 +130,7 @@ public class Shrdlite {
 
             } else {
                 Planner planner = new Planner(world, holding, objects);
-                Plan plan = planner.solve(goals.get(0),goalWorld);
+                Plan plan = planner.solve(goals.get(0),goalWorld, goalHolding);
                 // int column = 0;
 //                 while (((JSONArray)world.get(column)).isEmpty()) column++;
 //                 //List plan = new ArrayList(); 
