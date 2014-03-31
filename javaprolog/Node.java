@@ -18,4 +18,10 @@ public class Node{
    public Node getParent(){
       return parent;
    }
+	public Node getChild(int position){
+		if(position < 0 || position >= children.size()){
+			return null;
+		}
+		return children.get(position);
+	}
 }
