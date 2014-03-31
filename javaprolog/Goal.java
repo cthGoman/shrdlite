@@ -22,7 +22,7 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
 		this.add(newRow);
 	}
    
-   public boolean fulfiled(JSONArray world){
+   public boolean fulfilled(JSONArray world){
       
       for (ArrayList<Statement> listOfStatement : this){//Loop over all rows 
          boolean tempFulfilled = true;
