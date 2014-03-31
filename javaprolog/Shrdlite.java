@@ -86,14 +86,13 @@ public class Shrdlite {
             ((JSONArray) goalWorld.get(1)).remove(1);
             ((JSONArray) goalWorld.get(4)).add("l");
             
-            ((JSONArray) goalWorld.get(3)).remove(2);
-            goalHolding = "f";
-            
             ((JSONArray) goalWorld.get(3)).remove(0);
             ((JSONArray) goalWorld.get(1)).add("k");
-             
+            
             ((JSONArray) goalWorld.get(0)).remove(0);
-            ((JSONArray) goalWorld.get(4)).add("e");     
+            ((JSONArray) goalWorld.get(1)).add("e");
+            
+            
             
             
             //Print the two worlds
