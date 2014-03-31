@@ -15,11 +15,15 @@ public class Planner{
       holding=holdingIn;
       objects=objectsIn;
 	}
-	public Plan solve(Goal goal,JSONArray goalWorld, String goalHolding){
+	public Plan solve(Goal goal,JSONObject result){
       Plan plan=new Plan();
       
-//       JSONArray goalWorld = GenerateAndTest.generateWorld(goal,world,objects);
-//       String goalHolding = GenerateAndTest.generateGoalHolding(goal);
+      JSONArray goalWorld = GenerateAndTest.generateWorld(goal,world,holding,objects,100000);
+      String goalHolding = GenerateAndTest.generateGoalHolding(goal);
+      result.put("output", ""+goalWorld);
+//       System.out.println("goalWorld " + goalWorld);
+//       System.out.println("goalHolding " + goalHolding);
+//       
 
       String actHolding = holding;
       JSONArray actWorld = WorldFunctions.copy(world);
@@ -133,7 +137,9 @@ public class Planner{
       }
       
       
-   
+      if (plan.isEmpty()){
+         plan.add("No plan needed");
+      }
 		return plan;
 	}
 }

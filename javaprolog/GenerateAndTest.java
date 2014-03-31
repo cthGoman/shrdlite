@@ -35,10 +35,13 @@ public class GenerateAndTest{
       
    }
    Heuristic goalWorldHeu = new Heuristic(100);
+   JSONArray strippedWorld = WorldFunctions.copy(goalWorld);
+   
+//    System.out.println(grabbedObjects);
    
    for(int i=0;i<=worldIterations;i++){
       ArrayList<String> tempGrabbedObjects = new ArrayList(grabbedObjects);
-      JSONArray tempGoalWorld = WorldFunctions.copy(goalWorld);
+      JSONArray tempGoalWorld = WorldFunctions.copy(strippedWorld);
       
       for (int j=0; j<grabbedObjects.size(); j++){
          Random generator = new Random();
@@ -47,12 +50,22 @@ public class GenerateAndTest{
          int c = generator.nextInt(goalWorld.size());
          
          WorldFunctions.addObjectWorldColumn(tempGrabbedObjects.get(k),tempGoalWorld, c);
+//          System.out.println("tempGrabbedObjects.get(k) "+tempGrabbedObjects.get(k));
          tempGrabbedObjects.remove(k);
+         
+//          System.out.println("tempGoalWorld "+tempGoalWorld + " " + c);
          
       }
       Heuristic tempHeu = new Heuristic(world, holding, tempGoalWorld, "");
-      if(Constraints.isWorldAllowed(tempGoalWorld,"",objectsIn) && goal.fulfilled(tempGoalWorld) && goalWorldHeu.isBetter(tempHeu)){
-         goalWorld = WorldFunctions.copy(tempGoalWorld);         
+//       System.out.println("constraints " +Constraints.isWorldAllowed(tempGoalWorld,"",objectsIn));
+//       System.out.println("fulfilled " +goal.fulfilled(tempGoalWorld));
+//       System.out.println("heuristic " +tempHeu.isBetter(goalWorldHeu));
+      
+      
+      if(Constraints.isWorldAllowed(tempGoalWorld,"",objectsIn) && goal.fulfilled(tempGoalWorld) && tempHeu.isBetter(goalWorldHeu)){
+//          System.out.println("kanon!");
+         goalWorld = WorldFunctions.copy(tempGoalWorld);
+         goalWorldHeu=tempHeu;       
       }
       
    }
