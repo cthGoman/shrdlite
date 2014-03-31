@@ -17,22 +17,11 @@ public class Planner{
 	}
 	public Plan solve(Goal g,JSONArray goalWorld, String goalHolding){
       Plan plan=new Plan();
-      // plan.add("test");
       
       String actHolding = holding;
       
-      // int horizon = 1;
-      
-      JSONArray actWorld = new JSONArray();
+      JSONArray actWorld = WorldFunctions.copy(world);
             
-      for(int i=0;i<world.size();i++){
-              
-         JSONArray goalColTemp= new JSONArray();
-         goalColTemp.addAll((JSONArray) world.get(i));
- 
-         actWorld.add(goalColTemp);
- 
-      }
       int bestPickColumn = 0;
       int bestDropColumn = 0;
       
@@ -60,15 +49,7 @@ public class Planner{
             
             //Check which object to pick
             String tempHolding = actHolding;
-            JSONArray tempWorld = new JSONArray();
-            for(int k=0;k<actWorld.size();k++){
-              
-               JSONArray goalColTemp= new JSONArray();
-               goalColTemp.addAll((JSONArray) actWorld.get(k));
- 
-               tempWorld.add(goalColTemp);
- 
-            }
+            JSONArray tempWorld = WorldFunctions.copy(actWorld);
             
          
             
@@ -76,39 +57,22 @@ public class Planner{
             if (((JSONArray) tempWorld.get(j)).size()>0) {
                //If current column has an object
                
-               tempHolding= (String) ((JSONArray) tempWorld.get(j)).get(((JSONArray) tempWorld.get(j)).size()-1);
+               //Pick up the top object in column j
+               tempHolding= WorldFunctions.getTopObjectWorldColumn(tempWorld,j);
+               WorldFunctions.removeTopObjectWorldColumn(tempWorld,j);
                
-               ((JSONArray) tempWorld.get(j)).remove(((JSONArray) tempWorld.get(j)).size()-1);
-               
-//                   System.out.println("goalWorld " + goalWorld);
-//                   System.out.println("goalHolding " + goalHolding);
-//                   
-//                   System.out.println("tempWorld " + tempWorld);
-//                   System.out.println("tempHolding " + tempHolding);
-               
+               //Calculate the cost for the current pick
                Heuristic currPick = new Heuristic(tempWorld,tempHolding,goalWorld,goalHolding);
-                   
-//                   System.out.println("currPick cost " + currPick.getCost());
+
                
                
                if (currPick.isBetter(bestPick)){
                   bestPickColumn=j;
                   bestPick=currPick;
-               }
-                  
-//                    System.out.println("currPickCost " + currPick.getCost());
-//                   System.out.println("tempHolding "+tempHolding);
-//                   System.out.println("tempWorld "+tempWorld);
-//                   System.out.println("current column " +j);
+               }  
             }
             
           }
-//              System.out.println("bestPickColumn: " + bestPickColumn);
-//              System.out.println("");
-//              System.out.println(world);
-//              System.out.println(goalWorld);
-//              System.out.println(actWorld);
-//              System.out.println(actHolding);
           
           actHolding= (String) ((JSONArray) actWorld.get(bestPickColumn)).get(((JSONArray) actWorld.get(bestPickColumn)).size()-1);
           ((JSONArray) actWorld.get(bestPickColumn)).remove(((JSONArray) actWorld.get(bestPickColumn)).size()-1);
@@ -132,18 +96,8 @@ public class Planner{
             
             //Check which column to drop
             String tempHolding = actHolding;
-            JSONArray tempWorld = new JSONArray();
-            for(int k=0;k<world.size();k++){
-              
-               JSONArray goalColTemp= new JSONArray();
-               goalColTemp.addAll((JSONArray) actWorld.get(k));
- 
-               tempWorld.add(goalColTemp);
- 
-            }
-            
-         
-            
+            JSONArray tempWorld = WorldFunctions.copy(actWorld);
+
             
             if (!tempHolding.isEmpty()) {
                //If an object is hold
