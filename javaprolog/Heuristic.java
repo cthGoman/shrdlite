@@ -8,6 +8,7 @@ public class Heuristic{
    private int colCost;
    private ArrayList<Integer> tempColCostList = new ArrayList<Integer>();
    private int misplaced;
+   private int inTheWay;
    
    public Heuristic(int costIn,int colCostIn){
       cost=costIn;
@@ -19,6 +20,7 @@ public class Heuristic{
 		cost = 0;
       colCost = 0;
       misplaced = 0;
+      inTheWay = 0;
       
       //Loop over all columns                 
       for (int j=0; j<world.size();	j++){	
@@ -43,6 +45,7 @@ public class Heuristic{
                      if(!worldColTemp.get(i).equals(goalColTemp.get(i))){
                         tempCost+=4; //If the object is in the right column but in the wrong place
                         misplaced++;
+                        inTheWay++;
                      }
                   }
                
@@ -52,6 +55,7 @@ public class Heuristic{
                      if(((JSONArray) goalWorld.get(j)).size()>i){
                         tempCost += 3; //if the object that should be in holding is in the way of another object
                         misplaced++;
+                        inTheWay++;
                      }
                      else if(tempCost>0){
                         tempCost += 3; //if the object that should be in holding is above another that should be moved
@@ -62,13 +66,19 @@ public class Heuristic{
                      }
                    }
                    else{
-                     tempCost += 2;
+                     tempCost += 2; //If the object is in the wrong column but goalHolding is not empty
                      misplaced ++;
+                     if(((JSONArray) goalWorld.get(j)).size()>=i){
+                        inTheWay++; //If the object is in the way of another object
+                     }
                    }   
                }
               else{
                   tempCost+=2; //If the object is in the wrong column
                   misplaced++;
+                  if(((JSONArray) goalWorld.get(j)).size()>=i){
+                        inTheWay++; //If the object is in the way of another object
+                  }
               }
             
             }
@@ -133,14 +143,19 @@ public class Heuristic{
       return misplaced;
    }
    
+   public int getInTheWay(){
+      return inTheWay;
+   }
+   
    public boolean isBetter(Heuristic compHeu){
    
       if ((compHeu.getCost()>cost) ||
       (compHeu.getCost()==cost && compHeu.getMisplaced()>misplaced) ||
-      (compHeu.getCost()==cost && compHeu.getMisplaced()==misplaced && compHeu.getColCost()>colCost)){
+      (compHeu.getCost()==cost && compHeu.getMisplaced()==misplaced && compHeu.getInTheWay()>inTheWay) ||
+      (compHeu.getCost()==cost && compHeu.getMisplaced()==misplaced && compHeu.getInTheWay()==inTheWay && compHeu.getColCost()>colCost)){
          return true;
       }
-      else if ((compHeu.getCost()==cost && compHeu.getMisplaced()==misplaced && compHeu.getColCost()==colCost) && Math.random()>0.5){
+      else if (      (compHeu.getCost()==cost && compHeu.getMisplaced()==misplaced && compHeu.getInTheWay()==inTheWay && compHeu.getColCost()==colCost) && Math.random()>0.5){
          return true;
       }
       else{
