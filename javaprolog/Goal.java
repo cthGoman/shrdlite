@@ -29,7 +29,7 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
          
          for (Statement statement : listOfStatement) {//Loop over every statement in row
          
-            if (statement.get(0).equals("ontop")){
+            if ("ontop".equals(statement.get(0).toLowerCase())){
                int column = WorldFunctions.getColumnNumber(world,statement.get(1));
                int place = WorldFunctions.getPlaceInColumn(world,statement.get(1));
 
@@ -37,7 +37,7 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
                   tempFulfilled = false;
                }
             }
-            if (statement.get(0).equals("above")){
+            if ("above".equals(statement.get(0).toLowerCase())){
                int column = WorldFunctions.getColumnNumber(world,statement.get(1));
                int place = WorldFunctions.getPlaceInColumn(world,statement.get(1));
                
