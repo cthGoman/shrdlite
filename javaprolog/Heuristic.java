@@ -60,7 +60,6 @@ public class Heuristic{
                      else{
                         tempCost += 1; //If the object should be in holding and nothing else in the column is wrong
                         misplaced++;
-                        System.out.println("och pågång");
                      }
                    }
                    else{
@@ -103,7 +102,6 @@ public class Heuristic{
                   if (tempColCostList.get(j)==0 && ((JSONArray) world.get(j)).size() == i ){
                      cost += 1; //add cost for object can directly be dropped in the right position
                      misplaced++;
-                     System.out.println("pågång");
                   }
                   else {
                      cost += 3; //add cost if the object has to be dropped in the wrong position
