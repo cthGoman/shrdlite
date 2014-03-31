@@ -7,8 +7,9 @@ public class Constraints{
 
 	public static boolean isWorldAllowed(JSONArray world, String holding, JSONObject objects) {
 
-      boolean isAllowed = true;
-      isAllowed = (holding==null || holding.length()<2);
+      if(!(holding==null || holding.length()<2)){
+         return false;
+      }
       
       for(int i=0; i<world.size(); i++){
          JSONArray column = (JSONArray) world.get(i);
@@ -20,20 +21,20 @@ public class Constraints{
                String size = (String) objectinfo.get("size");
               
                if(form.contains("ball")){
-                  if(j+1<column.size()){
-                     return false;
+                  if(j+1<column.size()){  // Balls can not support anything
+                     return false;     
                   }
                   if(j-1>=0){
                      String objectBelow = (String) column.get(j-1);
                      JSONObject objectBelowinfo = (JSONObject) objects.get(objectBelow);
                      String formBelow = (String) objectBelowinfo.get("form");
                      
-                     if(!formBelow.contains("box")){
+                     if(!formBelow.contains("box")){  // Balls can only be supported by boxes or floor
                         return false;
                      }
                   }
                }
-               if(size.contains("small")){
+               if(size.contains("small")){   // Small objects cannot support large objects
                   if(j+1<column.size()){
                      String objectAbove = (String) column.get(j+1);
                      JSONObject objectAboveinfo = (JSONObject) objects.get(objectAbove);
@@ -43,10 +44,42 @@ public class Constraints{
                      }
                   }   
                }
+               if(form.contains("box")){  // Boxes cannot contain pyramids or planks of the same size
+                  if(j+1<column.size()){
+                     String objectAbove = (String) column.get(j+1);
+                     JSONObject objectAboveinfo = (JSONObject) objects.get(objectAbove);
+                     String sizeAbove = (String) objectAboveinfo.get("size");
+                     String formAbove = (String) objectAboveinfo.get("form");
+                     
+                     if(formAbove.contains("pyramid") || formAbove.contains("plank")){
+                        if(sizeAbove.equals((String) objectinfo.get("size"))){
+                           return false;
+                        }
+                     }
+                  } 
+                  if(j-1>=0){
+                     String objectBelow = (String) column.get(j-1);
+                     JSONObject objectBelowinfo = (JSONObject) objects.get(objectBelow);
+                     String formBelow = (String) objectBelowinfo.get("form");
+                     String sizeBelow = (String) objectBelowinfo.get("size");
+                   
+                     // Boxes can only be supported by tables or planks of the same size, but large boxes can also be supported by large bricks.
+                     boolean sizeCondition = (sizeBelow.equals(size));
+                     boolean formCondition = (formBelow.contains("table") || formBelow.contains("plank") || formBelow.contains("box"));
+                     if(!formCondition){  
+                        if(!(formBelow.contains("brick") && size.contains("large") && sizeBelow.contains("large"))){
+                           return false;
+                        }
+                     }
+                     if(formCondition && !sizeCondition && !formBelow.contains("box")){
+                        return false;
+                     }  
+                  }
+               }
             }
          }
       } 
-      return isAllowed;
+      return true;
 		
 	}
    
