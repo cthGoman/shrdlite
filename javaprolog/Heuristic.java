@@ -49,8 +49,23 @@ public class Heuristic{
                }
               else if(!goalHolding.isEmpty()){ 
                    if(goalHolding.equals(worldColTemp.get(i))){
-                  tempCost+=1; //If the object should be in holding
-                  misplaced++;
+                     if(((JSONArray) goalWorld.get(j)).size()>i){
+                        tempCost += 3; //if the object that should be in holding is in the way of another object
+                        misplaced++;
+                     }
+                     else if(tempCost>0){
+                        tempCost += 3; //if the object that should be in holding is above another that should be moved
+                        misplaced++;                       
+                     }
+                     else{
+                        tempCost += 1; //If the object should be in holding and nothing else in the column is wrong
+                        misplaced++;
+                        System.out.println("och pågång");
+                     }
+                   }
+                   else{
+                     tempCost += 2;
+                     misplaced ++;
                    }   
                }
               else{
@@ -88,7 +103,9 @@ public class Heuristic{
                   if (tempColCostList.get(j)==0 && ((JSONArray) world.get(j)).size() == i ){
                      cost += 1; //add cost for object can directly be dropped in the right position
                      misplaced++;
-                  }else {
+                     System.out.println("pågång");
+                  }
+                  else {
                      cost += 3; //add cost if the object has to be dropped in the wrong position
                      misplaced++;
                   }
@@ -99,7 +116,7 @@ public class Heuristic{
          if(holding.equals(goalHolding)){ //correct object in holding
             if(cost>0){ //other objects needs to be moved
                cost += 2;
-               System.out.println("nu tar jag den" +cost);
+               misplaced++;
             }
          }
          
