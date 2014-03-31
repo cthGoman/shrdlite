@@ -80,15 +80,15 @@ public class Planner{
                
                ((JSONArray) tempWorld.get(j)).remove(((JSONArray) tempWorld.get(j)).size()-1);
                
-                  System.out.println("goalWorld " + goalWorld);
-                  System.out.println("goalHolding " + goalHolding);
-                  
-                  System.out.println("tempWorld " + tempWorld);
-                  System.out.println("tempHolding " + tempHolding);
+//                   System.out.println("goalWorld " + goalWorld);
+//                   System.out.println("goalHolding " + goalHolding);
+//                   
+//                   System.out.println("tempWorld " + tempWorld);
+//                   System.out.println("tempHolding " + tempHolding);
                
                Heuristic currPick = new Heuristic(tempWorld,tempHolding,goalWorld,goalHolding);
                    
-                  System.out.println("currPick cost " + currPick.getCost());
+//                   System.out.println("currPick cost " + currPick.getCost());
                
                
                if (currPick.isBetter(bestPick)){
@@ -103,8 +103,8 @@ public class Planner{
             }
             
           }
-             System.out.println("bestPickColumn: " + bestPickColumn);
-             System.out.println("");
+//              System.out.println("bestPickColumn: " + bestPickColumn);
+//              System.out.println("");
 //              System.out.println(world);
 //              System.out.println(goalWorld);
 //              System.out.println(actWorld);
@@ -156,7 +156,7 @@ public class Planner{
                Heuristic currDrop = new Heuristic(tempWorld,tempHolding,goalWorld,goalHolding);
 
                
-               if (currDrop.isBetter(bestDrop) && j!=bestPickColumn){
+               if (currDrop.isBetter(bestDrop) && j!=bestPickColumn && Constraints.isWorldAllowed(tempWorld,tempHolding,objects)){
                   bestDropColumn=j;
                   bestDrop=currDrop;
                   foundDrop = true;
@@ -170,8 +170,8 @@ public class Planner{
             
           }
           
-             System.out.println("bestDropColumn " + bestDropColumn);
-             System.out.println("");
+//              System.out.println("bestDropColumn " + bestDropColumn);
+//              System.out.println("");
 //              System.out.println(world);
 //              System.out.println(goalWorld);
           
@@ -183,7 +183,7 @@ public class Planner{
           }
           
 //              System.out.println(plan);
-          if (actWorld.equals(goalWorld) || plan.size()>15){
+          if (actWorld.equals(goalWorld) || plan.size()>30){
             break;
           }
           
@@ -196,36 +196,6 @@ public class Planner{
       }
       
       
-      
-      
-      
-
-      
-//       for (int i=0; i<world.size(); i++)
-//       {
-//    
-//          JSONArray columnTemp = (JSONArray) world.get(i);
-//          
-//          if (columnTemp.contains(g.get(0).get(0).get(1)))
-//          {
-//             plan.add("pick " + i);
-//          }
-// 
-//       }
-//       
-//       for (int i=0; i<world.size(); i++)
-//       {
-//    
-//          JSONArray columnTemp = (JSONArray) world.get(i);
-//          
-//          if (columnTemp.isEmpty())
-//          {
-//             plan.add("drop " + i);
-//             break;
-//          }
-// 
-//       }
-
    
 		return plan;
 	}
