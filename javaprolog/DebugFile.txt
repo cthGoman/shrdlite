@@ -1,0 +1,3 @@
+relative_entity object relative basic_entity object Objects size: 2
+0 anyform - blue 
+inside1 box - black 

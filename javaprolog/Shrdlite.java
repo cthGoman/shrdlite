@@ -22,7 +22,7 @@ import org.json.simple.JSONArray;
 public class Shrdlite {
 
 	public static void main(String[] args) throws PrologException, ParseException, IOException {
-        JSONObject jsinput   = (JSONObject) JSONValue.parse(readFromStdin());
+		  JSONObject jsinput   = (JSONObject) JSONValue.parse(readFromStdin());
         JSONArray  utterance = (JSONArray)  jsinput.get("utterance");
         JSONArray  world     = (JSONArray)  jsinput.get("world");
         String     holding   = (String)     jsinput.get("holding");
@@ -36,7 +36,8 @@ public class Shrdlite {
         //String topobject = (String) column1.get(column1.size() - 1);
         //JSONObject objectinfo = (JSONObject) objects.get(topobject);
         //String form = (String) objectinfo.get("form");
-
+		  
+		  
         DCGParser parser = new DCGParser("shrdlite_grammar.pl");
         List<Term> trees = parser.parseSentence("command", utterance);
         List tstrs = new ArrayList();
@@ -84,7 +85,6 @@ public class Shrdlite {
                 }
             }
         }
-
         System.out.print(result);
     }
 
@@ -96,7 +96,6 @@ public class Shrdlite {
             data.append(line).append('\n');
         }
         return data.toString();
-    }
-
+	 }
+	 
 }
-
