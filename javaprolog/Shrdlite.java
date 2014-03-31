@@ -92,6 +92,9 @@ public class Shrdlite {
             ((JSONArray) goalWorld.get(0)).remove(0);
             ((JSONArray) goalWorld.get(1)).add("e");
             
+            ((JSONArray) goalWorld.get(3)).remove(1);
+            goalHolding = "f";            
+            
             
             
             

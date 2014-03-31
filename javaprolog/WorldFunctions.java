@@ -25,8 +25,12 @@ public class WorldFunctions{
    public static void removeTopObjectWorldColumn(JSONArray world, int column){
      ((JSONArray) world.get(column)).remove(((JSONArray) world.get(column)).size()-1);
    }
+   
+   public static void addObjectWorldColumn( String object,JSONArray world, int column){
+     ((JSONArray) world.get(column)).add(object);
+   }
 
-   public static boolean WorldColumnContains(JSONArray world, String object, int column){
+   public static boolean worldColumnContains(JSONArray world, String object, int column){
      return ((JSONArray) world.get(column)).contains(object);
    }
 }

@@ -46,13 +46,9 @@ public class Planner{
          for (int j=0;j<world.size();j++){
             //Loop over columns
             
-            
             //Check which object to pick
             String tempHolding = actHolding;
             JSONArray tempWorld = WorldFunctions.copy(actWorld);
-            
-         
-            
             
             if (((JSONArray) tempWorld.get(j)).size()>0) {
                //If current column has an object
@@ -65,7 +61,7 @@ public class Planner{
                Heuristic currPick = new Heuristic(tempWorld,tempHolding,goalWorld,goalHolding);
 
                
-               
+               //Check if the current pick is the best
                if (currPick.isBetter(bestPick)){
                   bestPickColumn=j;
                   bestPick=currPick;
@@ -74,13 +70,15 @@ public class Planner{
             
           }
           
-          actHolding= (String) ((JSONArray) actWorld.get(bestPickColumn)).get(((JSONArray) actWorld.get(bestPickColumn)).size()-1);
-          ((JSONArray) actWorld.get(bestPickColumn)).remove(((JSONArray) actWorld.get(bestPickColumn)).size()-1);
+          //Update the world according to the best pick
+          actHolding= WorldFunctions.getTopObjectWorldColumn(actWorld,bestPickColumn);
+          WorldFunctions.removeTopObjectWorldColumn(actWorld,bestPickColumn);
           
+          //Add to plan
           plan.add("pick " + bestPickColumn);
           
          
-         
+         //Check if goal is satisfied
          if (actWorld.equals(goalWorld) && actHolding.equals(goalHolding)){
             break;
           }
@@ -103,8 +101,7 @@ public class Planner{
                //If an object is hold
                
                
-               
-               ((JSONArray) tempWorld.get(j)).add(tempHolding);
+               WorldFunctions.addObjectWorldColumn(tempHolding,tempWorld,j);
                tempHolding= "";
                
                Heuristic currDrop = new Heuristic(tempWorld,tempHolding,goalWorld,goalHolding);
@@ -115,38 +112,22 @@ public class Planner{
                   bestDrop=currDrop;
                   foundDrop = true;
                }
-                  
-//                   System.out.println("currDropCost " + currDrop.getCost());
-//                   System.out.println("tempHolding "+tempHolding);
-//                   System.out.println("tempWorld "+tempWorld);
-//                   System.out.println("current column " +j);
+                 
             }
             
           }
           
-//              System.out.println("bestDropColumn " + bestDropColumn);
-//              System.out.println("");
-//              System.out.println(world);
-//              System.out.println(goalWorld);
-          
           
           if (foundDrop){
-             ((JSONArray) actWorld.get(bestDropColumn)).add(actHolding);
+             WorldFunctions.addObjectWorldColumn(actHolding,actWorld,bestDropColumn);
              actHolding= "";
              plan.add("drop " + bestDropColumn);
           }
           
-//              System.out.println(plan);
           if (actWorld.equals(goalWorld) || plan.size()>30){
             break;
           }
-          
-          
-         
-         
-      
-   
-      
+
       }
       
       
