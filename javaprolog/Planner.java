@@ -43,7 +43,7 @@ public class Planner{
          }
          
          bestPickColumn = 0;
-         Heuristic bestPick = new Heuristic(100,100);
+         Heuristic bestPick = new Heuristic(100);
          
          for (int j=0;j<world.size();j++){
             //Loop over columns
@@ -87,7 +87,7 @@ public class Planner{
           
           
          bestDropColumn = 0;
-         Heuristic bestDrop = new Heuristic(100,100);
+         Heuristic bestDrop = new Heuristic(100);
          foundDrop = false;
          
          for (int j=0;j<world.size();j++){

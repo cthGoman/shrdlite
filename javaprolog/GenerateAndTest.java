@@ -1,31 +1,60 @@
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 import org.json.simple.*;
 
 public class GenerateAndTest{
 
-   public static JSONArray generateWorld(Goal goal, JSONArray world, JSONObject objectsIn){
+   public static JSONArray generateWorld(Goal goal, JSONArray world, String holding, JSONObject objectsIn, int worldIterations){
    JSONArray goalWorld = (JSONArray) WorldFunctions.copy(world);
+   ArrayList<String> grabbedObjects = new ArrayList();
    
    for(int i=0; i < goal.size(); i++){ //Loop over rows in goal
       
+      
       for(int j=0; j<goal.get(i).size(); j++){ //Loop over columns in goal
          
-         if (goal.get(i).get(j).get(0).equals("ontop")){ //If it is an ontop statement
             
-            for(int k=0; k<world.size(); k++){   //Loop over columns in the world
+          for(int k=0; k<goalWorld.size(); k++){   //Loop over columns in the world
             
-            //Check if the column contains any of the objects in the statement
-               if(WorldFunctions.worldColumnContains(world, goal.get(i).get(j).get(1), k) ||
-                  WorldFunctions.worldColumnContains(world, goal.get(i).get(j).get(2), k) ||
-                  goal.get(i).get(j).get(1).contains(""+k)){
+            //Check if the column in the world contains any of the objects in the statement
+             if(WorldFunctions.worldColumnContains(goalWorld, goal.get(i).get(j).get(1), k) ||
+                WorldFunctions.worldColumnContains(goalWorld, goal.get(i).get(j).get(2), k) ||
+                goal.get(i).get(j).get(1).contains(""+k) || goal.get(i).get(j).get(1).contains(""+k)){
+                  
+                while(((JSONArray) goalWorld.get(k)).size()>0){
+                   String tempObject = new String(WorldFunctions.getTopObjectWorldColumn(goalWorld, k));
+                   grabbedObjects.add(tempObject);
+                   WorldFunctions.removeTopObjectWorldColumn(goalWorld, k);                   
+                  
+                }
                
-               }
+             }
             
-            }
+          }
          
-         }
       }
+      
+   }
+   Heuristic goalWorldHeu = new Heuristic(100);
+   
+   for(int i=0;i<=worldIterations;i++){
+      ArrayList<String> tempGrabbedObjects = new ArrayList(grabbedObjects);
+      JSONArray tempGoalWorld = WorldFunctions.copy(goalWorld);
+      
+      for (int j=0; j<grabbedObjects.size(); j++){
+         Random generator = new Random();
+         int k = generator.nextInt(tempGrabbedObjects.size());
+         generator = new Random();
+         int c = generator.nextInt(goalWorld.size());
+         
+         WorldFunctions.addObjectWorldColumn(tempGrabbedObjects.get(k),tempGoalWorld, c);
+         tempGrabbedObjects.remove(k);
+         
+      }
+      Heuristic tempHeu = new Heuristic(world, holding, tempGoalWorld, "");
+      if(Constraints.isWorldAllowed(tempGoalWorld,"",objectsIn) && goal.fulfilled(tempGoalWorld) && goalWorldHeu.isBetter(tempHeu)){
+         goalWorld = WorldFunctions.copy(tempGoalWorld);         
+      }
+      
    }
    
    return goalWorld;

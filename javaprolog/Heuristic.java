@@ -10,9 +10,12 @@ public class Heuristic{
    private int misplaced;
    private int inTheWay;
    
-   public Heuristic(int costIn,int colCostIn){
-      cost=costIn;
-      colCost=colCostIn;
+   public Heuristic(int input){
+      cost=input;
+      colCost=input;
+      misplaced = input;
+      inTheWay=input;
+      
    }
 
 	public Heuristic(JSONArray world, String holding, JSONArray goalWorld, String goalHolding) {
