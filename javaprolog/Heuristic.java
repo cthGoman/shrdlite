@@ -39,7 +39,7 @@ public class Heuristic{
                      tempCost+=4; //If something below the object needs to be moved
                      misplaced++;
                   }
-                  else if(worldColTemp.size()>i){
+                  else if(goalColTemp.size()>i){
                      if(!worldColTemp.get(i).equals(goalColTemp.get(i))){
                         tempCost+=4; //If the object is in the right column but in the wrong place
                         misplaced++;
@@ -118,6 +118,9 @@ public class Heuristic{
       if ((compHeu.getCost()>cost) ||
       (compHeu.getCost()==cost && compHeu.getMisplaced()>misplaced) ||
       (compHeu.getCost()==cost && compHeu.getMisplaced()==misplaced && compHeu.getColCost()>colCost)){
+         return true;
+      }
+      else if ((compHeu.getCost()==cost && compHeu.getMisplaced()==misplaced && compHeu.getColCost()==colCost) && Math.random()>0.5){
          return true;
       }
       else{
