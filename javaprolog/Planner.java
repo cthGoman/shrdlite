@@ -152,7 +152,7 @@ public class Planner{
    
    
    public Plan solve2(Goal goal,JSONObject result){
-      //DFS
+      //DFS lowest cost first
       Stack stateStack = new Stack();
       Stack planStack = new Stack();
       Set<JSONArray> visitedWorlds = new HashSet<JSONArray>();

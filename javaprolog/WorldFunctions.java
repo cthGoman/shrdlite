@@ -99,7 +99,7 @@ public class WorldFunctions{
                
                
                //Calculate the cost for the current pick
-               Heuristic currPick = new Heuristic(world,"",strippedWorld,"");
+               Heuristic currPick = new Heuristic(strippedWorld,"",world,"");
       
                
                //Check if the current pick is the best
