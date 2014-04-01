@@ -1,4 +1,5 @@
-import org.json.simple.JSONArray;
+import org.json.simple.*;
+import java.util.*;
 
 public class WorldFunctions{
 
@@ -67,5 +68,50 @@ public class WorldFunctions{
       }
      }
      return "";
+   }
+   
+   public static JSONArray getUnvisitedWorld(JSONArray world, Set<JSONArray> visitedWorlds, JSONObject objectsIn){
+      
+      
+      JSONArray bestUnvisitedWorld = null;
+      Heuristic bestPick = new Heuristic(100);
+      
+      for (int j=0;j<world.size();j++){
+         //Loop over columns
+         
+         
+         
+         JSONArray tempWorld = WorldFunctions.copy(world);
+         String movedObject = "";
+         
+         if (((JSONArray) tempWorld.get(j)).size()>0) {
+            //If current column has an object
+            
+            //Pick up the top object in column j
+            movedObject= WorldFunctions.getTopObjectWorldColumn(tempWorld,j);
+            WorldFunctions.removeTopObjectWorldColumn(tempWorld,j);
+            
+            for (int i=0;i<world.size();i++){
+            
+               JSONArray strippedWorld = WorldFunctions.copy(tempWorld);
+               //Place the object in each column and test
+               WorldFunctions.addObjectWorldColumn(movedObject,strippedWorld,i);
+               
+               
+               //Calculate the cost for the current pick
+               Heuristic currPick = new Heuristic(world,"",strippedWorld,"");
+      
+               
+               //Check if the current pick is the best
+               if (currPick.isBetter(bestPick) && !visitedWorlds.contains(strippedWorld) && Constraints.isWorldAllowed(strippedWorld,"",objectsIn)){
+                  bestUnvisitedWorld=strippedWorld;
+                  bestPick=currPick;
+               }
+            }     
+         }
+         
+       }
+      
+      return bestUnvisitedWorld;
    }
 }

@@ -1,7 +1,7 @@
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
-import java.util.List;
+import java.util.*;
 import java.util.ArrayList;
 
 public class Planner{
@@ -18,7 +18,7 @@ public class Planner{
 	public Plan solve(Goal goal,JSONObject result){
       Plan plan=new Plan();
       
-      JSONArray goalWorld = GenerateAndTest.generateWorld(goal,world,holding,objects,100000);
+      JSONArray goalWorld = GenerateAndTest.generateWorld(goal,world,holding,objects,10000);
       String goalHolding = GenerateAndTest.generateGoalHolding(goal);
       result.put("output", ""+goalWorld);
 //       System.out.println("goalWorld " + goalWorld);
@@ -130,7 +130,13 @@ public class Planner{
              plan.add("drop " + bestDropColumn);
           }
           
-          if (actWorld.equals(goalWorld) || plan.size()>30){
+          if (actWorld.equals(goalWorld)){
+            break;
+          }
+          
+          if (plan.size()>30){
+            plan= new Plan();
+            result.put("output", ""+goalWorld+" Planning error");
             break;
           }
 
@@ -142,4 +148,41 @@ public class Planner{
       }
 		return plan;
 	}
+   
+   
+   
+   public Plan solve2(Goal goal,JSONObject result){
+      //DFS
+      Stack stateStack = new Stack();
+      Stack planStack = new Stack();
+      Set<JSONArray> visitedWorlds = new HashSet<JSONArray>();
+      boolean foundGoalstate = false;
+   
+		stateStack.push(world);
+		visitedWorlds.add(world);
+      
+
+		while(!stateStack.isEmpty() && !foundGoalstate) {
+         JSONArray state = (JSONArray) stateStack.peek();
+			JSONArray child  = (JSONArray) WorldFunctions.getUnvisitedWorld(state,visitedWorlds,objects);
+         
+         System.out.println("child " + child);
+			if(child != null) {
+            visitedWorlds.add(child);
+				stateStack.push(child);
+            foundGoalstate = goal.fulfilled(child);
+            System.out.println("child " + child);
+            // System.out.println("visitedWorlds " + visitedWorlds);
+			}
+			else {
+				stateStack.pop();
+			}
+		}
+      
+      JSONArray goalWorld = (JSONArray) stateStack.peek();
+      
+      System.out.println("goalWorld " + goalWorld);
+      
+      return new Plan();
+   }
 }

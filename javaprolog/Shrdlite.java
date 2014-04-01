@@ -67,7 +67,7 @@ public class Shrdlite {
             InterpreterStupid interpreter = new InterpreterStupid(world, holding, objects);
             for (Term tree : trees) {
 	            for (Goal goal : interpreter.interpret(tree)) {
-		            // goals.add(goal);
+		            goals.add(goal);
 	            }
             }
             
@@ -109,7 +109,7 @@ public class Shrdlite {
             row.add(new Statement("ONTOP","e","k"));
             
 
-            goals.add(new Goal(row));
+            // goals.add(new Goal(row));
             
 //             System.out.println(goals.get(0));
 //             System.out.println(goals.get(0).fulfiled(world));
@@ -127,7 +127,7 @@ public class Shrdlite {
                   holding="";
                }
                 Planner planner = new Planner(world, holding, objects);
-                Plan plan = planner.solve(goals.get(0),result);
+                Plan plan = planner.solve2(goals.get(0),result);
                 // int column = 0;
 //                 while (((JSONArray)world.get(column)).isEmpty()) column++;
 //                 //List plan = new ArrayList(); 
