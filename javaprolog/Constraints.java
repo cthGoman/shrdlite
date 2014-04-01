@@ -14,7 +14,19 @@ public class Constraints{
       for(int i=0; i<world.size(); i++){
          JSONArray column = (JSONArray) world.get(i);
          if(column.size()>1){
-            for(int j=0; j<column.size(); j++){
+            if(!isColumnAllowed(column, objects)){
+               return false;
+            }
+         }
+      } 
+      return true;
+		
+	}
+   
+   
+   public static boolean isColumnAllowed(ArrayList column, JSONObject objects){
+   
+      for(int j=0; j<column.size(); j++){
                String object = (String) column.get(j);
                JSONObject objectinfo = (JSONObject) objects.get(object);
                String form = (String) objectinfo.get("form");
@@ -76,12 +88,11 @@ public class Constraints{
                      }  
                   }
                }
-            }
-         }
-      } 
+      }
       return true;
-		
-	}
+          
+   
+   }
    
    public static boolean isGoalRowAllowed(List<Statement> goalRow, JSONObject objects){
       boolean isAllowed = true;

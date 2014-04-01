@@ -37,10 +37,52 @@ public class GenerateAndTest{
    Heuristic goalWorldHeu = new Heuristic(100);
    JSONArray strippedWorld = WorldFunctions.copy(goalWorld);
    
-//    System.out.println(grabbedObjects);
+//   System.out.println(grabbedObjects);
+//    if(!Constraints.isColumnAllowed(grabbedObjects, objectsIn)){
+//       System.out.println("inte okej");
+//    }
+  
+   ArrayList<String> tempGrabbedObjects = new ArrayList(grabbedObjects);  
+   ArrayList<ArrayList<String>> stackableObjects = new ArrayList<ArrayList<String>>(grabbedObjects.size());
+//   System.out.println(grabbedObjects.size());
+   
+// //    for(int i=0; i<grabbedObjects.size(); i++){
+// //       stackableObjects.add(new ArrayList<String>());
+// //       stackableObjects.get(i).add(tempGrabbedObjects.get(i));
+// //       ArrayList<String> tempColumn = new ArrayList();
+// //       tempColumn.add(tempGrabbedObjects.get(i));
+// //       for(int j=0; j<grabbedObjects.size(); j++){
+// //          if(i!=j){
+// //             tempColumn.add(tempGrabbedObjects.get(j));
+// //             if(Constraints.isColumnAllowed(tempColumn,objectsIn)){
+// //                stackableObjects.get(i).add(tempGrabbedObjects.get(j));
+// //             }
+// //             tempColumn.remove(tempGrabbedObjects.get(j));
+// //          }
+// //       }
+// //    }   
+// //    
+// //    ArrayList<ArrayList<ArrayList<String>>> possibleColumns = new ArrayList<ArrayList<ArrayList<String>>>(grabbedObjects.size());
+// //    for(int i=0; i<stackableObjects.size(); i++){
+// //       tempGrabbedObjects = new ArrayList(grabbedObjects);
+// //       possibleColumns.add(new ArrayList<ArrayList<String>>(1));
+// //       possibleColumns.get(i).add(new ArrayList<String>(1));
+// //       possibleColumns.get(i).get(1).add(stackableObjects.get(i).get(1));
+// //       tempGrabbedObjects.remove(i);
+// //       for (int j=1; j<stackableObjects.get(i).size(); j++){
+// //          System.out.println("Sista kolumn objektet: "+ possibleColumns.get(i).get(possibleColumns.get(i).size()-1));
+// //          for (int k=0; k<possibleColumns.get(i).get(possibleColumns.get(i).size()-1).size();k++){
+// //          
+// //          }
+// //       
+// //       }
+// //       
+// //    }
+   
+   
    
    for(int i=0;i<=worldIterations;i++){
-      ArrayList<String> tempGrabbedObjects = new ArrayList(grabbedObjects);
+      tempGrabbedObjects = new ArrayList(grabbedObjects);
       JSONArray tempGoalWorld = WorldFunctions.copy(strippedWorld);
       
       for (int j=0; j<grabbedObjects.size(); j++){
