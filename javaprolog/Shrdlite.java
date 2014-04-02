@@ -72,32 +72,7 @@ public class Shrdlite {
             }
             
             // System.out.println(goals);
-                
-            //Setup the goalWorld  
-//             String goalHolding = "";       
-//             JSONArray  goalWorld     = new JSONArray();
-//             
-//             for(int i=0;i<world.size();i++){
-//               
-//                JSONArray goalColTemp= new JSONArray();
-//                goalColTemp.addAll((JSONArray) world.get(i));
-//                goalWorld.add(goalColTemp);
-//     
-//             }
-//             
-//             ((JSONArray) goalWorld.get(1)).remove(1);
-//             ((JSONArray) goalWorld.get(4)).add("l");
-//             
-//             ((JSONArray) goalWorld.get(3)).remove(0);
-//             ((JSONArray) goalWorld.get(1)).add("k");
-//             
-//             ((JSONArray) goalWorld.get(0)).remove(0);
-//             ((JSONArray) goalWorld.get(1)).add("e");
-//             
-//             ((JSONArray) goalWorld.get(3)).remove(1);
-//             goalHolding = "f";            
-            
-            
+                         
 
             //Generate a test goal
             ArrayList<Statement> row= new ArrayList<Statement>();
@@ -111,8 +86,6 @@ public class Shrdlite {
 
             goals.add(new Goal(row));
             
-//             System.out.println(goals.get(0));
-//             System.out.println(goals.get(0).fulfiled(world));
             
             result.put("goals", goals);
 
@@ -128,21 +101,14 @@ public class Shrdlite {
                }
                 Planner planner = new Planner(world, holding, objects);
                 Plan plan = planner.solve2(goals.get(0),result);
-                // int column = 0;
-//                 while (((JSONArray)world.get(column)).isEmpty()) column++;
-//                 //List plan = new ArrayList(); 
-//                 plan.add("I pick up . . ."); 
-//                 plan.add("pick " + column);
-//                 plan.add(". . . and then I drop down"); 
-//                 plan.add("drop " + column);
-                 result.put("plan", plan);
+                result.put("plan", plan);
                  
 					 
-//                 if (plan.isEmpty()) {
-//                     result.put("output", "Planning error!");
-//                 } else {
-//                     result.put("output", "Success!");
-//                 }
+                if (plan.isEmpty()) {
+                    result.put("output", "Planning error!");
+                } else {
+                    result.put("output", "Success!");
+                }
             }
         }
 

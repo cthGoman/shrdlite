@@ -21,9 +21,7 @@ public class Planner{
       JSONArray goalWorld = GenerateAndTest.generateWorld(goal,world,holding,objects,10000);
       String goalHolding = GenerateAndTest.generateGoalHolding(goal);
       result.put("output", ""+goalWorld);
-//       System.out.println("goalWorld " + goalWorld);
-//       System.out.println("goalHolding " + goalHolding);
-//       
+     
 
       String actHolding = holding;
       JSONArray actWorld = WorldFunctions.copy(world);
@@ -193,24 +191,17 @@ public class Planner{
          JSONArray state = (JSONArray) stateStack.peek();
 			JSONArray child  = (JSONArray) WorldFunctions.getBestUnvisitedWorld(state,goalWorld,visitedWorlds,objects,pickFrom,dropIn);
          
-         // System.out.println("child " + child);
 			if(child != null) {
             visitedWorlds.add(child);
 				stateStack.push(child);
             foundGoalstate = goal.fulfilled(child);
-            // System.out.println("child " + child);
             plan.add("pick " + pickFrom[0]);
             plan.add("drop " + dropIn[0]);
-            // System.out.println("visitedWorlds " + visitedWorlds);
 			}
 			else {
 				stateStack.pop();
 			}
 		}
-      
-      // goalWorld = (JSONArray) stateStack.peek();
-      
-      // System.out.println("goalWorld " + goalWorld);
       
       return plan;
    }
