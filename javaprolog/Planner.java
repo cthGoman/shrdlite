@@ -184,7 +184,7 @@ public class Planner{
       foundGoalstate = false;
       int[] pickFrom = {0};
       int[] dropIn = {0};
-   
+      
 		stateStack.push(world);
 		visitedWorlds.add(world);
       
@@ -198,7 +198,7 @@ public class Planner{
             visitedWorlds.add(child);
 				stateStack.push(child);
             foundGoalstate = goal.fulfilled(child);
-            System.out.println("child " + child);
+            // System.out.println("child " + child);
             plan.add("pick " + pickFrom[0]);
             plan.add("drop " + dropIn[0]);
             // System.out.println("visitedWorlds " + visitedWorlds);
@@ -210,7 +210,7 @@ public class Planner{
       
       // goalWorld = (JSONArray) stateStack.peek();
       
-      System.out.println("goalWorld " + goalWorld);
+      // System.out.println("goalWorld " + goalWorld);
       
       return plan;
    }

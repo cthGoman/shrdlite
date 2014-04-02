@@ -103,10 +103,10 @@ public class Shrdlite {
             ArrayList<Statement> row= new ArrayList<Statement>();
             
 
-            row.add(new Statement("ONTOP","l","floor-4"));
-            row.add(new Statement("ONTOP","g","floor-2"));
-            row.add(new Statement("ONTOP","k","g"));
-            row.add(new Statement("ONTOP","e","k"));
+            row.add(new Statement("ONTOP","g","k"));
+            row.add(new Statement("above","e","g"));
+            row.add(new Statement("above","l","g"));
+            
             
 
             goals.add(new Goal(row));
@@ -136,6 +136,7 @@ public class Shrdlite {
 //                 plan.add(". . . and then I drop down"); 
 //                 plan.add("drop " + column);
                  result.put("plan", plan);
+                 
 					 
 //                 if (plan.isEmpty()) {
 //                     result.put("output", "Planning error!");
