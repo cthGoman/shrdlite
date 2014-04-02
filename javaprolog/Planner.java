@@ -152,11 +152,38 @@ public class Planner{
    
    
    public Plan solve2(Goal goal,JSONObject result){
+      Plan plan = new Plan();
+      JSONArray goalWorld = new JSONArray();
+      // BFS uses Queue data structure
+      
+		Queue stateQueue = new LinkedList();
+		stateQueue.add(world);
+      Set<JSONArray> visitedWorlds = new HashSet<JSONArray>();
+      boolean foundGoalstate = false;
+		
+		visitedWorlds.add(world);
+      
+		while(!stateQueue.isEmpty() && !foundGoalstate) {
+         JSONArray state = (JSONArray) stateQueue.remove();
+			JSONArray child=null;
+			while((child=WorldFunctions.getUnvisitedWorld(state,visitedWorlds,objects))!=null) {
+				visitedWorlds.add(child);
+				stateQueue.add(child);
+            foundGoalstate = goal.fulfilled(child);
+            if (foundGoalstate)
+               goalWorld = child;
+			}
+		}
+      
+      
+      
       //DFS lowest cost first
       Stack stateStack = new Stack();
       Stack planStack = new Stack();
-      Set<JSONArray> visitedWorlds = new HashSet<JSONArray>();
-      boolean foundGoalstate = false;
+      visitedWorlds = new HashSet<JSONArray>();
+      foundGoalstate = false;
+      int[] pickFrom = {0};
+      int[] dropIn = {0};
    
 		stateStack.push(world);
 		visitedWorlds.add(world);
@@ -164,14 +191,16 @@ public class Planner{
 
 		while(!stateStack.isEmpty() && !foundGoalstate) {
          JSONArray state = (JSONArray) stateStack.peek();
-			JSONArray child  = (JSONArray) WorldFunctions.getUnvisitedWorld(state,visitedWorlds,objects);
+			JSONArray child  = (JSONArray) WorldFunctions.getBestUnvisitedWorld(state,goalWorld,visitedWorlds,objects,pickFrom,dropIn);
          
-         System.out.println("child " + child);
+         // System.out.println("child " + child);
 			if(child != null) {
             visitedWorlds.add(child);
 				stateStack.push(child);
             foundGoalstate = goal.fulfilled(child);
-            System.out.println("child " + child);
+            // System.out.println("child " + child);
+            plan.add("pick " + pickFrom[0]);
+            plan.add("drop " + dropIn[0]);
             // System.out.println("visitedWorlds " + visitedWorlds);
 			}
 			else {
@@ -179,10 +208,10 @@ public class Planner{
 			}
 		}
       
-      JSONArray goalWorld = (JSONArray) stateStack.peek();
+      // goalWorld = (JSONArray) stateStack.peek();
       
-      System.out.println("goalWorld " + goalWorld);
-      
-      return new Plan();
+      // System.out.println("goalWorld " + goalWorld);
+      result.put("output", ""+goalWorld);
+      return plan;
    }
 }
