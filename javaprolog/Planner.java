@@ -176,7 +176,7 @@ public class Planner{
 		}
       
       
-      
+      result.put("output", ""+goalWorld);
       //DFS lowest cost first
       Stack stateStack = new Stack();
       Stack planStack = new Stack();
@@ -198,7 +198,7 @@ public class Planner{
             visitedWorlds.add(child);
 				stateStack.push(child);
             foundGoalstate = goal.fulfilled(child);
-            // System.out.println("child " + child);
+            System.out.println("child " + child);
             plan.add("pick " + pickFrom[0]);
             plan.add("drop " + dropIn[0]);
             // System.out.println("visitedWorlds " + visitedWorlds);
@@ -210,8 +210,8 @@ public class Planner{
       
       // goalWorld = (JSONArray) stateStack.peek();
       
-      // System.out.println("goalWorld " + goalWorld);
-      result.put("output", ""+goalWorld);
+      System.out.println("goalWorld " + goalWorld);
+      
       return plan;
    }
 }
