@@ -71,7 +71,7 @@ public class Heuristic{
                    else{
                      tempCost += 2; //If the object is in the wrong column but goalHolding is not empty
                      misplaced ++;
-                     if(((JSONArray) goalWorld.get(j)).size()>=i){
+                     if(((JSONArray) goalWorld.get(j)).size()>i){
                         inTheWay++; //If the object is in the way of another object
                      }
                    }   
@@ -79,7 +79,7 @@ public class Heuristic{
               else{
                   tempCost+=2; //If the object is in the wrong column
                   misplaced++;
-                  if(((JSONArray) goalWorld.get(j)).size()>=i){
+                  if(((JSONArray) goalWorld.get(j)).size()>i){
                         inTheWay++; //If the object is in the way of another object
                   }
               }
