@@ -21,4 +21,7 @@ public class Tree{
 			}        
 		}
 	}
+	public Node getMasterNode(){
+		return masterNode;
+	}
 }
