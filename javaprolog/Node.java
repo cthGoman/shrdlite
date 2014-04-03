@@ -30,6 +30,9 @@ public class Node{
 		}
 		return children.get(position);
 	}
+	public int getChildren(){
+		return children.size();
+	}
 	public String getValue(){
 		return value;
 	}
