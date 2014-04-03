@@ -34,7 +34,18 @@ public class InterpreterStupid{
 		g.addStatement(8,new Statement("ontop","k","floor-4"));
 		g.addStatement(9,new Statement("ontop","e","k"));
 		g.addStatement(9,new Statement("ontop","k","floor-5"));
-		gl.add(g);
+		
+      Goal g2 = new Goal();
+      g2.addStatement(0,new Statement("ontop","l","floor-2"));
+      g2.addStatement(0,new Statement("ontop","k","floor-3"));
+      g2.addStatement(0,new Statement("ontop","m","floor-4"));
+      
+      g2.addStatement(1,new Statement("ontop","l","floor-0"));
+      g2.addStatement(1,new Statement("ontop","k","floor-2"));
+      g2.addStatement(1,new Statement("ontop","m","floor-4"));      
+      gl.add(g2);
+      
+      
 		return gl;
 	}
 }

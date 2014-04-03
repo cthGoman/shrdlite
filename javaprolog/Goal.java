@@ -22,7 +22,7 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
 		this.add(newRow);
 	}
    
-   public boolean fulfilled(JSONArray world){
+   public boolean fulfilled(JSONArray world, String holding){
       
       for (ArrayList<Statement> listOfStatement : this){//Loop over all rows 
          boolean tempFulfilled = true;
@@ -82,7 +82,18 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
                  tempFulfilled = false; 
                }
             }
-            
+            if ("hold".equals(statement.get(0).toLowerCase())){
+               
+               if (!holding.equals(statement.get(1))){
+                 tempFulfilled = false; 
+               }
+            }
+            if ("drop".equals(statement.get(0).toLowerCase())){
+               
+               if (holding.equals(statement.get(1))){
+                 tempFulfilled = false; 
+               }
+            }                
          }
          if (tempFulfilled){
             return tempFulfilled;
