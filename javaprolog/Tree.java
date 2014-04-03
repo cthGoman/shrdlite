@@ -5,7 +5,7 @@ public class Tree{
 		Searcher sc = new Searcher(tree);
 		sc.useDelimiter("(),");
 		masterNode = new Node(sc.next(),null);
-		private Node currentNode = masterNode;
+		Node currentNode = masterNode;
 		while(sc.hasNext()){
 			String s = sc.next();
 			if(s.equals("(")){

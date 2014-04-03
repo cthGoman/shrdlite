@@ -22,7 +22,7 @@ DebugFile.start();
 	}
 	public List<Goal> interpret(Term input){
 		Tree tree = new Tree(input.toString().replace("(-)","-"));
-		tree.fixInitialSide(objects,worldList);
+//		tree.fixInitialSide(objects,worldList);
 		
 		
 		
