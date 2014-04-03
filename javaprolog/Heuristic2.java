@@ -212,7 +212,7 @@ public class Heuristic2{
       return inTheWay;
    }
    
-   public boolean isBetter(Heuristic compHeu){
+   public boolean isBetter(Heuristic2 compHeu){
    
       if ((compHeu.getCost()>cost) ||
       (compHeu.getCost()==cost && compHeu.getMisplaced()>misplaced) ||

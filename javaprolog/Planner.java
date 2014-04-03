@@ -273,15 +273,15 @@ public class Planner{
    
    
    
-   public Plan solve2(Goal goal,JSONObject result){
+   public Plan solve3(Goal goal,JSONObject result){
       Plan plan = new Plan();
       
       
       //DFS lowest cost first
       Stack stateStack = new Stack();
       Stack planStack = new Stack();
-      visitedWorlds = new HashSet<JSONArray>();
-      foundGoalstate = false;
+      Set visitedWorlds = new HashSet<JSONArray>();
+      boolean foundGoalstate = false;
       int[] pickFrom = {0};
       int[] dropIn = {0};
       

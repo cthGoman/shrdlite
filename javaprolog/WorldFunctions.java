@@ -158,7 +158,7 @@ public class WorldFunctions{
       
       
       JSONArray bestUnvisitedWorld = null;
-      Heuristic bestPick = new Heuristic(100);
+      Heuristic2 bestPick = new Heuristic2(100);
       
       for (int j=0;j<world.size();j++){
          //Loop over columns
@@ -183,7 +183,7 @@ public class WorldFunctions{
                
                
                //Calculate the cost for the current pick
-               Heuristic currPick = new Heuristic(strippedWorld,goal);
+               Heuristic2 currPick = new Heuristic2(strippedWorld,"",goal,objectsIn);
       
                
                //Check if the current pick is the best

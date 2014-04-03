@@ -82,9 +82,12 @@ public class Shrdlite {
             ArrayList<Statement> row= new ArrayList<Statement>();
             
 
-            row.add(new Statement("ONTOP","g","k"));
-            row.add(new Statement("above","e","g"));
-            row.add(new Statement("above","l","g"));
+            row.add(new Statement("ONTOP","m","g"));
+            row.add(new Statement("ONTOP","f","m"));
+            
+            
+//             row.add(new Statement("above","e","g"));
+//             row.add(new Statement("above","l","g"));
             
             
 
@@ -108,7 +111,7 @@ public class Shrdlite {
                 if (goals.get(0).get(0).get(0).equals("hold")){
                   plan = planner.solve(goals.get(0),result);
                 }else{
-                  plan = planner.solve2(goals.get(0),result);
+                  plan = planner.solve3(goals.get(0),result);
                 }
                 
                 result.put("plan", plan);
