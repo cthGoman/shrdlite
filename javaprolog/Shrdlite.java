@@ -22,6 +22,10 @@ import org.json.simple.JSONArray;
 public class Shrdlite {
 
 	public static void main(String[] args) throws PrologException, ParseException, IOException {
+         long startTime = System.currentTimeMillis();
+
+         
+        
         JSONObject jsinput   = (JSONObject) JSONValue.parse(readFromStdin());
         JSONArray  utterance = (JSONArray)  jsinput.get("utterance");
         JSONArray  world     = (JSONArray)  jsinput.get("world");
@@ -113,12 +117,17 @@ public class Shrdlite {
                 if (plan.isEmpty()) {
                     result.put("output", "Planning error!");
                 } else {
-                    result.put("output", "Success!");
+                    long endTime   = System.currentTimeMillis();
+                    long totalTime = endTime - startTime;
+                    result.put("output", "Success! " + totalTime);
                 }
             }
         }
 
         System.out.print(result);
+        
+        
+        System.exit(0);
         
     }
 

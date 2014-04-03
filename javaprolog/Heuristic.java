@@ -158,7 +158,7 @@ public class Heuristic{
       (compHeu.getCost()==cost && compHeu.getMisplaced()==misplaced && compHeu.getInTheWay()==inTheWay && compHeu.getColCost()>colCost)){
          return true;
       }
-      else if (      (compHeu.getCost()==cost && compHeu.getMisplaced()==misplaced && compHeu.getInTheWay()==inTheWay && compHeu.getColCost()==colCost) && Math.random()>0.5){
+      else if (      (compHeu.getCost()==cost && compHeu.getMisplaced()==misplaced && compHeu.getInTheWay()==inTheWay && compHeu.getColCost()==colCost) && Math.random()>1.1){
          return true;
       }
       else{
