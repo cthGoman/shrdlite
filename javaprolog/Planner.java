@@ -177,7 +177,7 @@ public class Planner{
 			while((child=WorldFunctions.getUnvisitedWorld(state,visitedWorlds,objects))!=null) {
 				visitedWorlds.add(child);
 				stateQueue.add(child);
-            foundGoalstate = goal.fulfilled(child);
+            foundGoalstate = goal.fulfilled(child,"");
             if (foundGoalstate)
                goalWorld = child;
 			}
@@ -246,7 +246,7 @@ public class Planner{
 			if(child != null) {
             visitedWorlds.add(child);
 				stateStack.push(child);
-            foundGoalstate = goal.fulfilled(child);
+            foundGoalstate = goal.fulfilled(child,"");
             plan.add("pick " + pickFrom[0]);
             plan.add("drop " + dropIn[0]);
 			}
