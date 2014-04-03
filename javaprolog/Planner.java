@@ -184,8 +184,6 @@ public class Planner{
 		}
       
       
-      result.put("output", ""+goalWorld);
-      
       if (!holding.isEmpty()){
          int bestDropColumn = 0;
          Heuristic bestDrop = new Heuristic(100);
