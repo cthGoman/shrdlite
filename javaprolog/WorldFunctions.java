@@ -40,6 +40,9 @@ public class WorldFunctions{
       if (((JSONArray) world.get(k)).contains(object)){
          return k;
       }
+      else if(object.contains(String.valueOf(k))){
+      
+      }
      }
      return -1;
    }
