@@ -100,7 +100,13 @@ public class Shrdlite {
                   holding="";
                }
                 Planner planner = new Planner(world, holding, objects);
-                Plan plan = planner.solve2(goals.get(0),result);
+                Plan plan = null;
+                if (goals.get(0).get(0).get(0).equals("hold")){
+                  plan = planner.solve(goals.get(0),result);
+                }else{
+                  plan = planner.solve2(goals.get(0),result);
+                }
+                
                 result.put("plan", plan);
                  
 					 
