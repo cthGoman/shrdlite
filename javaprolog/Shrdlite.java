@@ -22,6 +22,10 @@ import org.json.simple.JSONArray;
 public class Shrdlite {
 
 	public static void main(String[] args) throws PrologException, ParseException, IOException {
+         long startTime = System.currentTimeMillis();
+
+         
+        
         JSONObject jsinput   = (JSONObject) JSONValue.parse(readFromStdin());
         JSONArray  utterance = (JSONArray)  jsinput.get("utterance");
         JSONArray  world     = (JSONArray)  jsinput.get("world");
@@ -100,19 +104,30 @@ public class Shrdlite {
                   holding="";
                }
                 Planner planner = new Planner(world, holding, objects);
-                Plan plan = planner.solve2(goals.get(0),result);
+                Plan plan = null;
+                if (goals.get(0).get(0).get(0).equals("hold")){
+                  plan = planner.solve(goals.get(0),result);
+                }else{
+                  plan = planner.solve2(goals.get(0),result);
+                }
+                
                 result.put("plan", plan);
                  
 					 
                 if (plan.isEmpty()) {
                     result.put("output", "Planning error!");
                 } else {
-                    result.put("output", "Success!");
+                    long endTime   = System.currentTimeMillis();
+                    long totalTime = endTime - startTime;
+                    result.put("output", "Success! " + totalTime);
                 }
             }
         }
 
         System.out.print(result);
+        
+        
+        System.exit(0);
         
     }
 
