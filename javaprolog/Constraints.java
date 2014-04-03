@@ -24,7 +24,7 @@ public class Constraints{
 	}
    
    
-   public static boolean isColumnAllowed(ArrayList column, JSONObject objects){
+   public static boolean isColumnAllowed(JSONArray column, JSONObject objects){
    
       for(int j=0; j<column.size(); j++){
                String object = (String) column.get(j);

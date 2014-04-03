@@ -37,7 +37,7 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
                   tempFulfilled = false;
                }
             }
-            if ("above".equals(statement.get(0).toLowerCase())){
+            else if ("above".equals(statement.get(0).toLowerCase())){
                int column = WorldFunctions.getColumnNumber(world,statement.get(1));
                int place = WorldFunctions.getPlaceInColumn(world,statement.get(1));
                
@@ -47,7 +47,7 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
                  tempFulfilled = false; 
                }
             }
-            if ("below".equals(statement.get(0).toLowerCase())){
+            else if ("below".equals(statement.get(0).toLowerCase())){
                int column = WorldFunctions.getColumnNumber(world,statement.get(1));
                int place = WorldFunctions.getPlaceInColumn(world,statement.get(1));
                
@@ -57,7 +57,7 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
                  tempFulfilled = false; 
                }
             }
-            if ("beside".equals(statement.get(0).toLowerCase())){
+            else if ("beside".equals(statement.get(0).toLowerCase())){
                int column = WorldFunctions.getColumnNumber(world,statement.get(1));
                             
                int secondColumn=WorldFunctions.getColumnNumber(world,statement.get(2));
@@ -66,14 +66,14 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
                  tempFulfilled = false; 
                }
             }
-            if ("leftof".equals(statement.get(0).toLowerCase())){
+            else if ("leftof".equals(statement.get(0).toLowerCase())){
                int column = WorldFunctions.getColumnNumber(world,statement.get(1));             
                int secondColumn=WorldFunctions.getColumnNumber(world,statement.get(2));
                if (column>secondColumn || column==-1 || secondColumn==-1){
                  tempFulfilled = false; 
                }
             }
-            if ("rightof".equals(statement.get(0).toLowerCase())){
+            else if ("rightof".equals(statement.get(0).toLowerCase())){
                int column = WorldFunctions.getColumnNumber(world,statement.get(1));
                             
                int secondColumn=WorldFunctions.getColumnNumber(world,statement.get(2));
@@ -82,13 +82,13 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
                  tempFulfilled = false; 
                }
             }
-            if ("hold".equals(statement.get(0).toLowerCase())){
+            else if ("hold".equals(statement.get(0).toLowerCase())){
                
                if (!holding.equals(statement.get(1))){
                  tempFulfilled = false; 
                }
             }
-            if ("drop".equals(statement.get(0).toLowerCase())){
+            else if ("drop".equals(statement.get(0).toLowerCase())){
                
                if (holding.equals(statement.get(1))){
                  tempFulfilled = false; 
