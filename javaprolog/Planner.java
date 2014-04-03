@@ -154,8 +154,18 @@ public class Planner{
    public Plan solve2(Goal goal,JSONObject result){
       Plan plan = new Plan();
       JSONArray goalWorld = new JSONArray();
-      // BFS uses Queue data structure
+      if (!holding.isEmpty()){
+         for (int j=0;j<world.size();j++){
+            //Loop over columns
+            
+            JSONArray tempWorld = WorldFunctions.copy(world);
+            WorldFunctions.addObjectWorldColumn(holding,tempWorld,4);
+            if (Constraints.isWorldAllowed(tempWorld,"",objects))
+              world=tempWorld;
+          }
+      }
       
+      // BFS uses Queue data structure     
 		Queue stateQueue = new LinkedList();
 		stateQueue.add(world);
       Set<JSONArray> visitedWorlds = new HashSet<JSONArray>();
@@ -177,6 +187,50 @@ public class Planner{
       
       
       result.put("output", ""+goalWorld);
+      
+      if (!holding.isEmpty()){
+         int bestDropColumn = 0;
+         Heuristic bestDrop = new Heuristic(100);
+         boolean foundDrop = false;
+         
+         for (int j=0;j<world.size();j++){
+            //Loop over columns
+            
+            
+            //Check which column to drop
+            String tempHolding = holding;
+            JSONArray tempWorld = WorldFunctions.copy(world);
+
+            
+            if (!tempHolding.isEmpty()) {
+               //If an object is hold
+               
+               
+               WorldFunctions.addObjectWorldColumn(tempHolding,tempWorld,j);
+               tempHolding= "";
+               
+               Heuristic currDrop = new Heuristic(tempWorld,tempHolding,goalWorld,"");
+
+               
+               if (currDrop.isBetter(bestDrop) && Constraints.isWorldAllowed(tempWorld,tempHolding,objects)){
+                  bestDropColumn=j;
+                  bestDrop=currDrop;
+                  foundDrop = true;
+               }
+                 
+            }
+            
+          }
+          if (foundDrop){
+            plan.add("drop " + bestDropColumn);
+          }
+          else{
+            plan.add("planning error.");
+            return plan;
+          }
+          
+      }
+      
       //DFS lowest cost first
       Stack stateStack = new Stack();
       Stack planStack = new Stack();
