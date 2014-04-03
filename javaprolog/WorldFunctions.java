@@ -74,13 +74,10 @@ public class WorldFunctions{
       
       
       JSONArray bestUnvisitedWorld = null;
-      Heuristic bestPick = new Heuristic(100);
       
       for (int j=0;j<world.size();j++){
          //Loop over columns
-         
-         
-         
+
          JSONArray tempWorld = WorldFunctions.copy(world);
          String movedObject = "";
          
@@ -96,16 +93,11 @@ public class WorldFunctions{
                JSONArray strippedWorld = WorldFunctions.copy(tempWorld);
                //Place the object in each column and test
                WorldFunctions.addObjectWorldColumn(movedObject,strippedWorld,i);
-               
-               
-               //Calculate the cost for the current pick
-               Heuristic currPick = new Heuristic(strippedWorld,"",world,"");
       
                
                //Check if the current pick is the best
                if (!visitedWorlds.contains(strippedWorld) && Constraints.isWorldAllowed(strippedWorld,"",objectsIn)){
                   bestUnvisitedWorld=strippedWorld;
-                  bestPick=currPick;
                }
             }     
          }
