@@ -104,7 +104,7 @@ public class GenerateAndTest{
 //       System.out.println("heuristic " +tempHeu.isBetter(goalWorldHeu));
       
       
-      if(Constraints.isWorldAllowed(tempGoalWorld,"",objectsIn) && goal.fulfilled(tempGoalWorld) && tempHeu.isBetter(goalWorldHeu)){
+      if(Constraints.isWorldAllowed(tempGoalWorld,"",objectsIn) && goal.fulfilled(tempGoalWorld,"") && tempHeu.isBetter(goalWorldHeu)){
 //          System.out.println("kanon!");
          goalWorld = WorldFunctions.copy(tempGoalWorld);
          goalWorldHeu=tempHeu;       

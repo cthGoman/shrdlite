@@ -20,9 +20,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 
 public class Shrdlite {
-
+   public static long startTime=0;
 	public static void main(String[] args) throws PrologException, ParseException, IOException {
-         long startTime = System.currentTimeMillis();
+         startTime = System.currentTimeMillis();
 
          
         

@@ -171,6 +171,10 @@ public class Planner{
 		
 		visitedWorlds.add(world);
       
+      long endTime   = System.currentTimeMillis();
+      long totalTime = endTime - Shrdlite.startTime;
+      System.out.println("before BFS " + totalTime);
+      
 		while(!stateQueue.isEmpty() && !foundGoalstate) {
          JSONArray state = (JSONArray) stateQueue.remove();
 			JSONArray child=null;
@@ -182,6 +186,8 @@ public class Planner{
                goalWorld = child;
 			}
 		}
+      
+      System.out.println("number of visited worlds " + visitedWorlds.size());
       
       
       if (!holding.isEmpty()){
@@ -227,6 +233,9 @@ public class Planner{
           
       }
       
+      endTime   = System.currentTimeMillis();
+      totalTime = endTime - Shrdlite.startTime;
+      System.out.println("before DFS after BFS " + totalTime);
       //DFS lowest cost first
       Stack stateStack = new Stack();
       Stack planStack = new Stack();
@@ -242,6 +251,47 @@ public class Planner{
 		while(!stateStack.isEmpty() && !foundGoalstate) {
          JSONArray state = (JSONArray) stateStack.peek();
 			JSONArray child  = (JSONArray) WorldFunctions.getBestUnvisitedWorld(state,goalWorld,visitedWorlds,objects,pickFrom,dropIn);
+         
+			if(child != null) {
+            visitedWorlds.add(child);
+				stateStack.push(child);
+            foundGoalstate = goal.fulfilled(child,"");
+            plan.add("pick " + pickFrom[0]);
+            plan.add("drop " + dropIn[0]);
+			}
+			else {
+				stateStack.pop();
+			}
+		}
+      
+      endTime   = System.currentTimeMillis();
+      totalTime = endTime - Shrdlite.startTime;
+      System.out.println("after DFS " + totalTime);
+      
+      return plan;
+   }
+   
+   
+   
+   public Plan solve2(Goal goal,JSONObject result){
+      Plan plan = new Plan();
+      
+      
+      //DFS lowest cost first
+      Stack stateStack = new Stack();
+      Stack planStack = new Stack();
+      visitedWorlds = new HashSet<JSONArray>();
+      foundGoalstate = false;
+      int[] pickFrom = {0};
+      int[] dropIn = {0};
+      
+		stateStack.push(world);
+		visitedWorlds.add(world);
+      
+
+		while(!stateStack.isEmpty() && !foundGoalstate) {
+         JSONArray state = (JSONArray) stateStack.peek();
+			JSONArray child  = (JSONArray) WorldFunctions.getBestUnvisitedWorld2(state,goal,visitedWorlds,objects,pickFrom,dropIn);
          
 			if(child != null) {
             visitedWorlds.add(child);
