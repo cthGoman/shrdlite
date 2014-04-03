@@ -19,10 +19,13 @@ DebugFile.start();
 				worldList.get(i).add((String)column.get(j));
 			}
 		}
+		ArrayList<String> hold = new ArrayList<String>();
+		hold.add(holding);
+		worldList.add(hold);
 	}
 	public List<Goal> interpret(Term input){
 		Tree tree = new Tree(input.toString().replace("(-)","-"));
-//		tree.fixInitialSide(objects,worldList);
+		InitialState.getInitialObjects(tree.getMasterNode(),objects,worldList);
 		
 		
 		
