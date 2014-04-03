@@ -47,7 +47,41 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
                  tempFulfilled = false; 
                }
             }
-            
+            if ("below".equals(statement.get(0).toLowerCase())){
+               int column = WorldFunctions.getColumnNumber(world,statement.get(1));
+               int place = WorldFunctions.getPlaceInColumn(world,statement.get(1));
+               
+               int placeSecondObject=WorldFunctions.getPlaceInColumn(world,statement.get(2));
+               
+               if (placeSecondObject<0 || place>=placeSecondObject){
+                 tempFulfilled = false; 
+               }
+            }
+            if ("beside".equals(statement.get(0).toLowerCase())){
+               int column = WorldFunctions.getColumnNumber(world,statement.get(1));
+                            
+               int secondColumn=WorldFunctions.getColumnNumber(world,statement.get(2));
+               
+               if (column!=(secondColumn-1) && column!=(secondColumn+1) || column==-1 || secondColumn==-1){
+                 tempFulfilled = false; 
+               }
+            }
+            if ("leftof".equals(statement.get(0).toLowerCase())){
+               int column = WorldFunctions.getColumnNumber(world,statement.get(1));             
+               int secondColumn=WorldFunctions.getColumnNumber(world,statement.get(2));
+               if (column>secondColumn || column==-1 || secondColumn==-1){
+                 tempFulfilled = false; 
+               }
+            }
+            if ("rightof".equals(statement.get(0).toLowerCase())){
+               int column = WorldFunctions.getColumnNumber(world,statement.get(1));
+                            
+               int secondColumn=WorldFunctions.getColumnNumber(world,statement.get(2));
+               
+               if (column<secondColumn || column==-1 || secondColumn==-1){
+                 tempFulfilled = false; 
+               }
+            }
             
          }
          if (tempFulfilled){
