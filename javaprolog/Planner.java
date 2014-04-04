@@ -157,7 +157,7 @@ public class Planner{
             //Loop over columns
             
             JSONArray tempWorld = WorldFunctions.copy(world);
-            WorldFunctions.addObjectWorldColumn(holding,tempWorld,4);
+            WorldFunctions.addObjectWorldColumn(holding,tempWorld,j);
             if (Constraints.isWorldAllowed(tempWorld,"",objects))
               world=tempWorld;
           }
