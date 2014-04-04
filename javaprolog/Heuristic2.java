@@ -27,6 +27,7 @@ public class Heuristic2{
       
     for (ArrayList<Statement> listOfStatement : goal){//Loop over all rows 
          int rowCost = 0;
+         int rowInTheWay = 0;
          
          for (Statement statement : listOfStatement) {//Loop over every statement in row
          
@@ -39,6 +40,9 @@ public class Heuristic2{
                if(column1==column2){//in the same column
                   if (!WorldFunctions.getObjectBelow(world,statement.get(1)).equals(statement.get(2))){//But not ontop
                      rowCost += 4;
+                     rowInTheWay += (Math.abs(place1-place2)-1); //add the objects between the objects in the statement as in the way
+                     rowInTheWay += ((JSONArray)world.get(column1)).size()-1-Math.max(place1,place2); //add the objects above the top statement object as in the way
+                     
                   }
                } 
                else if(column1==-1){//object 1 is in holding
@@ -54,6 +58,8 @@ public class Heuristic2{
                }
                else{//objects are in different columns
                   rowCost += 2;
+                  rowInTheWay += ((JSONArray)world.get(column1)).size()-1-place1; //add the objects above the statement objects as in the way
+                  rowInTheWay += ((JSONArray)world.get(column2)).size()-1-place2;
                }
             }
             else if ("above".equals(statement.get(0).toLowerCase())){
@@ -65,6 +71,8 @@ public class Heuristic2{
                if(column1==column2){//in the same column
                   if (place1<place2){//But object 1 is below
                      rowCost += 4;
+                     rowInTheWay += (Math.abs(place1-place2)-1); //add the objects between the objects in the statement as in the way
+                     rowInTheWay += ((JSONArray)world.get(column1)).size()-1-Math.max(place1,place2); //add the objects above the top statement object as in the way
                   }
                } 
                else if(column1==-1){//object 1 is in holding
@@ -83,6 +91,7 @@ public class Heuristic2{
                }
                else{//objects are in different columns
                   rowCost += 2;
+                  rowInTheWay += ((JSONArray)world.get(column1)).size()-1-place1; //add the objects above the object 1 as in the way
                }
             }
             else if ("below".equals(statement.get(0).toLowerCase())){
@@ -95,6 +104,10 @@ public class Heuristic2{
                   if (place2<place1){//But object 2 is below
                      rowCost += 4;
                   }
+                  rowInTheWay += (Math.abs(place1-place2)-1); //add the objects between the objects in the statement as in the way
+                  
+                  rowInTheWay += ((JSONArray)world.get(column1)).size()-1-Math.max(place1,place2); //add the objects above the top statement object as in the way
+            
                } 
                else if(column2==-1){//object 2 is in holding
                   ((JSONArray)world.get(column1)).add(statement.get(2));
@@ -112,6 +125,7 @@ public class Heuristic2{
                }
                else{//objects are in different columns
                   rowCost += 2;
+                  rowInTheWay += ((JSONArray)world.get(column2)).size()-1-place2; //add the objects above the object 2 as in the way
                }
             }
             else if ("beside".equals(statement.get(0).toLowerCase())){
@@ -188,8 +202,9 @@ public class Heuristic2{
                
             }
          }
-         if(rowCost<cost){
+         if(rowCost<cost || (rowCost==cost && rowInTheWay < inTheWay)){
             cost=rowCost;
+            inTheWay = rowInTheWay;
          }
          
     }
