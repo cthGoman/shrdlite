@@ -298,7 +298,7 @@ public class Planner{
 		visitedWorlds.add(world);
       JSONArray state = world;
 
-		while(!stateStack.isEmpty() && (!foundGoalstate || numberOfFoundGoalStates<9 )) {
+		while(!stateStack.isEmpty() && (!foundGoalstate || numberOfFoundGoalStates<20 )) {
          if (!foundGoalstate)
             state = (JSONArray) stateStack.peek();
             
