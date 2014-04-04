@@ -173,7 +173,7 @@ public class Planner{
       
       long endTime   = System.currentTimeMillis();
       long totalTime = endTime - Shrdlite.startTime;
-      System.out.println("before BFS " + totalTime);
+      // System.out.println("before BFS " + totalTime);
       
 		while(!stateQueue.isEmpty() && !foundGoalstate) {
          JSONArray state = (JSONArray) stateQueue.remove();
@@ -187,7 +187,7 @@ public class Planner{
 			}
 		}
       
-      System.out.println("number of visited worlds " + visitedWorlds.size());
+      // System.out.println("number of visited worlds " + visitedWorlds.size());
       
       
       if (!holding.isEmpty()){
@@ -235,7 +235,7 @@ public class Planner{
       
       endTime   = System.currentTimeMillis();
       totalTime = endTime - Shrdlite.startTime;
-      System.out.println("before DFS after BFS " + totalTime);
+      // System.out.println("before DFS after BFS " + totalTime);
       //DFS lowest cost first
       Stack stateStack = new Stack();
       Stack planStack = new Stack();
@@ -266,7 +266,7 @@ public class Planner{
       
       endTime   = System.currentTimeMillis();
       totalTime = endTime - Shrdlite.startTime;
-      System.out.println("after DFS " + totalTime);
+      // System.out.println("after DFS " + totalTime);
       
       return plan;
    }
