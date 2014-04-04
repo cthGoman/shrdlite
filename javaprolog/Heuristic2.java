@@ -45,17 +45,6 @@ public class Heuristic2{
                      
                   }
                } 
-               else if(column1==-1){//object 1 is in holding
-                  if(((JSONArray)world.get(column2)).size()==(place2+1)){//object 2 is the top object in its column
-                     rowCost += 1;
-                  }
-                  else{
-                     rowCost += 3;
-                  }
-               }
-               else if(column2==-1){//Object 2 is in holding
-                  rowCost += 3;
-               }
                else{//objects are in different columns
                   rowCost += 2;
                   rowInTheWay += ((JSONArray)world.get(column1)).size()-1-place1; //add the objects above the statement objects as in the way
@@ -75,23 +64,14 @@ public class Heuristic2{
                      rowInTheWay += ((JSONArray)world.get(column1)).size()-1-Math.max(place1,place2); //add the objects above the top statement object as in the way
                   }
                } 
-               else if(column1==-1){//object 1 is in holding
-                  ((JSONArray)world.get(column2)).add(statement.get(1));
-                  if(Constraints.isColumnAllowed((JSONArray)world.get(column2),objects)){//is column allowed
-                     rowCost += 1;
-                  }
-                  else{
-                     rowCost += 3;
-                  }
-                 
-                 ((JSONArray)world.get(column2)).remove(statement.get(1));
-               }
-               else if(column2==-1){//Object 2 is in holding
-                  rowCost += 3;
-               }
                else{//objects are in different columns
                   rowCost += 2;
                   rowInTheWay += ((JSONArray)world.get(column1)).size()-1-place1; //add the objects above the object 1 as in the way
+                  ((JSONArray)world.get(column2)).add(statement.get(1)); //add object 1 to column 2
+                  if(!Constraints.isColumnAllowed((JSONArray)world.get(column2),objects)){ //and see if column is allowed
+                     rowInTheWay ++;
+                  }
+                  ((JSONArray)world.get(column2)).remove(statement.get(1));
                }
             }
             else if ("below".equals(statement.get(0).toLowerCase())){
@@ -109,23 +89,14 @@ public class Heuristic2{
                   rowInTheWay += ((JSONArray)world.get(column1)).size()-1-Math.max(place1,place2); //add the objects above the top statement object as in the way
             
                } 
-               else if(column2==-1){//object 2 is in holding
-                  ((JSONArray)world.get(column1)).add(statement.get(2));
-                  if(Constraints.isColumnAllowed((JSONArray)world.get(column1),objects)){//is column allowed
-                     rowCost += 1;
-                  }
-                  else{
-                     rowCost += 3;
-                  }
-                 
-                 ((JSONArray)world.get(column1)).remove(statement.get(2));
-               }
-               else if(column1==-1){//Object 1 is in holding
-                  rowCost += 3;
-               }
                else{//objects are in different columns
                   rowCost += 2;
                   rowInTheWay += ((JSONArray)world.get(column2)).size()-1-place2; //add the objects above the object 2 as in the way
+                  ((JSONArray)world.get(column1)).add(statement.get(2)); //add object 2 to column 1
+                  if(!Constraints.isColumnAllowed((JSONArray)world.get(column1),objects)){ //and see if column is allowed
+                     rowInTheWay ++; //if not say it's in the wa
+                  }
+                  ((JSONArray)world.get(column1)).remove(statement.get(2));
                }
             }
             else if ("beside".equals(statement.get(0).toLowerCase())){
@@ -135,28 +106,12 @@ public class Heuristic2{
                int place2 = WorldFunctions.getPlaceInColumn(world,statement.get(2));
                
                if(column1==column2){//in the same column
-                  
                   rowCost += 2;
-                  
-               } 
-               else if(column1==-1){//object 1 is in holding
-                  // if((world.size()-1)>column2){
-//                      world.get(column2+1).add(statement.get(1));
-//                      if(isColumnAllowed(world.get(column1),objects)){//is column allowed
-//                      rowCost += 1;
-//                      }
-//                      
-//                      world.get(column2+1).remove(statement.get(1));
-//                   }
-                  
-                  rowCost += 1;
-                  
-               }
-               else if(column2==-1){//Object 2 is in holding
-                  rowCost += 1;
+                  rowInTheWay += ((JSONArray)world.get(column1)).size()-1-Math.max(place1,place2); //add the objects above the top statement object as in the way
                }
                else if((column1-column2 > 1) || (column2-column1 > 1)){//objects are further away
                   rowCost += 2;
+                  Math.min(((JSONArray)world.get(column1)).size()-1-place1,((JSONArray)world.get(column2)).size()-1-place2);
                }
             }
             else if ("rightof".equals(statement.get(0).toLowerCase())){
@@ -165,18 +120,26 @@ public class Heuristic2{
                int column2 = WorldFunctions.getColumnNumber(world,statement.get(2));
                int place2 = WorldFunctions.getPlaceInColumn(world,statement.get(2));
                
-               if(world.size()-1==column2 && column1==0){
+               if(world.size()-1==column2 && column1==0){//both objects are in the wrong edges
                   
                   rowCost += 4;
+                  rowInTheWay+=((JSONArray)world.get(column1)).size()-1-place1);
+                  rowInTheWay+=((JSONArray)world.get(column2)).size()-1-place2);
                   
+               }
+               else if(column1==0){
+                  rowCost += 2;
+                  rowInTheWay+=((JSONArray)world.get(column1)).size()-1-place1);
+               } 
+               else if(world.size()-1==column2){
+                  rowCost += 2;
+                  rowInTheWay+=((JSONArray)world.get(column2)).size()-1-place2);
                } 
                else if(column1<column2){//object 1 left of object 2
                   
                   rowCost += 2;
+                  rowInTheWay+=Math.min(((JSONArray)world.get(column1)).size()-1-place1,((JSONArray)world.get(column2)).size()-1-place2);
                   
-               }
-               else if(column2==-1 || column1==-1){//Object 1 or 2 is in holding
-                  rowCost += 1;
                }
                
             }
@@ -189,16 +152,25 @@ public class Heuristic2{
                if(world.size()-1==column1 && column2==0){
                   
                   rowCost += 4;
+                  rowInTheWay+=((JSONArray)world.get(column1)).size()-1-place1);
+                  rowInTheWay+=((JSONArray)world.get(column2)).size()-1-place2);
                   
                } 
+               else if(column2==0){
+                  rowCost += 2;
+                  rowInTheWay+=((JSONArray)world.get(column2)).size()-1-place2);
+               } 
+               else if(world.size()-1==column1){
+                  rowCost += 2;
+                  rowInTheWay+=((JSONArray)world.get(column1)).size()-1-place1);
+               } 
+
                else if(column2<column1){//object 1 right of object 2
                   
                   rowCost += 2;
-                  
+                  rowInTheWay+=Math.min(((JSONArray)world.get(column1)).size()-1-place1,((JSONArray)world.get(column2)).size()-1-place2);
                }
-               else if(column2==-1 || column1==-1){//Object 1 or 2 is in holding
-                  rowCost += 1;
-               }
+
                
             }
          }
