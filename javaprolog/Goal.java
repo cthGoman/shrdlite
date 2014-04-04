@@ -42,8 +42,9 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
                int place = WorldFunctions.getPlaceInColumn(world,statement.get(1));
                
                int placeSecondObject=WorldFunctions.getPlaceInColumn(world,statement.get(2));
+               int columnSecondObject = WorldFunctions.getColumnNumber(world,statement.get(2));
                
-               if (placeSecondObject<0 || place<=placeSecondObject){
+               if (placeSecondObject<0 || place<=placeSecondObject || column!=columnSecondObject){
                  tempFulfilled = false; 
                }
             }
@@ -52,8 +53,9 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
                int place = WorldFunctions.getPlaceInColumn(world,statement.get(1));
                
                int placeSecondObject=WorldFunctions.getPlaceInColumn(world,statement.get(2));
+               int columnSecondObject = WorldFunctions.getColumnNumber(world,statement.get(2));
                
-               if (placeSecondObject<0 || place>=placeSecondObject){
+               if (placeSecondObject<0 || place>=placeSecondObject || column!=columnSecondObject){
                  tempFulfilled = false; 
                }
             }
