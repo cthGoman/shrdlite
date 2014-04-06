@@ -10,43 +10,29 @@ public class FindObject{
       String size ;
       String color ;
       ArrayList<String> matchingObjects = new ArrayList<String>();
-DebugFile.print(object.size()+" ");
 		if(object.size() > 0){
 			if(object.get(0).equals("floor")){
 				for(int i = 0 ; i < world.size() - 1 ; i++){
 					matchingObjects.add("floor-"+i);
 				}
 			}else{
-DebugFile.print("Not Floor: ");
 		      for(int i=0;i<world.size();i++){
 		         for(int j=0;j<world.get(i).size();j++){
 		            currentObject = world.get(i).get(j);
-						
-
-DebugFile.println(currentObject);
-if(false){
-
 						objectinfo = (JSONObject) objectsInformation.get(currentObject);
 		            form = (String) objectinfo.get("form");
 		            size = (String) objectinfo.get("size");
 		            color = (String) objectinfo.get("color");
-DebugFile.print(form+" "+size+" "+color+",");
 		            boolean formRight = form.equals(object.get(0)) || object.get(0).equals("anyform");
 		            boolean sizeRight = size.equals(object.get(1)) || object.get(1).equals("-");
 		            boolean colorRight = color.equals(object.get(2)) || object.get(2).equals("-");
 		            if(formRight && sizeRight && colorRight){
 		               matchingObjects.add(currentObject);
 		            }
-
-}
-						
 		         }
 				}
-DebugFile.print("Ending not floor.");
 			}
       }
-for(String m:matchingObjects){DebugFile.print(m+" ");}
-DebugFile.println("");
       return matchingObjects;
 	}
 	public static ArrayList<String> relatedObject(ArrayList<String> relativeObjects, String relation,ArrayList<String> BasicObjects, ArrayList<ArrayList<String>> world){
@@ -73,7 +59,7 @@ DebugFile.println("");
 							for(String ro:relativeObjects){
 								if(world.get(c).get(r + 1).equals(ro)){
 									fulfillingObjects.add(ro);
-									DebugFile.println(ro);
+DebugFile.print(ro+" ");
 								}
 							}
 						}
