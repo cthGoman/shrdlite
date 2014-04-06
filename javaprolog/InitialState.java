@@ -6,14 +6,10 @@ import org.json.simple.JSONArray;
 public class InitialState{
 	public static ArrayList<String> getInitialObjects(Node masterNode, JSONObject objectsInformation, ArrayList<ArrayList<String>> world){
 		Node currentNode = masterNode.getChild(0);
-		int k = 0;
 		int l = Math.min(currentNode.getValue().length(),8);
-		DebugFile.println(currentNode.getValue().substring(0,l) + "\t" + k);
 		while(currentNode.getValue().substring(0,l).equals("relative")){
 			currentNode = currentNode.getLastChild();
-			k++;
 			l = Math.min(currentNode.getValue().length(),8);
-			DebugFile.println(currentNode.getValue().substring(0,l) + "\t" + k);
 		}
 		ArrayList<String> oldObjects = FindObject.match(currentNode.createObject(),objectsInformation,world);
 		currentNode = currentNode.getParent();
