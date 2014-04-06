@@ -18,6 +18,7 @@ DebugFile.println(currentNode.getValue().substring(0,l) + "\t" + k);
 		ArrayList<String> oldObjects = FindObject.match(currentNode.createObject(),objectsInformation,world);
 		currentNode = currentNode.getParent();
 		String relation = currentNode.getChild(0).getValue();
+DebugFile.println(relation);
 		currentNode = currentNode.getParent();
 		ArrayList<String> newObjects = FindObject.match(currentNode.createObject(),objectsInformation,world);
 		oldObjects = FindObject.relatedObject(newObjects,relation,oldObjects,world);
