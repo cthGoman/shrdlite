@@ -15,12 +15,8 @@ public static ArrayList<ArrayList<Statement>> relations(JSONObject objects,Array
         //String topobject = (String) column1.get(column1.size() - 1);
         //JSONObject objectinfo = (JSONObject) objects.get(topobject);
         //String form = (String) objectinfo.get("form");
-
-String topobject = world.get(0).get(0);
-JSONObject objectinfo = (JSONObject) objects.get(topobject);
-String color = (String) objectinfo.get("color");
-DebugFile.println(color);
-
+         
+         
 
 
 

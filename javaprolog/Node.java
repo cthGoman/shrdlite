@@ -40,11 +40,16 @@ public class Node{
 		if(value.equals("object")){
 			LinkedList<String> object = new LinkedList<String>();
 			value = objects.size() + "";
-			object.add(value);;
+			object.add(value);
 			for(Node child:children){
 				object.add(child.value);
 			}
 			objects.add(object);
+      }else if(value.equals("floor")){
+         LinkedList<String> object = new LinkedList<String>();
+         object.add(value);
+         objects.add(object); 
+         
 		}else{
 			if(value.equals("relative")){
 				relations.add(children.get(0).value);
@@ -57,7 +62,7 @@ public class Node{
 	public ArrayList<String> createObject(){
 		ArrayList<String> object = new ArrayList<String>();
 		if(value.equals("object")){
-			for(Node child:children){
+			for(Node child:children.get(1).children){
 				object.add(child.value);
 			}
 		}
