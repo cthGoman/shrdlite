@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class CombineStatements{
 
 
-   static public ArrayList<ArrayList<Statement>> combine(ArrayList<ArrayList<Statement>> statements){
+   static public Goal combine(ArrayList<ArrayList<Statement>> statements){
       
       ArrayList<ArrayList<Statement>> currentStatementList = new  ArrayList<ArrayList<Statement>> ();    
    
@@ -29,8 +29,15 @@ public class CombineStatements{
             }
          }
          currentStatementList = newStatementList;
-      }      
-      return currentStatementList;
+      }
+      Goal goal = new Goal();
+      
+      for(int i = 0; i < currentStatementList.size();i++){
+      
+      goal.addCondition(currentStatementList.get(i));
+      }
+      
+      return goal;
    
    }
    static public ArrayList<ArrayList<Statement>> testStatement(){
@@ -60,5 +67,12 @@ public class CombineStatements{
       testList.add(state3);
       testList.add(state4);
       return testList;
+      
+   }
+   static public ArrayList<String> testObject0(){
+       ArrayList<String> testObject = new ArrayList<String>();   
+       
+       testObject.add("e");
+       return testObject;   
    }
 }
