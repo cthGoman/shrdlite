@@ -39,8 +39,6 @@ public class Node{
 	public void createObjects(LinkedList<LinkedList<String>> objects, LinkedList<String> relations){
 		if(value.equals("object")){
 			LinkedList<String> object = new LinkedList<String>();
-			value = objects.size() + "";
-			object.add(value);
 			for(Node child:children){
 				object.add(child.value);
 			}
