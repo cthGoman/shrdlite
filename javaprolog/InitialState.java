@@ -18,8 +18,10 @@ DebugFile.println(currentNode.getValue().substring(0,l) + "\t" + k);
 		ArrayList<String> firstObject = currentNode.createObject();
 		ArrayList<String> oldObject = new ArrayList<String>();
 		if(firstObject.size() > 0){
-			if(firstObject..get(0).equals("floor")){
-				
+			if(firstObject.get(0).equals("floor")){
+				for(int i = 0 ; i < world.size() - 1 ; i++){
+					oldObject.add("floor-"+i);
+				}
 			}
 		}
 //		ArrayList<String> newObjects = FindObject.match(,objectsInformation,world);

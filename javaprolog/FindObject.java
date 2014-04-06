@@ -11,30 +11,29 @@ public class FindObject{
       String color ;
       ArrayList<String> matchingObjects = new ArrayList<String>();
       
-      for(int i=0;i<world.size();i++){
-         for(int j=0;j<world.get(i).size();j++){
-            currentObject = world.get(i).get(j);
-            objectinfo = (JSONObject) objectsInformation.get(currentObject);
-            form = (String) objectinfo.get("form");
-            size = (String) objectinfo.get("size");
-            color = (String) objectinfo.get("color");
-            boolean formRight = form.equals(object.get(0)) || object.get(0).equals("anyform");
-            boolean sizeRight = size.equals(object.get(1)) || object.get(1).equals("-");
-            boolean colorRight = color.equals(object.get(2)) || object.get(2).equals("-");
-            if(formRight && sizeRight && colorRight){
-               matchingObjects.add(currentObject);
-               
-            }
-            
-         }
-         
-         
+		if(object.size() > 0){
+			if(object.get(0).equals("floor")){
+				for(int i = 0 ; i < world.size() - 1 ; i++){
+					matchingObjects.add("floor-"+i);
+				}
+			}else{
+		      for(int i=0;i<world.size();i++){
+		         for(int j=0;j<world.get(i).size();j++){
+		            currentObject = world.get(i).get(j);
+		            objectinfo = (JSONObject) objectsInformation.get(currentObject);
+		            form = (String) objectinfo.get("form");
+		            size = (String) objectinfo.get("size");
+		            color = (String) objectinfo.get("color");
+		            boolean formRight = form.equals(object.get(0)) || object.get(0).equals("anyform");
+		            boolean sizeRight = size.equals(object.get(1)) || object.get(1).equals("-");
+		            boolean colorRight = color.equals(object.get(2)) || object.get(2).equals("-");
+		            if(formRight && sizeRight && colorRight){
+		               matchingObjects.add(currentObject);
+		            }
+		         }
+				}
+			}
       }
-      
-      
-      return matchingObjects;//		JSONObject objectinfo = (JSONObject) objects.get(topobject);
-//		String form = (String) objectinfo.get("form");
-
-
+      return matchingObjects;
 	}
 }
