@@ -15,18 +15,12 @@ DebugFile.println(currentNode.getValue().substring(0,l) + "\t" + k);
 			l = Math.min(currentNode.getValue().length(),8);
 DebugFile.println(currentNode.getValue().substring(0,l) + "\t" + k);
 		}
-		ArrayList<String> firstObject = currentNode.createObject();
-		ArrayList<String> oldObject = new ArrayList<String>();
-		if(firstObject.size() > 0){
-			if(firstObject.get(0).equals("floor")){
-				for(int i = 0 ; i < world.size() - 1 ; i++){
-					oldObject.add("floor-"+i);
-				}
-			}
-		}
-//		ArrayList<String> newObjects = FindObject.match(,objectsInformation,world);
-
-// 		//oldObjects = FindObject.union(oldObjects , newObjects);
-	return new ArrayList<String>();
+		ArrayList<String> oldObjects = FindObject.match(currentNode.createObject(),objectsInformation,world);
+		currentNode = currentNode.getParent();
+		String relation = currentNode.getChild(0).getValue();
+		currentNode = currentNode.getParent();
+		ArrayList<String> newObjects = FindObject.match(currentNode.createObject(),objectsInformation,world);
+		oldObjects = FindObject.relatedObject(newObjects,relation,oldObjects,world);
+		return new ArrayList<String>();
 	}
 }

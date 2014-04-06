@@ -1,1 +1,7 @@
-floor	0
+relative	0
+relative	1
+floor	2
+1 floor-0 floor-1 floor-2 floor-3 floor-4 
+0 
+Begining
+Ending 0
