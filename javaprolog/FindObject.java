@@ -10,7 +10,6 @@ public class FindObject{
       String size ;
       String color ;
       ArrayList<String> matchingObjects = new ArrayList<String>();
-      DebugFile.print(object.size()+" ");
       if(object.size() > 0){
          if(object.get(0).equals("floor")){
             for(int i = 0 ; i < world.size() - 1 ; i++){
@@ -18,7 +17,6 @@ public class FindObject{
             }
          }
          else{
-            DebugFile.print("Not Floor: ");
             for(int i=0;i<world.size();i++){
                for(int j=0;j<world.get(i).size();j++){
                   currentObject = world.get(i).get(j);
@@ -35,16 +33,12 @@ public class FindObject{
                   }
                }
             }
-            DebugFile.println("Ending not floor.");
          }
       }
-      for(String m:matchingObjects){DebugFile.print(m+" ");}
-      DebugFile.println("");
       return matchingObjects;
    }
    public static ArrayList<String> relatedObject(ArrayList<String> relativeObjects, String relation,ArrayList<String> BasicObjects, ArrayList<ArrayList<String>> world){
       ArrayList<String> fulfillingObjects = new ArrayList<String>();
-      DebugFile.println("Begining");
       for(String bo:BasicObjects){
          int c = -1;
          int r = -1;
@@ -66,7 +60,7 @@ public class FindObject{
                      for(String ro:relativeObjects){
                         if(world.get(c).get(r + 1).equals(ro)){
                            fulfillingObjects.add(ro);
-                           DebugFile.println(ro);
+DebugFile.println(ro);
                         }
                      }
                   }
@@ -80,7 +74,7 @@ public class FindObject{
             }
          }
       }
-      DebugFile.println("Ending "+fulfillingObjects.size());
+DebugFile.println("");
       return fulfillingObjects;
    }
 }
