@@ -27,8 +27,8 @@ DebugFile.start();
 	}
 	public List<Goal> interpret(Term input){
 		Tree tree = new Tree(input.toString().replace("(-)","-"));
-		//InitialState.getInitialObjects(tree.getMasterNode(),objects,worldList);
-		Goal testGoal = Relations.relation(objects,worldList,tree,CombineStatements.testObject0());
+		ArrayList<String> object0 = InitialState.getInitialObjects(tree.getMasterNode(),objects,worldList);
+		Goal testGoal = Relations.relation(objects,worldList,tree,object0);
       LinkedList<Goal> goalList = new LinkedList<Goal>();
       goalList.add(testGoal);
 		
