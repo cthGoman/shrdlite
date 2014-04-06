@@ -39,6 +39,7 @@ public class FindObject{
    public static ArrayList<String> relatedObject(ArrayList<String> relativeObjects, String relation,ArrayList<String> BasicObjects, ArrayList<ArrayList<String>> world){
       ArrayList<String> fulfillingObjects = new ArrayList<String>();
       for(String bo:BasicObjects){
+			boolean added = false;
          int c = -1;
          int r = -1;
          if(bo.substring(0,bo.length()-1).equals("floor-")){
@@ -53,22 +54,89 @@ public class FindObject{
             }
          }
          if(c != world.size() - 1){
-            switch (relation) {
-               case "ontop":
-                  if(world.get(c).size() > r + 1){
+            switch (relation){
+					case "inside":
+					case "ontop":
+                  if(r + 1 < world.get(c).size()){
                      for(String ro:relativeObjects){
                         if(world.get(c).get(r + 1).equals(ro)){
                            fulfillingObjects.add(ro);
+									added = true;
+									break;
                         }
                      }
                   }
                   break;
-               case "above":
-                  for(int k = r + 1; k < world.get(c).size() ; k++){
-                     world.get(c).get(k).equals("?");
+					case "above":
+                  for(int k = r - 1; k >= 0 ; k--){
+							if(added){break;}
+							for(String ro:relativeObjects){
+                        if(world.get(c).get(k).equals(ro)){
+                           fulfillingObjects.add(ro);
+									added = true;
+									break;
+								}
+							}
                   }	
                   break;
+               case "under":
+                  for(int k = r + 1; k < world.get(c).size() ; k++){
+							if(added){break;}
+							for(String ro:relativeObjects){
+								if(world.get(c).get(k).equals(ro)){
+									fulfillingObjects.add(ro);
+									added = true;
+									break;
+								}
+                     }
+                  }
+                  break;
+					case "leftof":
+						for(int k = c + 1; k < world.size() - 1 ; k++){
+							if(added){break;}
+							for(int l = 0 ; l < world.get(k).size() ; l++){
+								if(added){break;}
+								for(String ro:relativeObjects){
+									if(world.get(k).get(l).equals(ro)){
+										fulfillingObjects.add(ro);
+										added = true;
+										break;
+									}
+								}
+							}
+						}
+						break;
+					case "rightof":
+						for(int k = c - 1; k >= 0 ; k--){
+							if(added){break;}
+							for(int l = 0 ; l < world.get(k).size() ; l++){
+								if(added){break;}
+								for(String ro:relativeObjects){
+									if(world.get(k).get(l).equals(ro)){
+										fulfillingObjects.add(ro);
+										added = true;
+										break;
+									}
+								}
+							}
+						}
+						break;
+					case "beside":
+						for(String ro:relativeObjects){
+							if(r + 1 < world.get(c).size() && world.get(c).get(r + 1).equals(ro)){
+								fulfillingObjects.add(ro);
+								added = true;
+								break;
+							}
+							if(r - 1 >= 0 && world.get(c).get(r - 1).equals(ro)){
+								fulfillingObjects.add(ro);
+								added = true;
+								break;
+							}
+						}	
+						break;
                default:
+					break;
             }
          }
       }
