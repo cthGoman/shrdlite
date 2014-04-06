@@ -20,7 +20,9 @@ DebugFile.start();
 			}
 		}
 		ArrayList<String> hold = new ArrayList<String>();
-		hold.add(holding);
+		if(holding != null){
+			hold.add(holding);
+		}
 		worldList.add(hold);
 	}
 	public List<Goal> interpret(Term input){
