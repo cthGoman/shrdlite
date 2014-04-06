@@ -2,8 +2,6 @@
 import java.util.*;
 
 public class Statement extends ArrayList<String>{
-
-	
 	public Statement(String spacialOperator,String arg1,String arg2){
       super.add(spacialOperator);
 		super.add(arg1);

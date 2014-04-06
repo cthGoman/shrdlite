@@ -61,7 +61,7 @@ public class Node{
 	}
 	public ArrayList<String> createObject(){
 		ArrayList<String> object = new ArrayList<String>();
-		if(value.equals("object")){
+		if(value.contains("entity")){
 			for(Node child:children.get(1).children){
 				object.add(child.value);
 			}
