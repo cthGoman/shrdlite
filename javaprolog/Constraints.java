@@ -94,70 +94,108 @@ public class Constraints{
    
    }
    
-   public static boolean isGoalRowAllowed(List<Statement> goalRow, JSONObject objects){
+   public static boolean isStatementAllowed(Statement statement, JSONObject objects){
       
       String sizeA;
       String sizeB;
       String formA;
       String formB;
+     
       
-      for (Statement statement:goalRow){
-      
-         if(!(statement.get(1).contains("floor") || statement.get(1).contains("robot"))){
-            JSONObject objectAInfo = (JSONObject) objects.get(statement.get(1));
-            sizeA = (String) objectAInfo.get("size");
-            formA = (String) objectAInfo.get("form");
-         }
-         else{
-            sizeA = "undefined";
-            formA = statement.get(1).substring(0,5);
-         }
-         
-         if(!(statement.get(2).contains("floor") || statement.get(2).contains("robot"))){
-            JSONObject objectBInfo = (JSONObject) objects.get(statement.get(2));
-            sizeB = (String) objectBInfo.get("size");
-            formB = (String) objectBInfo.get("form");
-         }
-         else{
-            sizeB = "undefined";
-            formB = statement.get(2).substring(0,5);
-         }
-         
-         if(statement.get(0).contains("ontop")){
-            
-         }
-         
-         else if(statement.get(0).contains("inside")){
-            if(!formB.equals("box")){
-               return false;
-            }
-         }
-         
-         else if(statement.get(0).contains("above")){
-            
-         }
-         
-         else if(statement.get(0).contains("under")){
-            
-         }
-         
-         else if(statement.get(0).contains("beside")){
-            
-         }
-         
-         else if(statement.get(0).contains("leftof")){
-            
-         }
-         
-         else if(statement.get(0).contains("rightof")){
-            
-         }
-         
-         else if(statement.get(0).contains("hold")){
-            
-         }
-               
+      if(!(statement.get(1).contains("floor") || statement.get(1).contains("robot"))){
+         JSONObject objectAInfo = (JSONObject) objects.get(statement.get(1));
+         sizeA = (String) objectAInfo.get("size");
+         formA = (String) objectAInfo.get("form");
       }
-      return true;
+      else{
+         sizeA = "undefined";
+         formA = statement.get(1).substring(0,5);
+      }
+         
+      if(!(statement.get(2).contains("floor") || statement.get(2).contains("robot"))){
+         JSONObject objectBInfo = (JSONObject) objects.get(statement.get(2));
+         sizeB = (String) objectBInfo.get("size");
+         formB = (String) objectBInfo.get("form");
+      }
+      else{
+         sizeB = "undefined";
+         formB = statement.get(2).substring(0,5);
+      }
+
+      // ------------------------ "On top of"-statements ------------------------//          
+      if(statement.get(0).contains("ontop")){
+      
+         if(sizeB.equals("small") && sizeA.equals("large")){
+            return false;
+         }
+         
+         if(formA.equals("ball") && !formB.contains("floor")){ // Balls only on top of floor (or inside boxes)
+            return false;
+         }
+         
+         if(formA.contains("floor")){        // Floor has to be below everything else
+            return false;
+         }
+           
+      }
+      
+      
+      // ------------------------ "Inside"-statements ------------------------//   
+      else if(statement.get(0).contains("inside")){
+         if(!formB.equals("box")){
+            return false;
+         }
+         if(formA.equals("ball") && !formA.equals("box")){
+            return false;
+         }
+      }
+      
+      // ------------------------ "Above"-statements ------------------------//      
+      else if(statement.get(0).contains("above")){
+         if(sizeB.equals("small") && sizeA.equals("large")){
+            return false;
+         }
+         if(formA.contains("floor")){        // Floor has to be below everything else
+            return false;
+         }
+      }
+      
+      // ------------------------ "Under"-statements ------------------------//           
+      else if(statement.get(0).contains("under")){
+         if(formB.contains("floor")){        // Floor has to be below everything else
+            return false;
+         }
+         if(sizeA.equals("small") && sizeB.equals("large")){
+            return false;
+         }
+      }
+      
+      // ------------------------ "Beside"-statements ------------------------//           
+      else if(statement.get(0).contains("beside")){
+           
+      }
+      
+      // ------------------------ "Left of"-statements ------------------------//           
+      else if(statement.get(0).contains("leftof")){
+            
+      }
+        
+      // ------------------------ "Right of"-statements ------------------------//         
+      else if(statement.get(0).contains("rightof")){
+            
+      }
+
+      // ------------------------ "Hold"-statements ------------------------//          
+      else if(statement.get(0).contains("hold")){
+         if(!formA.contains("robot")){
+            return false;
+         }
+         if(formB.contains("floor")){
+            return false;
+         }
+         
+      }
+               
+      return true;      // All checks passed
    }
 }
