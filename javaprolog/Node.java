@@ -54,4 +54,16 @@ public class Node{
 			}
 		}
 	}
+	public ArrayList<String> createObject(){
+		ArrayList<String> object = new ArrayList<String>();
+		if(value.equals("object")){
+			for(Node child:children){
+				object.add(child.value);
+			}
+		}
+		if(value.equals("floor")){
+			object.add(value);
+		}
+	return object;
+	}
 }
