@@ -22,11 +22,12 @@ public class Relations{
       ArrayList<ArrayList<String>> objectsList = new ArrayList<ArrayList<String>>();
       ArrayList<String> objectArray;
       for(int i = 0; i < objectsDescriptionList.size(); i++){
+         DebugFile.println("from relations"+objectsDescriptionList.get(i).toString());
          objectArray = FindObject.match(objectsDescriptionList.get(i),objects,world);
          objectsList.add(objectArray);
       }
          
-         
+     
       for(int i = 0;i < object0.size();i++){
          for(int j = 0; j < objectsList.get(0).size() ; j++){ 
               

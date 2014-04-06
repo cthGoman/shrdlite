@@ -27,11 +27,13 @@ DebugFile.start();
 	}
 	public List<Goal> interpret(Term input){
 		Tree tree = new Tree(input.toString().replace("(-)","-"));
-		InitialState.getInitialObjects(tree.getMasterNode(),objects,worldList);
-		
+		//InitialState.getInitialObjects(tree.getMasterNode(),objects,worldList);
+		Goal testGoal = Relations.relation(objects,worldList,tree,CombineStatements.testObject0());
+      LinkedList<Goal> goalList = new LinkedList<Goal>();
+      goalList.add(testGoal);
 		
 		
 DebugFile.stop();
-		return new LinkedList<Goal>();
+		return goalList;
 	}
 }

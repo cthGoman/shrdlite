@@ -56,7 +56,7 @@ public class Shrdlite {
                 for (Goal goal : interpreter.interpret(tree)) {
                     goals.add(goal);
                 }
-                goals.add(new Goal());
+                //goals.add(new Goal());
             }
             result.put("goals", goals);
 
