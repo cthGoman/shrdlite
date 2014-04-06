@@ -23,8 +23,7 @@ public class FindObject{
                   objectinfo = (JSONObject) objectsInformation.get(currentObject);
                   form = (String) objectinfo.get("form");
                   size = (String) objectinfo.get("size");
-                  color = (String) objectinfo.get("color");
-                  DebugFile.print(form+" "+size+" "+color+",");						
+                  color = (String) objectinfo.get("color");						
                   boolean formRight = form.equals(object.get(0)) || object.get(0).equals("anyform");
                   boolean sizeRight = size.equals(object.get(1)) || object.get(1).equals("-");
                   boolean colorRight = color.equals(object.get(2)) || object.get(2).equals("-");
@@ -60,7 +59,6 @@ public class FindObject{
                      for(String ro:relativeObjects){
                         if(world.get(c).get(r + 1).equals(ro)){
                            fulfillingObjects.add(ro);
-DebugFile.println(ro);
                         }
                      }
                   }
@@ -74,7 +72,6 @@ DebugFile.println(ro);
             }
          }
       }
-DebugFile.println("");
       return fulfillingObjects;
    }
 }
