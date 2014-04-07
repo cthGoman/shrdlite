@@ -93,6 +93,7 @@ public class GenerateAndTest{
       
       while (tempGrabbedObjects.size()>0){
          Random generator = new Random();
+//          System.out.println(tempGrabbedObjects.size());
          int k = generator.nextInt(tempGrabbedObjects.size());
          generator = new Random();
          int c = generator.nextInt(goalWorld.size());

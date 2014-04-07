@@ -1,2 +1,2 @@
-take(basic_entity(any,object(ball,-,-)))
-e f 
+take(basic_entity(any,object(table,-,-)))
+g 

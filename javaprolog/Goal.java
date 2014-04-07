@@ -84,7 +84,7 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
                }
             }
             else if ("hold".equals(statement.get(0).toLowerCase())){
-               if (!holding.equals(statement.get(1))){
+               if (!holding.equals(statement.get(2))){
                  tempFulfilled = false; 
                }
             }
