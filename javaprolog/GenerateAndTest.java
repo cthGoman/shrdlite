@@ -21,7 +21,7 @@ public class GenerateAndTest{
             //Check if the column in the world contains any of the objects in the statement
              if(WorldFunctions.worldColumnContains(goalWorld, goal.get(i).get(j).get(1), k) ||
                 WorldFunctions.worldColumnContains(goalWorld, goal.get(i).get(j).get(2), k) ||
-                goal.get(i).get(j).get(1).contains(""+k) || goal.get(i).get(j).get(1).contains(""+k)){
+                goal.get(i).get(j).get(1).contains("floor-"+k) || goal.get(i).get(j).get(2).contains("floor-"+k)){
                   
                 while(((JSONArray) goalWorld.get(k)).size()>0){
                    String tempObject = new String(WorldFunctions.getTopObjectWorldColumn(goalWorld, k));
@@ -88,7 +88,10 @@ public class GenerateAndTest{
       tempGrabbedObjects = new ArrayList(grabbedObjects);
       JSONArray tempGoalWorld = WorldFunctions.copy(strippedWorld);
       
-      for (int j=0; j<grabbedObjects.size(); j++){
+      if(!goalHolding.isEmpty())
+         tempGrabbedObjects.remove(goalHolding);
+      
+      while (tempGrabbedObjects.size()>0){
          Random generator = new Random();
          int k = generator.nextInt(tempGrabbedObjects.size());
          generator = new Random();
