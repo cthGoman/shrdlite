@@ -1,2 +1,2 @@
-javaprolog/DebugFile.txt
 *.class
+javaprolog/DebugFile/*.txt
