@@ -29,6 +29,10 @@ DebugFile.start();
 		Tree tree = new Tree(input.toString().replace("(-)","-"));
 		ArrayList<String> object0 = InitialState.getInitialObjects(tree.getMasterNode(),objects,worldList);
 DebugFile.println(input.toString().replace("(-)","-"));
+for(String s:object0){
+DebugFile.print(s + " ");
+}
+DebugFile.println("");
 		Goal goal = null;
 		if(tree.getMasterNode().getValue().equals("move")){
 			goal = Relations.relation(objects,worldList,tree,object0);
@@ -41,13 +45,14 @@ DebugFile.println(input.toString().replace("(-)","-"));
       LinkedList<Goal> goalList = new LinkedList<Goal>();
 		if(goal != null){
 			goalList.add(goal);
-		}
 for(ArrayList<Statement> als:goal){
-DebugFile.println("");
 for(Statement s:als){
 DebugFile.print(s + " ");
 }
+DebugFile.println("");
 }
+DebugFile.println(""+goalList.size());
+		}
 DebugFile.stop();
 		return goalList;
 	}

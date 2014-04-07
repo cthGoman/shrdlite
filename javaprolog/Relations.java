@@ -9,7 +9,9 @@ public class Relations{
 
 
    public static Goal relation(JSONObject objects,ArrayList<ArrayList<String>> world,Tree tree, ArrayList<String> object0){
-   
+   	if(object0.size() == 0){
+			return null;
+		}
       //DebugFile.start();   
       LinkedList<LinkedList<String>> objectsDescriptionList = new LinkedList<LinkedList<String>>();
       LinkedList<String> relations = new LinkedList<String>();
