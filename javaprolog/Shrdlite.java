@@ -70,7 +70,7 @@ public class Shrdlite {
 				if (goals.get(0).get(0).get(0).equals("hold")){
 					plan = planner.solve(goals.get(0),result);
 				}else{
-					plan = planner.solve2(goals.get(0),result);
+					plan = planner.solve3(goals.get(0),result);
 				}
 				result.put("plan", plan);
 				if (plan.isEmpty()) {
