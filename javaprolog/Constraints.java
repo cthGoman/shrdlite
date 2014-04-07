@@ -246,22 +246,22 @@ public class Constraints{
       String[] idObjectB = new String[goalRow.size()];
       
       for(int i=0;i<goalRow.size();i++){
-         relationAB[i]=goalRow.get(i).get(1);
+         relationAB[i]=goalRow.get(i).get(0);
          idObjectA[i]=goalRow.get(i).get(1);
          idObjectB[i]=goalRow.get(i).get(2);
       }
 
       for(int i=0;i<goalRow.size();i++){
-      
          // ------------------------ "On top of"-statements ------------------------//          
          if(relationAB[i].contains("ontop")){
-         
-            for(int j=0;i<goalRow.size();j++){
-               if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j])){
+            for(int j=0;j<goalRow.size();j++){
+               if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && (relationAB[j].contains("above") || relationAB[j].contains("ontop"))){
                   return false;
                }
+               if(idObjectA[i].equals(idObjectA[j]) && idObjectB[i].equals(idObjectB[j]) && relationAB[j].contains("under")){
+                  return false;
+               }      
             }
-            
                                      
          }
       
@@ -272,35 +272,64 @@ public class Constraints{
       
          // ------------------------ "Above"-statements ------------------------//      
          else if(relationAB[i].contains("above")){
-      
+            for(int j=0;j<goalRow.size();j++){
+               if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && (relationAB[j].contains("above") || relationAB[j].contains("ontop"))){
+                  return false;
+               }
+               if(idObjectA[i].equals(idObjectA[j]) && idObjectB[i].equals(idObjectB[j]) && relationAB[j].contains("under")){
+                  return false;
+               }                 
+            }      
          }
       
          // ------------------------ "Under"-statements ------------------------//           
          else if(relationAB[i].contains("under")){
-      
+            for(int j=0;j<goalRow.size();j++){
+               if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && relationAB[j].contains("under")){
+                  return false;
+               }
+               if(idObjectA[i].equals(idObjectA[j]) && idObjectB[i].equals(idObjectB[j]) && (relationAB[j].contains("above") || relationAB[j].contains("ontop"))){
+                  return false;
+               }  
+            }      
          }
       
          // ------------------------ "Beside"-statements ------------------------//           
          else if(relationAB[i].contains("beside")){
-           
+            for(int j=0;j<goalRow.size();j++){
+               if(idObjectA[i].equals(idObjectA[j]) && idObjectB[i].equals(idObjectB[j]) && (relationAB[j].contains("under") || relationAB[j].contains("above") || relationAB[j].contains("ontop"))){
+                  return false;
+               }  
+            }      
+  
          }
       
          // ------------------------ "Left of"-statements ------------------------//           
          else if(relationAB[i].contains("leftof")){
-            
+            for(int j=0;j<goalRow.size();j++){
+               if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && relationAB[j].contains("leftof")){
+                  return false;
+               }
+               if(idObjectA[i].equals(idObjectA[j]) && idObjectB[i].equals(idObjectB[j]) && (relationAB[j].contains("rightof") || relationAB[j].contains("under") || relationAB[j].contains("above") || relationAB[j].contains("ontop"))){
+                  return false;
+               }                
+            }            
          }
         
          // ------------------------ "Right of"-statements ------------------------//         
          else if(relationAB[i].contains("rightof")){
-            
+            for(int j=0;j<goalRow.size();j++){
+               if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && relationAB[j].contains("rightof")){
+                  return false;
+               }
+               if(idObjectA[i].equals(idObjectA[j]) && idObjectB[i].equals(idObjectB[j]) && (relationAB[j].contains("leftof") || relationAB[j].contains("under") || relationAB[j].contains("above") || relationAB[j].contains("ontop"))){
+                  return false;
+               }                
+            }            
          }
 
-         // ------------------------ "Hold"-statements ------------------------//          
-         else if(relationAB[i].contains("hold")){
-   
-         }
-      
-      
+
+     
          /////////////ENDS////////////////
       
 

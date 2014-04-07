@@ -256,12 +256,12 @@ public class WorldFunctions{
                //Calculate the cost for the current pick
                Heuristic3 currPick = new Heuristic3(strippedWorld,"",goal,objectsIn);
                
-               if (currPick.getCost()==0){
-                  pickFrom[0]=j;
-                  dropIn[0]=-1;
-                  holding=movedObject;
-                  return strippedWorld;
-               }
+               // if (currPick.getCost()==0){
+//                   pickFrom[0]=j;
+//                   dropIn[0]=-1;
+//                   holding=movedObject;
+//                   return strippedWorld;
+//                }
       
                // System.out.println("strippedWorld " + strippedWorld);
 //                System.out.println("cost " + currPick.getCost());

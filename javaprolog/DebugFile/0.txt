@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 move(basic_entity(the,object(ball,-,white)),relative(inside,basic_entity(the,object(box,-,yellow))))
 e 
+=======
+move(basic_entity(the,object(box,-,red)),relative(ontop,basic_entity(the,object(pyramid,-,yellow))))
+l 
+>>>>>>> FETCH_HEAD
