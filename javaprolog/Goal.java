@@ -37,7 +37,7 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
       for (ArrayList<Statement> listOfStatement : this){//Loop over all rows 
          boolean tempFulfilled = true;
          for (Statement statement : listOfStatement) {//Loop over every statement in row
-            if ("ontop".equals(statement.get(0).toLowerCase())){
+            if ("ontop".equals(statement.get(0).toLowerCase()) || "inside".equals(statement.get(0).toLowerCase())){
                int column = WorldFunctions.getColumnNumber(world,statement.get(1));
                int place = WorldFunctions.getPlaceInColumn(world,statement.get(1));
                if (!WorldFunctions.getObjectBelow(world,statement.get(1)).equals(statement.get(2))){
