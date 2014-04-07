@@ -452,7 +452,7 @@ public class Planner{
 		visitedWorlds.add(world);
       JSONArray state = world;
 
-		while(!stateStack.isEmpty() && (!foundGoalstate || numberOfFoundGoalStates<5 )) {
+		while(!stateStack.isEmpty() && (!foundGoalstate || numberOfFoundGoalStates<10 )) {
          if (!foundGoalstate)
             state = (JSONArray) stateStack.peek();
          
@@ -460,8 +460,8 @@ public class Planner{
 			JSONArray child  = (JSONArray) WorldFunctions.getBestUnvisitedWorld3(state,goal,visitedWorlds,objects,pickFrom,dropIn,holding,cost);
          foundGoalstate=false;
          
-         System.out.println("child " + child);
-         System.out.println("cost " + cost[0]);
+         // System.out.println("child " + child);
+//          System.out.println("cost " + cost[0]);
 			if(child != null) {
             visitedWorlds.add(child);
 				stateStack.push(child);
