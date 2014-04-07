@@ -1,2 +1,2 @@
-take(basic_entity(any,object(table,-,-)))
-g 
+move(basic_entity(the,object(ball,-,white)),relative(inside,basic_entity(the,object(box,-,yellow))))
+e 

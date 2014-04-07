@@ -307,6 +307,30 @@ public class Planner{
          plan.add("No plan needed");
          return plan;
       }
+      boolean found=false;
+      int j=0;
+      if (!holding.isEmpty()){
+         
+         
+         while (j<world.size() && !found){
+            //Loop over columns
+            
+            JSONArray tempWorld = WorldFunctions.copy(world);
+            WorldFunctions.addObjectWorldColumn(holding,tempWorld,j);
+            if (Constraints.isWorldAllowed(tempWorld,"",objects)){
+              world=tempWorld;
+              tempPlan.add("drop "+j);
+              found=true;
+            }
+            j++;
+          }
+      }
+      plan=tempPlan;
+      if (goal.fulfilled(world,"")){
+         return plan;
+      }
+      
+      
       
       ArrayList<Plan> listOfPlans = new ArrayList<Plan>();
       int numberOfFoundGoalStates = 0;
@@ -330,7 +354,7 @@ public class Planner{
             state = (JSONArray) stateStack.peek();
          
          String holding = new String();   
-			JSONArray child  = (JSONArray) WorldFunctions.getBestUnvisitedWorld3(state,goal,visitedWorlds,objects,pickFrom,dropIn,holding);
+			JSONArray child  = (JSONArray) WorldFunctions.getBestUnvisitedWorld2(state,goal,visitedWorlds,objects,pickFrom,dropIn);
          foundGoalstate=false;
          
          // System.out.println("child " + child);
@@ -348,12 +372,14 @@ public class Planner{
                stateStack= new Stack();
                stateStack.add(state);
                tempPlan =new Plan();
+               if (found)
+                  tempPlan.add("drop "+j);
             }
             
 			}
 			else {
 				stateStack.pop();
-            if (tempPlan.size()>0){
+            if (tempPlan.size()>1){
                tempPlan.remove(tempPlan.size()-1);
                tempPlan.remove(tempPlan.size()-1);
             }
