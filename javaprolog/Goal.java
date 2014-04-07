@@ -72,14 +72,14 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
             else if ("leftof".equals(statement.get(0).toLowerCase())){
                int column = WorldFunctions.getColumnNumber(world,statement.get(1));             
                int secondColumn=WorldFunctions.getColumnNumber(world,statement.get(2));
-               if (column>secondColumn || column==-1 || secondColumn==-1){
+               if (column>=secondColumn || column==-1 || secondColumn==-1){
                  tempFulfilled = false; 
                }
             }
             else if ("rightof".equals(statement.get(0).toLowerCase())){
                int column = WorldFunctions.getColumnNumber(world,statement.get(1));
                int secondColumn=WorldFunctions.getColumnNumber(world,statement.get(2));
-               if (column<secondColumn || column==-1 || secondColumn==-1){
+               if (column<=secondColumn || column==-1 || secondColumn==-1){
                  tempFulfilled = false; 
                }
             }
