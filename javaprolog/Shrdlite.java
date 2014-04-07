@@ -72,6 +72,8 @@ DebugFile.stop();
 				Planner planner = new Planner(world, holding, objects);
 				Plan plan = null;
             // System.out.println(goals.get(0).get(0).get(0).get(0));
+            long endTime   = System.currentTimeMillis();
+			   long totalTime2 = endTime - startTime;
 				if (goals.get(0).get(0).get(0).get(0).equals("hold")){
 					plan = planner.solve(goals.get(0),result);
                // System.out.println("tjoho");
@@ -82,9 +84,9 @@ DebugFile.stop();
 				if (plan.isEmpty()) {
 					result.put("output", "Planning error!");
 				} else {
-					long endTime   = System.currentTimeMillis();
+					endTime   = System.currentTimeMillis();
 					long totalTime = endTime - startTime;
-					result.put("output", "Success! " + totalTime + " " + plan.size());
+					result.put("output", "Success! " + totalTime + " "+ totalTime2 + " " + plan.size());
 				}
 			}
 		}
