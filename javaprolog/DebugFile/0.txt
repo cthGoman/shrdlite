@@ -1,0 +1,4 @@
+take(basic_entity(any,object(ball,-,-)))
+
+[hold, robot-0, e] 
+[hold, robot-0, f] 
