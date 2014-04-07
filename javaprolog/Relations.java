@@ -41,7 +41,9 @@ public class Relations{
          for(int j = 0; j < objectsList.get(0).size() ; j++){ 
               
             Statement statement = new Statement(relations.get(0),object0.get(i),objectsList.get(0).get(j));
-            statements.add(statement);
+            if(Constraints.isStatementAllowed(statement,objects)){
+               statements.add(statement);
+            }
               
          }            
       }
