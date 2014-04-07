@@ -400,5 +400,109 @@ public class Planner{
       }
       return plan;
    }
+   
+   public Plan solve4(Goal goal,JSONObject result){
+      Plan tempPlan = new Plan();
+      Plan plan = new Plan();
+      
+      if (goal.fulfilled(world,holding)){
+         plan.add("No plan needed");
+         return plan;
+      }
+      boolean found=false;
+      int j=0;
+      if (!holding.isEmpty()){
+         
+         
+         while (j<world.size() && !found){
+            //Loop over columns
+            
+            JSONArray tempWorld = WorldFunctions.copy(world);
+            WorldFunctions.addObjectWorldColumn(holding,tempWorld,j);
+            if (Constraints.isWorldAllowed(tempWorld,"",objects)){
+              world=tempWorld;
+              tempPlan.add("drop "+j);
+              found=true;
+            }
+            j++;
+          }
+      }
+      plan=tempPlan;
+      if (goal.fulfilled(world,"")){
+         return plan;
+      }
+      
+      
+      
+      ArrayList<Plan> listOfPlans = new ArrayList<Plan>();
+      int numberOfFoundGoalStates = 0;
+      
+
+      
+      //DFS lowest cost first
+      Stack stateStack = new Stack();
+      Stack planStack = new Stack();
+      Set visitedWorlds = new HashSet<JSONArray>();
+      boolean foundGoalstate = false;
+      int[] pickFrom = {0};
+      int[] dropIn = {0};
+      int[] cost = {0};
+      
+		stateStack.push(world);
+		visitedWorlds.add(world);
+      JSONArray state = world;
+
+		while(!stateStack.isEmpty() && (!foundGoalstate || numberOfFoundGoalStates<5 )) {
+         if (!foundGoalstate)
+            state = (JSONArray) stateStack.peek();
+         
+         String holding = new String();   
+			JSONArray child  = (JSONArray) WorldFunctions.getBestUnvisitedWorld3(state,goal,visitedWorlds,objects,pickFrom,dropIn,holding,cost);
+         foundGoalstate=false;
+         
+         System.out.println("child " + child);
+         System.out.println("cost " + cost[0]);
+			if(child != null) {
+            visitedWorlds.add(child);
+				stateStack.push(child);
+            foundGoalstate = goal.fulfilled(child,"");
+            // System.out.println("foundGoalstate " + foundGoalstate);
+            tempPlan.add("pick " + pickFrom[0]);
+            tempPlan.add("drop " + dropIn[0]);
+            if (foundGoalstate){
+               numberOfFoundGoalStates++;
+               listOfPlans.add(tempPlan);
+               state=world;
+               stateStack= new Stack();
+               stateStack.add(state);
+               tempPlan =new Plan();
+               if (found)
+                  tempPlan.add("drop "+j);
+            }
+            
+			}
+			else {
+				stateStack.pop();
+            if (tempPlan.size()>1){
+               tempPlan.remove(tempPlan.size()-1);
+               tempPlan.remove(tempPlan.size()-1);
+            }
+			}
+		}
+      
+      if (numberOfFoundGoalStates==0){
+            plan = new Plan();
+            plan.add("planning error.");
+            return plan;
+      }
+      plan = listOfPlans.get(0);
+      for (Plan loopPlan : listOfPlans){
+         // System.out.println("lenth of plan "+loopPlan.size());
+//          System.out.println("plan "+loopPlan);
+         if (loopPlan.size()<plan.size())
+            plan=loopPlan;
+      }
+      return plan;
+   }
 }
 

@@ -225,7 +225,7 @@ public class WorldFunctions{
    }
    
    
-   public static JSONArray getBestUnvisitedWorld3(JSONArray world,Goal goal, Set<JSONArray> visitedWorlds, JSONObject objectsIn, int[] pickFrom, int[] dropIn,String holding){
+   public static JSONArray getBestUnvisitedWorld3(JSONArray world,Goal goal, Set<JSONArray> visitedWorlds, JSONObject objectsIn, int[] pickFrom, int[] dropIn,String holding, int[] cost){
       
       
       JSONArray bestUnvisitedWorld = null;
@@ -271,6 +271,7 @@ public class WorldFunctions{
                   bestPick=currPick;
                   pickFrom[0]=j;
                   dropIn[0]=i;
+                  cost[0]=bestPick.getCost();
                }
             }     
          }

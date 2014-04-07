@@ -72,7 +72,7 @@ public class Shrdlite {
 					plan = planner.solve(goals.get(0),result);
                // System.out.println("tjoho");
 				}else{
-					plan = planner.solve3(goals.get(0),result);
+					plan = planner.solve4(goals.get(0),result);
 				}
 				result.put("plan", plan);
 				if (plan.isEmpty()) {
