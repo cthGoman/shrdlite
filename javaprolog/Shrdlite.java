@@ -79,13 +79,13 @@ DebugFile.stop();
 					plan = planner.solve3(goals.get(0),result);
 				}
 				result.put("plan", plan);
-// 				if (plan.isEmpty()) {
-// 					result.put("output", "Planning error!");
-// 				} else {
-// 					long endTime   = System.currentTimeMillis();
-// 					long totalTime = endTime - startTime;
-// 					result.put("output", "Success! " + totalTime + " " + plan.size());
-// 				}
+				if (plan.isEmpty()) {
+					result.put("output", "Planning error!");
+				} else {
+					long endTime   = System.currentTimeMillis();
+					long totalTime = endTime - startTime;
+					result.put("output", "Success! " + totalTime + " " + plan.size());
+				}
 			}
 		}
 		System.out.print(result);
