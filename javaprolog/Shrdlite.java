@@ -3,7 +3,7 @@
 // javac -cp gnuprologjava-0.2.6.jar:json-simple-1.1.1.jar:. Shrdlite.java
 
 // Then test from the command line:
-// java -cp gnuprologjava-0.2.6.jar:json-simple-1.1.1.jar:. Shrdlite < ../examples/medium.json
+// java -cp gnuprologjava-0.2.6.jar;json-simple-1.1.1.jar;. Shrdlite < ../examples/small.json
 
 import java.util.List;
 import java.util.ArrayList;
@@ -20,13 +20,19 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 
 public class Shrdlite {
-
+   public static long startTime=0;
 	public static void main(String[] args) throws PrologException, ParseException, IOException {
+         startTime = System.currentTimeMillis();
+
+         
+        
         JSONObject jsinput   = (JSONObject) JSONValue.parse(readFromStdin());
         JSONArray  utterance = (JSONArray)  jsinput.get("utterance");
         JSONArray  world     = (JSONArray)  jsinput.get("world");
         String     holding   = (String)     jsinput.get("holding");
         JSONObject objects   = (JSONObject) jsinput.get("objects");
+        
+        
 
         JSONObject result = new JSONObject();
         result.put("utterance", utterance);
@@ -49,14 +55,45 @@ public class Shrdlite {
             result.put("output", "Parse error!");
 
         } else {
+            
+            
+// //             List<Goal> goals = new ArrayList<Goal>();
+// //             Interpreter interpreter = new Interpreter(world, holding, objects);
+                       
+            //for (Term tree : trees) {
+            //    for (Goal goal : interpreter.interpret(tree)) {
+            //        goals.add(goal);
+            //    }  
+            //}
+            
+            
             List<Goal> goals = new ArrayList<Goal>();
-            Interpreter interpreter = new Interpreter(world, holding, objects);
+            InterpreterStupid interpreter = new InterpreterStupid(world, holding, objects);
             for (Term tree : trees) {
-                for (Goal goal : interpreter.interpret(tree)) {
-                    goals.add(goal);
-                }
-                goals.add(new Goal());
+	            for (Goal goal : interpreter.interpret(tree)) {
+		            // goals.add(goal);
+	            }
             }
+            
+            // System.out.println(goals);
+                         
+
+            //Generate a test goal
+            ArrayList<Statement> row= new ArrayList<Statement>();
+            
+
+//             row.add(new Statement("ONTOP","m","g"));
+//             row.add(new Statement("ONTOP","f","m"));
+            
+            
+            row.add(new Statement("above","e","g"));
+            row.add(new Statement("above","l","g"));
+            
+            
+
+            goals.add(new Goal(row));
+            
+            
             result.put("goals", goals);
 
             if (goals.isEmpty()) {
@@ -66,26 +103,35 @@ public class Shrdlite {
                 result.put("output", "Ambiguity error!");
 
             } else {
+               if (holding==null){
+                  holding="";
+               }
                 Planner planner = new Planner(world, holding, objects);
-                Plan plan = planner.solve(goals.get(0));
-                int column = 0;
-                while (((JSONArray)world.get(column)).isEmpty()) column++;
-                //List plan = new ArrayList(); 
-                plan.add("I pick up . . ."); 
-                plan.add("pick " + column);
-                plan.add(". . . and then I drop down"); 
-                plan.add("drop " + column);
+                Plan plan = null;
+                if (goals.get(0).get(0).get(0).equals("hold")){
+                  plan = planner.solve(goals.get(0),result);
+                }else{
+                  plan = planner.solve3(goals.get(0),result);
+                }
+                
                 result.put("plan", plan);
+                 
 					 
                 if (plan.isEmpty()) {
                     result.put("output", "Planning error!");
                 } else {
-                    result.put("output", "Success!");
+                    long endTime   = System.currentTimeMillis();
+                    long totalTime = endTime - startTime;
+                    result.put("output", "Success! " + totalTime + " " + plan.size());
                 }
             }
         }
 
         System.out.print(result);
+        
+        
+        System.exit(0);
+        
     }
 
     public static String readFromStdin() throws IOException {

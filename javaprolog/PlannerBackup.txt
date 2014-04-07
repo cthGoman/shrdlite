@@ -21,7 +21,9 @@ public class Planner{
       JSONArray goalWorld = GenerateAndTest.generateWorld(goal,world,holding,objects,10000);
       String goalHolding = GenerateAndTest.generateGoalHolding(goal);
       result.put("output", ""+goalWorld);
-     
+//       System.out.println("goalWorld " + goalWorld);
+//       System.out.println("goalHolding " + goalHolding);
+//       
 
       String actHolding = holding;
       JSONArray actWorld = WorldFunctions.copy(world);
@@ -146,15 +148,6 @@ public class Planner{
       }
 		return plan;
 	}
-<<<<<<< HEAD
-}
-
-// This is how to get information about the top object in column 1:
-//JSONArray column1 = (JSONArray) world.get(0);
-//String topobject = (String) column1.get(column1.size() - 1);
-//JSONObject objectinfo = (JSONObject) objects.get(topobject);
-//String form = (String) objectinfo.get("form");
-=======
    
    
    
@@ -166,7 +159,7 @@ public class Planner{
             //Loop over columns
             
             JSONArray tempWorld = WorldFunctions.copy(world);
-            WorldFunctions.addObjectWorldColumn(holding,tempWorld,j);
+            WorldFunctions.addObjectWorldColumn(holding,tempWorld,4);
             if (Constraints.isWorldAllowed(tempWorld,"",objects))
               world=tempWorld;
           }
@@ -180,24 +173,20 @@ public class Planner{
 		
 		visitedWorlds.add(world);
       
-      long endTime   = System.currentTimeMillis();
-      long totalTime = endTime - Shrdlite.startTime;
-      // System.out.println("before BFS " + totalTime);
-      
 		while(!stateQueue.isEmpty() && !foundGoalstate) {
          JSONArray state = (JSONArray) stateQueue.remove();
 			JSONArray child=null;
 			while((child=WorldFunctions.getUnvisitedWorld(state,visitedWorlds,objects))!=null) {
 				visitedWorlds.add(child);
 				stateQueue.add(child);
-            foundGoalstate = goal.fulfilled(child,"");
+            foundGoalstate = goal.fulfilled(child);
             if (foundGoalstate)
                goalWorld = child;
 			}
 		}
       
-      // System.out.println("number of visited worlds " + visitedWorlds.size());
       
+      result.put("output", ""+goalWorld);
       
       if (!holding.isEmpty()){
          int bestDropColumn = 0;
@@ -242,9 +231,6 @@ public class Planner{
           
       }
       
-      endTime   = System.currentTimeMillis();
-      totalTime = endTime - Shrdlite.startTime;
-      // System.out.println("before DFS after BFS " + totalTime);
       //DFS lowest cost first
       Stack stateStack = new Stack();
       Stack planStack = new Stack();
@@ -261,93 +247,25 @@ public class Planner{
          JSONArray state = (JSONArray) stateStack.peek();
 			JSONArray child  = (JSONArray) WorldFunctions.getBestUnvisitedWorld(state,goalWorld,visitedWorlds,objects,pickFrom,dropIn);
          
-         foundGoalstate=false;
-         
          // System.out.println("child " + child);
 			if(child != null) {
             visitedWorlds.add(child);
 				stateStack.push(child);
-            foundGoalstate = goal.fulfilled(child,"");
-            // System.out.println("foundGoalstate " + foundGoalstate);
+            foundGoalstate = goal.fulfilled(child);
+            // System.out.println("child " + child);
             plan.add("pick " + pickFrom[0]);
             plan.add("drop " + dropIn[0]);
+            // System.out.println("visitedWorlds " + visitedWorlds);
 			}
 			else {
 				stateStack.pop();
 			}
 		}
       
-      endTime   = System.currentTimeMillis();
-      totalTime = endTime - Shrdlite.startTime;
-      // System.out.println("after DFS " + totalTime);
+      // goalWorld = (JSONArray) stateStack.peek();
       
-      return plan;
-   }
-   
-   
-   
-   public Plan solve3(Goal goal,JSONObject result){
-      Plan tempPlan = new Plan();
-      Plan plan = new Plan();
+      // System.out.println("goalWorld " + goalWorld);
       
-      ArrayList<Plan> listOfPlans = new ArrayList<Plan>();
-      int numberOfFoundGoalStates = 0;
-      
-
-      
-      //DFS lowest cost first
-      Stack stateStack = new Stack();
-      Stack planStack = new Stack();
-      Set visitedWorlds = new HashSet<JSONArray>();
-      boolean foundGoalstate = false;
-      int[] pickFrom = {0};
-      int[] dropIn = {0};
-      
-		stateStack.push(world);
-		visitedWorlds.add(world);
-      JSONArray state = world;
-
-		while(!stateStack.isEmpty() && (!foundGoalstate || numberOfFoundGoalStates<20 )) {
-         if (!foundGoalstate)
-            state = (JSONArray) stateStack.peek();
-            
-			JSONArray child  = (JSONArray) WorldFunctions.getBestUnvisitedWorld2(state,goal,visitedWorlds,objects,pickFrom,dropIn);
-         foundGoalstate=false;
-         
-         // System.out.println("child " + child);
-			if(child != null) {
-            visitedWorlds.add(child);
-				stateStack.push(child);
-            foundGoalstate = goal.fulfilled(child,"");
-            // System.out.println("foundGoalstate " + foundGoalstate);
-            tempPlan.add("pick " + pickFrom[0]);
-            tempPlan.add("drop " + dropIn[0]);
-            if (foundGoalstate){
-               numberOfFoundGoalStates++;
-               listOfPlans.add(tempPlan);
-               state=world;
-               stateStack= new Stack();
-               stateStack.add(state);
-               tempPlan =new Plan();
-            }
-            
-			}
-			else {
-				stateStack.pop();
-            if (tempPlan.size()>0){
-               tempPlan.remove(tempPlan.size()-1);
-               tempPlan.remove(tempPlan.size()-1);
-            }
-			}
-		}
-      plan = listOfPlans.get(0);
-      for (Plan loopPlan : listOfPlans){
-         // System.out.println("lenth of plan "+loopPlan.size());
-//          System.out.println("plan "+loopPlan);
-         if (loopPlan.size()<plan.size())
-            plan=loopPlan;
-      }
       return plan;
    }
 }
->>>>>>> origin/planner

@@ -1,21 +1,17 @@
 
 import java.util.*;
 
-public class Statement{
-	StatementOperator operator;
-	String[] arguments = new String[2];
+public class Statement extends ArrayList<String>{
+
 	
-	public Statement(StatementOperator so,String arg1,String arg2){
-		operator = so;
-		arguments[1] = arg1;
-		arguments[2] = arg2;
+	public Statement(String spatialOperator,String arg1,String arg2){
+      super.add(spatialOperator);
+		super.add(arg1);
+		super.add(arg2);
 	}
-	
-	
-	
-	
-	
-	public static enum StatementOperator{
-		ONTOPOF,ABOVE,UNDER,BESIDE,LEFTOF,RIGHTOF,HOLD;
+	// This prevents anyone from adding an additional string to the statement.
+	// Should also be done for a lot of other methods in arraylist, but nevermind
+	public boolean add(String s){
+		return false;
 	}
 }
