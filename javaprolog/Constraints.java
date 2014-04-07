@@ -303,7 +303,10 @@ public class Constraints{
             for(int j=0;j<goalRow.size();j++){
                if(idObjectA[i].equals(idObjectA[j]) && idObjectB[i].equals(idObjectB[j]) && (relationAB[j].contains("under") || relationAB[j].contains("above") || relationAB[j].contains("ontop"))){
                   return false;
-               }  
+               }
+               if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && (relationAB[j].contains("under") || relationAB[j].contains("above") || relationAB[j].contains("inside") || relationAB[j].contains("ontop"))){
+                  return false;
+               }    
             }      
   
          }
@@ -316,7 +319,10 @@ public class Constraints{
                }
                if(idObjectA[i].equals(idObjectA[j]) && idObjectB[i].equals(idObjectB[j]) && (relationAB[j].contains("rightof") || relationAB[j].contains("under") || relationAB[j].contains("above") || relationAB[j].contains("ontop"))){
                   return false;
-               }                
+               }
+               if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && (relationAB[j].contains("under") || relationAB[j].contains("above") || relationAB[j].contains("inside") || relationAB[j].contains("ontop"))){
+                  return false;
+               }                                
             }            
          }
         
@@ -328,7 +334,10 @@ public class Constraints{
                }
                if(idObjectA[i].equals(idObjectA[j]) && idObjectB[i].equals(idObjectB[j]) && (relationAB[j].contains("leftof") || relationAB[j].contains("under") || relationAB[j].contains("above") || relationAB[j].contains("ontop"))){
                   return false;
-               }                
+               }
+               if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && (relationAB[j].contains("under") || relationAB[j].contains("above") || relationAB[j].contains("inside") || relationAB[j].contains("ontop"))){
+                  return false;
+               }                               
             }            
          }
 
