@@ -82,12 +82,12 @@ public class Shrdlite {
             ArrayList<Statement> row= new ArrayList<Statement>();
             
 
-            row.add(new Statement("ONTOP","m","g"));
-            row.add(new Statement("ONTOP","f","m"));
+//             row.add(new Statement("ONTOP","m","g"));
+//             row.add(new Statement("ONTOP","f","m"));
             
             
-//             row.add(new Statement("above","e","g"));
-//             row.add(new Statement("above","l","g"));
+            row.add(new Statement("above","e","g"));
+            row.add(new Statement("above","l","g"));
             
             
 
