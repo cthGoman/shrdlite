@@ -137,10 +137,22 @@ public class Constraints{
             return false;
          }
          
+         if(formB.equals("ball")){           // Balls cannot support anything
+            return false;
+         }
+     
          if(formA.contains("floor")){        // Floor has to be below everything else
             return false;
          }
-           
+         if(formB.equals("box") && formA.equals("table") && (!sizeA.equals(sizeB)) ){
+            return false;
+         }         
+         if(formB.equals("box") && formA.equals("plank") && (!sizeA.equals(sizeB)) ){
+            return false;
+         }
+         if(formB.equals("box") && formA.equals("brick") && (!sizeA.equals(sizeB)) && (!sizeA.equals("large")) ){
+            return false;
+         }                            
       }
       
       
@@ -155,6 +167,10 @@ public class Constraints{
          if(sizeB.equals("large") && sizeA.equals("small")){
             return false;
          }
+         if((formA.equals("pyramid") || formA.equals("plank")) && (sizeA.equals(sizeB)) ){
+            return false;
+         }
+         
       }
       
       // ------------------------ "Above"-statements ------------------------//      
@@ -209,6 +225,54 @@ public class Constraints{
    public static boolean isGoalRowAllowed(List<Statement> goalRow, JSONObject objects){
 
       for(Statement statement : goalRow){
+      
+      
+         // ------------------------ "On top of"-statements ------------------------//          
+         if(statement.get(0).contains("ontop")){
+                                  
+         }
+      
+         // ------------------------ "Inside"-statements ------------------------//   
+         else if(statement.get(0).contains("inside")){
+        
+         }
+      
+         // ------------------------ "Above"-statements ------------------------//      
+         else if(statement.get(0).contains("above")){
+      
+         }
+      
+         // ------------------------ "Under"-statements ------------------------//           
+         else if(statement.get(0).contains("under")){
+      
+         }
+      
+         // ------------------------ "Beside"-statements ------------------------//           
+         else if(statement.get(0).contains("beside")){
+           
+         }
+      
+         // ------------------------ "Left of"-statements ------------------------//           
+         else if(statement.get(0).contains("leftof")){
+            
+         }
+        
+         // ------------------------ "Right of"-statements ------------------------//         
+         else if(statement.get(0).contains("rightof")){
+            
+         }
+
+         // ------------------------ "Hold"-statements ------------------------//          
+         else if(statement.get(0).contains("hold")){
+   
+         }
+      
+      
+         /////////////ENDS////////////////
+      
+         if(1==2){
+            return false;
+         }
          
       }
       return true;
