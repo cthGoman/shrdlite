@@ -1,2 +1,4 @@
-move(basic_entity(the,object(pyramid,large,-)),relative(ontop,basic_entity(any,object(plank,-,-))))
-i 
+take(basic_entity(any,object(ball,-,-)))
+
+[hold, robot-0, e] 
+[hold, robot-0, f] 
