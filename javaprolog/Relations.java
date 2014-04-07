@@ -31,7 +31,7 @@ public class Relations{
       for(int i = 0;i < object0.size();i++){
          for(int j = 0; j < objectsList.get(0).size() ; j++){ 
               
-            Statement statement = new Statement(object0.get(i),relations.get(0),objectsList.get(0).get(j));
+            Statement statement = new Statement(relations.get(0),object0.get(i),objectsList.get(0).get(j));
             statements.add(statement);
               
          }            
@@ -43,7 +43,7 @@ public class Relations{
          for(int j = 0; j < objectsList.get(i).size();j++){
             for(int k = 0; k < objectsList.get(i+1).size(); k++){
                
-               Statement statement = new Statement(objectsList.get(i).get(j),relations.get(i+1),objectsList.get(i+1).get(k));
+               Statement statement = new Statement(relations.get(i+1),objectsList.get(i).get(j),objectsList.get(i+1).get(k));
                statements.add(statement);
               
                
