@@ -21,7 +21,7 @@ public class CombineStatements{
          for(int j = 0; j < currentStatementList.size();j++){    
          
             for(int k = 0; k < statements.get(i+1).size();k++){
-               if(currentStatementList.get(j).get(currentStatementList.get(j).size()-1).get(2).equals(statements.get(i+1).get(k).get(0))){
+               if(currentStatementList.get(j).get(currentStatementList.get(j).size()-1).get(2).equals(statements.get(i+1).get(k).get(1))){
                   ArrayList<Statement> tempStatementList = new ArrayList<Statement>(currentStatementList.get(j));
                   tempStatementList.add(statements.get(i+1).get(k));
                   newStatementList.add(tempStatementList);
