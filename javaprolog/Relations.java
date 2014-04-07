@@ -9,9 +9,9 @@ public class Relations{
 
 
    public static Goal relation(JSONObject objects,ArrayList<ArrayList<String>> world,Tree tree, ArrayList<String> object0){
-   	if(object0.size() == 0){
-			return null;
-		}
+      if(object0.size() == 0){
+         return null;
+      }
       //DebugFile.start();   
       LinkedList<LinkedList<String>> objectsDescriptionList = new LinkedList<LinkedList<String>>();
       LinkedList<String> relations = new LinkedList<String>();
@@ -36,47 +36,36 @@ public class Relations{
      //DebugFile.println("objectList" + objectsList.toString());    
      //DebugFile.stop();
      
-     Goal goal = new Goal();
-     
-     if(relations.size() != 0 && objectsList.size() != 0 && object0.size() != 0){
-      for(int i = 0;i < object0.size();i++){
-         for(int j = 0; j < objectsList.get(0).size() ; j++){ 
-              
-            Statement statement = new Statement(relations.get(0),object0.get(i),objectsList.get(0).get(j));
-            if(Constraints.isStatementAllowed(statement,objects)){
-               statements.add(statement);
-            }
-              
-         }            
-      }
-      statementsList.add(statements);
-         
-      for(int i = 0;i < objectsList.size()-1 ; i++){
-         statements = new ArrayList<Statement>();
-         for(int j = 0; j < objectsList.get(i).size();j++){
-            for(int k = 0; k < objectsList.get(i+1).size(); k++){
-               
-               Statement statement = new Statement(relations.get(i+1),objectsList.get(i).get(j),objectsList.get(i+1).get(k));
+      Goal goal = new Goal();
+      if(relations.size() != 0 && objectsList.size() != 0){
+         for(int i = 0;i < object0.size();i++){
+            for(int j = 0; j < objectsList.get(0).size() ; j++){ 
+               Statement statement = new Statement(relations.get(0),object0.get(i),objectsList.get(0).get(j));
                if(Constraints.isStatementAllowed(statement,objects)){
                   statements.add(statement);
                }
-               
             }
          }
          statementsList.add(statements);
+         for(int i = 0;i < objectsList.size()-1 ; i++){
+            statements = new ArrayList<Statement>();
+            for(int j = 0; j < objectsList.get(i).size();j++){
+               for(int k = 0; k < objectsList.get(i+1).size(); k++){
+                  Statement statement = new Statement(relations.get(i+1),objectsList.get(i).get(j),objectsList.get(i+1).get(k));
+                  if(Constraints.isStatementAllowed(statement,objects)){
+                     statements.add(statement);
+                  }
+               }
+            }
+            statementsList.add(statements);
+         }
+         Goal prelGoal = CombineStatements.combine(statementsList);
+			for(ArrayList<Statement> als:prelGoal){
+				if(Constraints.isGoalRowAllowed(als)){
+					goal.addCondition(als);
+				}
+			}
       }
-            
-      
-      goal = CombineStatements.combine(statementsList);
-      }
-      
       return goal; 
-   
-   
    }
-
-
-
-
-
 }
