@@ -160,6 +160,12 @@ public class Planner{
    
    public Plan solve2(Goal goal,JSONObject result){
       Plan plan = new Plan();
+      
+      if (goal.fulfilled(world,holding)){
+         plan.add("No plan needed");
+         return plan;
+      }
+      
       JSONArray goalWorld = new JSONArray();
       if (!holding.isEmpty()){
          for (int j=0;j<world.size();j++){
@@ -289,6 +295,11 @@ public class Planner{
    public Plan solve3(Goal goal,JSONObject result){
       Plan tempPlan = new Plan();
       Plan plan = new Plan();
+      
+      if (goal.fulfilled(world,holding)){
+         plan.add("No plan needed");
+         return plan;
+      }
       
       ArrayList<Plan> listOfPlans = new ArrayList<Plan>();
       int numberOfFoundGoalStates = 0;
