@@ -7,13 +7,13 @@ public class Heuristic3{
    private SetCost setCost;
    
    public Heuristic3(JSONArray world, String holding){
-      SetCost setCost = new SetCost(world, holding, -1);
+      setCost = new SetCost(world, holding, -1);
       
    }
 
 	public Heuristic3(JSONArray world, String holding, Goal goal, JSONObject objects) {
 		
-      SetCost setCost = new SetCost(world, holding, -1);
+      setCost = new SetCost(world, holding, -1);
       
     for (ArrayList<Statement> listOfStatement : goal){//Loop over all rows 
 

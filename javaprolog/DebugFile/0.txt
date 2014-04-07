@@ -1,2 +1,2 @@
-take(basic_entity(any,object(ball,-,-)))
-e f 
+move(basic_entity(the,object(box,-,red)),relative(ontop,basic_entity(the,object(pyramid,-,yellow))))
+l 
