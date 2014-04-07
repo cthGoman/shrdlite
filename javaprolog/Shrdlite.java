@@ -67,19 +67,21 @@ public class Shrdlite {
 				}
 				Planner planner = new Planner(world, holding, objects);
 				Plan plan = null;
-				if (goals.get(0).get(0).get(0).equals("hold")){
+            // System.out.println(goals.get(0).get(0).get(0).get(0));
+				if (goals.get(0).get(0).get(0).get(0).equals("hold")){
 					plan = planner.solve(goals.get(0),result);
+               // System.out.println("tjoho");
 				}else{
 					plan = planner.solve3(goals.get(0),result);
 				}
 				result.put("plan", plan);
-				if (plan.isEmpty()) {
-					result.put("output", "Planning error!");
-				} else {
-					long endTime   = System.currentTimeMillis();
-					long totalTime = endTime - startTime;
-					result.put("output", "Success! " + totalTime + " " + plan.size());
-				}
+// 				if (plan.isEmpty()) {
+// 					result.put("output", "Planning error!");
+// 				} else {
+// 					long endTime   = System.currentTimeMillis();
+// 					long totalTime = endTime - startTime;
+// 					result.put("output", "Success! " + totalTime + " " + plan.size());
+// 				}
 			}
 		}
 		System.out.print(result);

@@ -117,7 +117,7 @@ public class GenerateAndTest{
    
    
    public static String generateGoalHolding(Goal goals){
-   String goalHolding = new String("");
+   String goalHolding = goals.get(0).get(0).get(2);
    
    return goalHolding;
    }
