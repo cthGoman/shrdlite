@@ -322,8 +322,9 @@ public class Planner{
 		while(!stateStack.isEmpty() && (!foundGoalstate || numberOfFoundGoalStates<20 )) {
          if (!foundGoalstate)
             state = (JSONArray) stateStack.peek();
-            
-			JSONArray child  = (JSONArray) WorldFunctions.getBestUnvisitedWorld2(state,goal,visitedWorlds,objects,pickFrom,dropIn);
+         
+         String holding = new String();   
+			JSONArray child  = (JSONArray) WorldFunctions.getBestUnvisitedWorld3(state,goal,visitedWorlds,objects,pickFrom,dropIn,holding);
          foundGoalstate=false;
          
          // System.out.println("child " + child);

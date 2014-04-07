@@ -3,7 +3,7 @@ import org.json.simple.*;
 
 public class GenerateAndTest{
 
-   public static JSONArray generateWorld(Goal goal, JSONArray world, String holding, JSONObject objectsIn, int worldIterations){
+   public static JSONArray generateWorld(Goal goal, JSONArray world, String holding, String goalHolding, JSONObject objectsIn, int worldIterations){
    JSONArray goalWorld = (JSONArray) WorldFunctions.copy(world);
    ArrayList<String> grabbedObjects = new ArrayList();
    
@@ -104,7 +104,7 @@ public class GenerateAndTest{
 //       System.out.println("heuristic " +tempHeu.isBetter(goalWorldHeu));
       
       
-      if(Constraints.isWorldAllowed(tempGoalWorld,"",objectsIn) && goal.fulfilled(tempGoalWorld,"") && tempHeu.isBetter(goalWorldHeu)){
+      if(Constraints.isWorldAllowed(tempGoalWorld,"",objectsIn) && goal.fulfilled(tempGoalWorld,goalHolding) && tempHeu.isBetter(goalWorldHeu)){
 //          System.out.println("kanon!");
          goalWorld = WorldFunctions.copy(tempGoalWorld);
          goalWorldHeu=tempHeu;       
