@@ -25,8 +25,14 @@ public class Interpreter{
 		worldList.add(hold);
 	}
 	public List<Goal> interpret(Term input){
+DebugFile.start();
 		Tree tree = new Tree(input.toString().replace("(-)","-"));
 		ArrayList<String> object0 = InitialState.getInitialObjects(tree.getMasterNode(),objects,worldList);
+DebugFile.println(input.toString().replace("(-)","-"));
+for(String o:object0){
+	DebugFile.print(o+" ");
+}
+DebugFile.println("");
 		Goal testGoal = Relations.relation(objects,worldList,tree,object0);
 		if(tree.getMasterNode().getValue().equals("take")){
 			ArrayList<Statement> rob = new ArrayList<Statement>();
@@ -37,6 +43,7 @@ public class Interpreter{
 		}
       LinkedList<Goal> goalList = new LinkedList<Goal>();
       goalList.add(testGoal);
+DebugFile.stop();
 		return goalList;
 	}
 }
