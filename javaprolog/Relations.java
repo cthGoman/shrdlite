@@ -22,7 +22,6 @@ public class Relations{
       ArrayList<ArrayList<String>> objectsList = new ArrayList<ArrayList<String>>();
       ArrayList<String> objectArray;
       for(int i = 0; i < objectsDescriptionList.size(); i++){
-         DebugFile.println("from relations"+objectsDescriptionList.get(i).toString());
          objectArray = FindObject.match(objectsDescriptionList.get(i),objects,world);
          objectsList.add(objectArray);
       }
