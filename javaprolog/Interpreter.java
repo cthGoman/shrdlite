@@ -29,20 +29,25 @@ DebugFile.start();
 		Tree tree = new Tree(input.toString().replace("(-)","-"));
 		ArrayList<String> object0 = InitialState.getInitialObjects(tree.getMasterNode(),objects,worldList);
 DebugFile.println(input.toString().replace("(-)","-"));
-for(String o:object0){
-	DebugFile.print(o+" ");
-}
-DebugFile.println("");
-		Goal testGoal = Relations.relation(objects,worldList,tree,object0);
-		if(tree.getMasterNode().getValue().equals("take")){
-			ArrayList<Statement> rob = new ArrayList<Statement>();
-			for(String o:object0){
-				rob.add(new Statement("hold","robot-0",o));
+		Goal goal = null;
+		if(tree.getMasterNode().getValue().equals("move")){
+			goal = Relations.relation(objects,worldList,tree,object0);
+		}else if(tree.getMasterNode().getValue().equals("take")){
+			goal = new Goal();
+			for(int i = 0 ; i < object0.size() ; i++){
+				goal.addStatement(i, new Statement("hold","robot-0",object0.get(i)));
 			}
-			testGoal.add(0,rob);
 		}
       LinkedList<Goal> goalList = new LinkedList<Goal>();
-      goalList.add(testGoal);
+		if(goal != null){
+			goalList.add(goal);
+		}
+for(ArrayList<Statement> als:goal){
+DebugFile.println("");
+for(Statement s:als){
+DebugFile.print(s + " ");
+}
+}
 DebugFile.stop();
 		return goalList;
 	}

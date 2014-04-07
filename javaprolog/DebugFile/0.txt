@@ -1,2 +1,8 @@
 take(basic_entity(any,object(ball,-,-)))
+<<<<<<< HEAD
 e f 
+=======
+
+[hold, robot-0, e] 
+[hold, robot-0, f] 
+>>>>>>> FETCH_HEAD
