@@ -18,8 +18,9 @@ public class Planner{
 	public Plan solve(Goal goal,JSONObject result){
       Plan plan=new Plan();
       
-      JSONArray goalWorld = GenerateAndTest.generateWorld(goal,world,holding,objects,10000);
       String goalHolding = GenerateAndTest.generateGoalHolding(goal);
+      JSONArray goalWorld = GenerateAndTest.generateWorld(goal,world,holding,goalHolding,objects,10000);
+      
       result.put("output", ""+goalWorld+ " " + goalHolding);
      
 

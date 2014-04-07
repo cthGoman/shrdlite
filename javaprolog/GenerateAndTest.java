@@ -7,6 +7,9 @@ public class GenerateAndTest{
    JSONArray goalWorld = (JSONArray) WorldFunctions.copy(world);
    ArrayList<String> grabbedObjects = new ArrayList();
    
+   if (!holding.isEmpty())
+      grabbedObjects.add(holding);
+   
    for(int i=0; i < goal.size(); i++){ //Loop over rows in goal
       
       
@@ -98,13 +101,13 @@ public class GenerateAndTest{
 //          System.out.println("tempGoalWorld "+tempGoalWorld + " " + c);
          
       }
-      Heuristic tempHeu = new Heuristic(world, holding, tempGoalWorld, "");
+      Heuristic tempHeu = new Heuristic(world, holding, tempGoalWorld, goalHolding);
 //       System.out.println("constraints " +Constraints.isWorldAllowed(tempGoalWorld,"",objectsIn));
 //       System.out.println("fulfilled " +goal.fulfilled(tempGoalWorld));
 //       System.out.println("heuristic " +tempHeu.isBetter(goalWorldHeu));
       
       
-      if(Constraints.isWorldAllowed(tempGoalWorld,"",objectsIn) && goal.fulfilled(tempGoalWorld,goalHolding) && tempHeu.isBetter(goalWorldHeu)){
+      if(Constraints.isWorldAllowed(tempGoalWorld,goalHolding,objectsIn) && goal.fulfilled(tempGoalWorld,goalHolding) && tempHeu.isBetter(goalWorldHeu)){
 //          System.out.println("kanon!");
          goalWorld = WorldFunctions.copy(tempGoalWorld);
          goalWorldHeu=tempHeu;       
