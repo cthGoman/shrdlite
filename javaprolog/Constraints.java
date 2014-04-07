@@ -243,7 +243,7 @@ public class Constraints{
       return true;      // All checks passed
    }
    
-   public static boolean isGoalRowAllowed(List<Statement> goalRow, JSONObject objects){
+   public static boolean isGoalRowAllowed(List<Statement> goalRow){
       
       String[] relationAB = new String[goalRow.size()];
       String[] idObjectA = new String[goalRow.size()];
