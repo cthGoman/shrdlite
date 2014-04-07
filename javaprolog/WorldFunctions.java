@@ -41,7 +41,7 @@ public class WorldFunctions{
          return k;
       }
       else if(object.contains(String.valueOf(k))){
-      
+         return k;
       }
      }
      return -1;
@@ -188,7 +188,8 @@ public class WorldFunctions{
                //Calculate the cost for the current pick
                Heuristic2 currPick = new Heuristic2(strippedWorld,"",goal,objectsIn);
       
-               
+               System.out.println("strippedWorld " + strippedWorld);
+               System.out.println("cost " + currPick.getCost());
                //Check if the current pick is the best
                if (currPick.isBetter(bestPick) && !visitedWorlds.contains(strippedWorld) && Constraints.isWorldAllowed(strippedWorld,"",objectsIn)){
                   bestUnvisitedWorld=strippedWorld;
