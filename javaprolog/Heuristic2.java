@@ -31,7 +31,7 @@ public class Heuristic2{
          
          for (Statement statement : listOfStatement) {//Loop over every statement in row
          
-            if ("ontop".equals(statement.get(0).toLowerCase())){
+            if ("ontop".equals(statement.get(0).toLowerCase()) || "inside".equals(statement.get(0).toLowerCase())){
                int column1 = WorldFunctions.getColumnNumber(world,statement.get(1));
                int place1 = WorldFunctions.getPlaceInColumn(world,statement.get(1));
                int column2 = WorldFunctions.getColumnNumber(world,statement.get(2));
