@@ -10,7 +10,6 @@ public class Interpreter{
 	private JSONObject objects;
 	private ArrayList<ArrayList<String>> worldList = new ArrayList<ArrayList<String>>();
 	Interpreter(JSONArray world, String holding, JSONObject objects){
-DebugFile.start();
 		this.objects = objects;
 		for(int i = 0 ; i < world.size() ; i++){
 			JSONArray column = (JSONArray)world.get(i);
@@ -28,7 +27,6 @@ DebugFile.start();
 	public List<Goal> interpret(Term input){
 		Tree tree = new Tree(input.toString().replace("(-)","-"));
 		ArrayList<String> object0 = InitialState.getInitialObjects(tree.getMasterNode(),objects,worldList);
-DebugFile.stop();
 		Goal testGoal = Relations.relation(objects,worldList,tree,object0);
 		if(tree.getMasterNode().getValue().equals("take")){
 			ArrayList<Statement> rob = new ArrayList<Statement>();
@@ -39,8 +37,6 @@ DebugFile.stop();
 		}
       LinkedList<Goal> goalList = new LinkedList<Goal>();
       goalList.add(testGoal);
-
-//DebugFile.stop();
 		return goalList;
 	}
 }
