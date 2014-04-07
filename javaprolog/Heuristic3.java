@@ -111,7 +111,7 @@ public class Heuristic3{
                else if(world.size()-1==columnNr2){
                   rowSetCost.move(obj2,column2);;
                } 
-               else if(columnNr1<columnNr2){//object 1 left of object 2
+               else if(columnNr1=<columnNr2){//object 1 left of object 2
                   rowSetCost.moveMin(obj1,obj2,column1,column2);
                }
                
@@ -132,7 +132,7 @@ public class Heuristic3{
                   rowSetCost.move(obj1,column1);
                } 
 
-               else if(columnNr2<columnNr1){//object 1 right of object 2
+               else if(columnNr2=<columnNr1){//object 1 right of object 2
                   rowSetCost.moveMin(obj1,obj2,column1,column2);
                }   
             }
