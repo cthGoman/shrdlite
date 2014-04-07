@@ -123,7 +123,7 @@ public class Constraints{
       }
       
       if(statement.get(1).equals(statement.get(2))){
-         System.out.println("fail 1");
+         //System.out.println("fail 1");
          return false;
       }
 
@@ -131,34 +131,34 @@ public class Constraints{
       if(statement.get(0).contains("ontop")){
       
          if(sizeB.equals("small") && sizeA.equals("large")){
-            System.out.println("fail 2");
+            //System.out.println("fail 2");
             return false;
          }
          
          if(formA.equals("ball") && !formB.contains("floor")){ // Balls only on top of floor (or inside boxes)
-            System.out.println("fail 3");
+            //System.out.println("fail 3");
             return false;
          }
          
          if(formB.equals("ball")){           // Balls cannot support anything
-            System.out.println("fail 4");
+            //System.out.println("fail 4");
             return false;
          }
      
          if(formA.contains("floor")){        // Floor has to be below everything else
-            System.out.println("fail 5");
+            //System.out.println("fail 5");
             return false;
          }
          if(formB.equals("box") && formA.equals("table") && (!sizeA.equals(sizeB)) ){
-            System.out.println("fail 6");
+            //System.out.println("fail 6");
             return false;
          }         
          if(formB.equals("box") && formA.equals("plank") && (!sizeA.equals(sizeB)) ){
-            System.out.println("fail 7");
+            //System.out.println("fail 7");
             return false;
          }
          if(formB.equals("box") && formA.equals("brick") && (!sizeA.equals(sizeB)) && (!sizeA.equals("large")) ){
-            System.out.println("fail 8");
+            //System.out.println("fail 8");
             return false;
          }                            
       }
@@ -167,19 +167,19 @@ public class Constraints{
       // ------------------------ "Inside"-statements ------------------------//   
       else if(statement.get(0).contains("inside")){
          if(!formB.equals("box")){
-            System.out.println("fail 9");
+            //System.out.println("fail 9");
             return false;
          }
          if(formA.equals("ball") && !formB.equals("box")){
-            System.out.println("fail 10");
+            //System.out.println("fail 10");
             return false;
          }
          if(sizeA.equals("large") && sizeB.equals("small")){
-            System.out.println("fail 11");
+            //System.out.println("fail 11");
             return false;
          }
          if((formA.equals("pyramid") || formA.equals("plank")) && (sizeA.equals(sizeB)) ){
-            System.out.println("fail 12");
+            //System.out.println("fail 12");
             return false;
          }
       }
@@ -187,11 +187,11 @@ public class Constraints{
       // ------------------------ "Above"-statements ------------------------//      
       else if(statement.get(0).contains("above")){
          if(sizeB.equals("small") && sizeA.equals("large")){
-            System.out.println("fail 13");
+            //System.out.println("fail 13");
             return false;
          }
          if(formA.contains("floor")){        // Floor has to be below everything else
-            System.out.println("fail 14");
+            //System.out.println("fail 14");
             return false;
          }
       }
@@ -199,11 +199,11 @@ public class Constraints{
       // ------------------------ "Under"-statements ------------------------//           
       else if(statement.get(0).contains("under")){
          if(formB.contains("floor")){        // Floor has to be below everything else
-            System.out.println("fail 15");
+            //System.out.println("fail 15");
             return false;
          }
          if(sizeA.equals("small") && sizeB.equals("large")){
-            System.out.println("fail 16");
+            //System.out.println("fail 16");
             return false;
          }
       }
@@ -226,11 +226,11 @@ public class Constraints{
       // ------------------------ "Hold"-statements ------------------------//          
       else if(statement.get(0).contains("hold")){
          if(!formA.contains("robot")){
-            System.out.println("fail 17");
+            //System.out.println("fail 17");
             return false;
          }
          if(formB.contains("floor")){
-            System.out.println("fail 18");
+            //System.out.println("fail 18");
             return false;
          }
          
