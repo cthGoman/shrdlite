@@ -123,6 +123,7 @@ public class Constraints{
       }
       
       if(statement.get(1).equals(statement.get(2))){
+         System.out.println("fail 1");
          return false;
       }
 
@@ -130,27 +131,34 @@ public class Constraints{
       if(statement.get(0).contains("ontop")){
       
          if(sizeB.equals("small") && sizeA.equals("large")){
+            System.out.println("fail 2");
             return false;
          }
          
          if(formA.equals("ball") && !formB.contains("floor")){ // Balls only on top of floor (or inside boxes)
+            System.out.println("fail 3");
             return false;
          }
          
          if(formB.equals("ball")){           // Balls cannot support anything
+            System.out.println("fail 4");
             return false;
          }
      
          if(formA.contains("floor")){        // Floor has to be below everything else
+            System.out.println("fail 5");
             return false;
          }
          if(formB.equals("box") && formA.equals("table") && (!sizeA.equals(sizeB)) ){
+            System.out.println("fail 6");
             return false;
          }         
          if(formB.equals("box") && formA.equals("plank") && (!sizeA.equals(sizeB)) ){
+            System.out.println("fail 7");
             return false;
          }
          if(formB.equals("box") && formA.equals("brick") && (!sizeA.equals(sizeB)) && (!sizeA.equals("large")) ){
+            System.out.println("fail 8");
             return false;
          }                            
       }
@@ -159,26 +167,31 @@ public class Constraints{
       // ------------------------ "Inside"-statements ------------------------//   
       else if(statement.get(0).contains("inside")){
          if(!formB.equals("box")){
+            System.out.println("fail 9");
             return false;
          }
-         if(formA.equals("ball") && !formA.equals("box")){
+         if(formA.equals("ball") && !formB.equals("box")){
+            System.out.println("fail 10");
             return false;
          }
-         if(sizeB.equals("large") && sizeA.equals("small")){
+         if(sizeA.equals("large") && sizeB.equals("small")){
+            System.out.println("fail 11");
             return false;
          }
          if((formA.equals("pyramid") || formA.equals("plank")) && (sizeA.equals(sizeB)) ){
+            System.out.println("fail 12");
             return false;
          }
-         
       }
       
       // ------------------------ "Above"-statements ------------------------//      
       else if(statement.get(0).contains("above")){
          if(sizeB.equals("small") && sizeA.equals("large")){
+            System.out.println("fail 13");
             return false;
          }
          if(formA.contains("floor")){        // Floor has to be below everything else
+            System.out.println("fail 14");
             return false;
          }
       }
@@ -186,9 +199,11 @@ public class Constraints{
       // ------------------------ "Under"-statements ------------------------//           
       else if(statement.get(0).contains("under")){
          if(formB.contains("floor")){        // Floor has to be below everything else
+            System.out.println("fail 15");
             return false;
          }
          if(sizeA.equals("small") && sizeB.equals("large")){
+            System.out.println("fail 16");
             return false;
          }
       }
@@ -211,9 +226,11 @@ public class Constraints{
       // ------------------------ "Hold"-statements ------------------------//          
       else if(statement.get(0).contains("hold")){
          if(!formA.contains("robot")){
+            System.out.println("fail 17");
             return false;
          }
          if(formB.contains("floor")){
+            System.out.println("fail 18");
             return false;
          }
          
@@ -223,56 +240,70 @@ public class Constraints{
    }
    
    public static boolean isGoalRowAllowed(List<Statement> goalRow, JSONObject objects){
-
-      for(Statement statement : goalRow){
       
+      String[] relationAB = new String[goalRow.size()];
+      String[] idObjectA = new String[goalRow.size()];
+      String[] idObjectB = new String[goalRow.size()];
+      
+      for(int i=0;i<goalRow.size();i++){
+         relationAB[i]=goalRow.get(i).get(1);
+         idObjectA[i]=goalRow.get(i).get(1);
+         idObjectB[i]=goalRow.get(i).get(2);
+      }
+
+      for(int i=0;i<goalRow.size();i++){
       
          // ------------------------ "On top of"-statements ------------------------//          
-         if(statement.get(0).contains("ontop")){
-                                  
+         if(relationAB[i].contains("ontop")){
+         
+            for(int j=0;i<goalRow.size();j++){
+               if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j])){
+                  return false;
+               }
+            }
+            
+                                     
          }
       
          // ------------------------ "Inside"-statements ------------------------//   
-         else if(statement.get(0).contains("inside")){
+         else if(relationAB[i].contains("inside")){
         
          }
       
          // ------------------------ "Above"-statements ------------------------//      
-         else if(statement.get(0).contains("above")){
+         else if(relationAB[i].contains("above")){
       
          }
       
          // ------------------------ "Under"-statements ------------------------//           
-         else if(statement.get(0).contains("under")){
+         else if(relationAB[i].contains("under")){
       
          }
       
          // ------------------------ "Beside"-statements ------------------------//           
-         else if(statement.get(0).contains("beside")){
+         else if(relationAB[i].contains("beside")){
            
          }
       
          // ------------------------ "Left of"-statements ------------------------//           
-         else if(statement.get(0).contains("leftof")){
+         else if(relationAB[i].contains("leftof")){
             
          }
         
          // ------------------------ "Right of"-statements ------------------------//         
-         else if(statement.get(0).contains("rightof")){
+         else if(relationAB[i].contains("rightof")){
             
          }
 
          // ------------------------ "Hold"-statements ------------------------//          
-         else if(statement.get(0).contains("hold")){
+         else if(relationAB[i].contains("hold")){
    
          }
       
       
          /////////////ENDS////////////////
       
-         if(1==2){
-            return false;
-         }
+
          
       }
       return true;
