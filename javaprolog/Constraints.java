@@ -121,6 +121,10 @@ public class Constraints{
          sizeB = "undefined";
          formB = statement.get(2).substring(0,5);
       }
+      
+      if(statement.get(1).equals(statement.get(2))){
+         return false;
+      }
 
       // ------------------------ "On top of"-statements ------------------------//          
       if(statement.get(0).contains("ontop")){
@@ -146,6 +150,9 @@ public class Constraints{
             return false;
          }
          if(formA.equals("ball") && !formA.equals("box")){
+            return false;
+         }
+         if(sizeB.equals("large") && sizeA.equals("small")){
             return false;
          }
       }
@@ -198,4 +205,14 @@ public class Constraints{
                
       return true;      // All checks passed
    }
+   
+   public static boolean isGoalRowAllowed(List<Statement> goalRow, JSONObject objects){
+
+      for(Statement statement : goalRow){
+         
+      }
+      return true;
+   }
 }
+
+
