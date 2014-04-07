@@ -21,9 +21,9 @@ public class Relations{
          
       ArrayList<ArrayList<String>> objectsList = new ArrayList<ArrayList<String>>();
       ArrayList<String> objectArray;
-      //DebugFile.println("object0" + object0.toString());
-      //DebugFile.println("objectsDescriptionList" + objectsDescriptionList.toString());
-      //DebugFile.println("relations" + relations.toString());
+     // DebugFile.println("object0" + object0.toString());
+     // DebugFile.println("objectsDescriptionList" + objectsDescriptionList.toString());
+     // DebugFile.println("relations" + relations.toString());
       
      
       
@@ -53,8 +53,9 @@ public class Relations{
             for(int k = 0; k < objectsList.get(i+1).size(); k++){
                
                Statement statement = new Statement(relations.get(i+1),objectsList.get(i).get(j),objectsList.get(i+1).get(k));
-               statements.add(statement);
-              
+               if(Constraints.isStatementAllowed(statement,objects)){
+                  statements.add(statement);
+               }
                
             }
          }
