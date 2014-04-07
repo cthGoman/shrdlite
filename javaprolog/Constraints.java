@@ -259,7 +259,7 @@ public class Constraints{
          // ------------------------ "On top of"-statements ------------------------//          
          if(relationAB[i].contains("ontop")){
             for(int j=0;j<goalRow.size();j++){
-               if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && (relationAB[j].contains("above") || relationAB[j].contains("ontop"))){
+               if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && (relationAB[j].contains("above") || relationAB[j].contains("ontop") || relationAB[j].contains("inside"))){
                   return false;
                }
                if(idObjectA[i].equals(idObjectA[j]) && idObjectB[i].equals(idObjectB[j]) && relationAB[j].contains("under")){
