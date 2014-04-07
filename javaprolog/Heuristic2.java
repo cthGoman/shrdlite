@@ -123,17 +123,17 @@ public class Heuristic2{
                if(world.size()-1==column2 && column1==0){//both objects are in the wrong edges
                   
                   rowCost += 4;
-                  rowInTheWay+=((JSONArray)world.get(column1)).size()-1-place1);
-                  rowInTheWay+=((JSONArray)world.get(column2)).size()-1-place2);
+                  rowInTheWay+=(((JSONArray)world.get(column1)).size()-1-place1);
+                  rowInTheWay+=(((JSONArray)world.get(column2)).size()-1-place2);
                   
                }
                else if(column1==0){
                   rowCost += 2;
-                  rowInTheWay+=((JSONArray)world.get(column1)).size()-1-place1);
+                  rowInTheWay+=(((JSONArray)world.get(column1)).size()-1-place1);
                } 
                else if(world.size()-1==column2){
                   rowCost += 2;
-                  rowInTheWay+=((JSONArray)world.get(column2)).size()-1-place2);
+                  rowInTheWay+=(((JSONArray)world.get(column2)).size()-1-place2);
                } 
                else if(column1<column2){//object 1 left of object 2
                   
@@ -152,17 +152,17 @@ public class Heuristic2{
                if(world.size()-1==column1 && column2==0){
                   
                   rowCost += 4;
-                  rowInTheWay+=((JSONArray)world.get(column1)).size()-1-place1);
-                  rowInTheWay+=((JSONArray)world.get(column2)).size()-1-place2);
+                  rowInTheWay+=(((JSONArray)world.get(column1)).size()-1-place1);
+                  rowInTheWay+=(((JSONArray)world.get(column2)).size()-1-place2);
                   
                } 
                else if(column2==0){
                   rowCost += 2;
-                  rowInTheWay+=((JSONArray)world.get(column2)).size()-1-place2);
+                  rowInTheWay+=(((JSONArray)world.get(column2)).size()-1-place2);
                } 
                else if(world.size()-1==column1){
                   rowCost += 2;
-                  rowInTheWay+=((JSONArray)world.get(column1)).size()-1-place1);
+                  rowInTheWay+=(((JSONArray)world.get(column1)).size()-1-place1);
                } 
 
                else if(column2<column1){//object 1 right of object 2
