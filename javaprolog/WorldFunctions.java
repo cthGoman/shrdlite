@@ -19,6 +19,25 @@ public class WorldFunctions{
       return tempWorld;
    }
    
+   public static ArrayList<String> getAllObjectsInWorld(JSONArray world,String holding){
+      
+      ArrayList<String> listOfObjects = new ArrayList<String>();
+      
+      for(int k=0;k<world.size();k++){
+         JSONArray goalColTemp= new JSONArray();
+         goalColTemp.addAll((JSONArray) world.get(k));
+         for(int i=0; i<((JSONArray)world.get(k)).size();i++){
+      
+            listOfObjects.add((String)goalColTemp.get(i));
+         }
+         
+      
+      }
+      if (!holding.isEmpty())
+         listOfObjects.add(holding);
+      return listOfObjects;
+   }
+   
    public static String getTopObjectWorldColumn(JSONArray world, int column){
      return (String) ((JSONArray) world.get(column)).get(((JSONArray) world.get(column)).size()-1);
    }
