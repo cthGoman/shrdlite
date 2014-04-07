@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class Heuristic3{
    private SetCost setCost;
    
-   public Heuristic3(JSONArray world, String holding,int input){
-      SetCost setCost = new SetCost(world, holding, 10);
+   public Heuristic3(JSONArray world, String holding){
+      SetCost setCost = new SetCost(world, holding, -1);
       
    }
 

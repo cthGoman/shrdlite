@@ -86,6 +86,9 @@ HashMap<String, Integer> costMap;
    public int sum(){
       int cost = 0;
       for(Integer value : costMap.values()){
+         if(value==-1){
+            return 10000;
+         }
          cost += value;
       }
       return cost;
