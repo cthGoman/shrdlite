@@ -74,7 +74,7 @@ public class Heuristic2{
                   ((JSONArray)world.get(column2)).remove(statement.get(1));
                }
             }
-            else if ("below".equals(statement.get(0).toLowerCase())){
+            else if ("under".equals(statement.get(0).toLowerCase())){
                int column1 = WorldFunctions.getColumnNumber(world,statement.get(1));
                int place1 = WorldFunctions.getPlaceInColumn(world,statement.get(1));
                int column2 = WorldFunctions.getColumnNumber(world,statement.get(2));
