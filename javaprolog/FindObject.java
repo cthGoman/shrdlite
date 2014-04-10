@@ -68,18 +68,6 @@ public class FindObject{
                   }
                   break;
 					case "above":
-                  for(int k = r - 1; k >= 0 ; k--){
-							if(added){break;}
-							for(String ro:relativeObjects){
-                        if(world.get(c).get(k).equals(ro)){
-                           fulfillingObjects.add(ro);
-									added = true;
-									break;
-								}
-							}
-                  }	
-                  break;
-               case "under":
                   for(int k = r + 1; k < world.get(c).size() ; k++){
 							if(added){break;}
 							for(String ro:relativeObjects){
@@ -89,6 +77,18 @@ public class FindObject{
 									break;
 								}
                      }
+                  }
+                  break;
+               case "under":
+                  for(int k = r - 1; k >= 0 ; k--){
+							if(added){break;}
+							for(String ro:relativeObjects){
+                        if(world.get(c).get(k).equals(ro)){
+                           fulfillingObjects.add(ro);
+									added = true;
+									break;
+								}
+							}
                   }
                   break;
 					case "leftof":
