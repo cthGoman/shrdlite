@@ -43,7 +43,9 @@ DebugFile.println("");
 			}
 		}
       LinkedList<Goal> goalList = new LinkedList<Goal>();
-		if(goal != null){
+DebugFile.println("goalList1 " + goalList);
+DebugFile.println("goal1 " + goal);
+		if(goal != null && goal.size() != 0){
 			goalList.add(goal);
 for(ArrayList<Statement> als:goal){
 for(Statement s:als){
@@ -53,7 +55,9 @@ DebugFile.println("");
 }
 DebugFile.println(""+goalList.size());
 		}
+DebugFile.println("goalList2 " + goalList);
 DebugFile.stop();
+      
 		return goalList;
 	}
 }
