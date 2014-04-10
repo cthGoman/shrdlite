@@ -12,12 +12,15 @@ public class InitialState{
 			l = Math.min(currentNode.getValue().length(),8);
 		}
 		ArrayList<String> oldObjects = FindObject.match(currentNode.createObject(),objectsInformation,world);
+DebugFile.println(""+oldObjects);
 		currentNode = currentNode.getParent();
 		String relation = currentNode.getChild(0).getValue();
 		currentNode = currentNode.getParent();
 		while(currentNode != null){
 			ArrayList<String> newObjects = FindObject.match(currentNode.createObject(),objectsInformation,world);
+DebugFile.println(""+newObjects);
 			oldObjects = FindObject.relatedObject(newObjects,relation,oldObjects,world);
+DebugFile.println(""+oldObjects);
 			currentNode = currentNode.getParent();
 			relation = currentNode.getChild(0).getValue();
 			currentNode = currentNode.getParent();

@@ -1,3 +1,18 @@
-move(basic_entity(any,object(ball,-,-)),relative(ontop,relative_entity(the,object(table,-,-),relative(inside,relative_entity(any,object(box,-,-),relative(leftof,relative_entity(any,object(ball,-,-),relative(inside,basic_entity(any,object(box,-,-))))))))))
-e f 
+[a, b]
+[e]
+bo: a
+ ro: e
+ i h j 
+ e 
+bo: b
+ ro: e
+ d m f 
+ i h j 
+[e]
+take(relative_entity(the,object(ball,-,white),relative(beside,basic_entity(any,object(brick,-,-)))))
+e 
+goalList1 []
+goal1 [[[hold, robot-0, e]]]
+[hold, robot-0, e] 
 1
+goalList2 [[[[hold, robot-0, e]]]]
