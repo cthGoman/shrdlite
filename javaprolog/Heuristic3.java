@@ -68,7 +68,7 @@ public class Heuristic3{
                   }
                }
             }
-            else if ("below".equals(statement.get(0).toLowerCase())){
+            else if ("under".equals(statement.get(0).toLowerCase())){
                
                if(columnNr2==columnNr1){//in the same column
                   if (place2<place1){//But object 2 is below
