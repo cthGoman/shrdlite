@@ -139,7 +139,7 @@ public class Planner{
             break;
           }
           
-          if (plan.size()>30){
+          if (plan.size()>100){
             plan= new Plan();
             result.put("output", ""+goalWorld+" Planning error" + " " + goalHolding);
             break;
