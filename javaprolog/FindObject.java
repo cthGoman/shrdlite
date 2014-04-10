@@ -92,7 +92,7 @@ public class FindObject{
                   }
                   break;
 					case "leftof":
-						for(int k = c + 1; k < world.size() - 1 ; k++){
+						for(int k = c - 1; k >= 0 ; k--){
 							if(added){break;}
 							for(int l = 0 ; l < world.get(k).size() ; l++){
 								if(added){break;}
@@ -107,7 +107,7 @@ public class FindObject{
 						}
 						break;
 					case "rightof":
-						for(int k = c - 1; k >= 0 ; k--){
+						for(int k = c + 1; k < world.size() - 1 ; k++){
 							if(added){break;}
 							for(int l = 0 ; l < world.get(k).size() ; l++){
 								if(added){break;}
@@ -123,15 +123,24 @@ public class FindObject{
 						break;
 					case "beside":
 						for(String ro:relativeObjects){
-							if(r + 1 < world.get(c).size() && world.get(c).get(r + 1).equals(ro)){
-								fulfillingObjects.add(ro);
-								added = true;
-								break;
+							if(added){break;}
+							if(c + 1 < world.size()){
+								for(int l = 0 ; l < world.get(c + 1).size() ; l++){
+									if(world.get(c + 1).get(l).equals(ro)){
+										fulfillingObjects.add(ro);
+										added = true;
+										break;
+									}
+								}
 							}
-							if(r - 1 >= 0 && world.get(c).get(r - 1).equals(ro)){
-								fulfillingObjects.add(ro);
-								added = true;
-								break;
+							if(c - 1 >= 0){
+								for(int l = 0 ; l < world.get(c + 1).size() ; l++){
+									if(world.get(c + 1).get(l).equals(ro)){
+										fulfillingObjects.add(ro);
+										added = true;
+										break;
+									}
+								}
 							}
 						}	
 						break;
