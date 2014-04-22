@@ -100,4 +100,10 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
       }
       return false;
    }
+   
+   public boolean fulfilled(JSONArray worldIn, String holdingIn){
+   
+      return fulfilled(new State(worldIn,holdingIn));
+   
+   }
 }

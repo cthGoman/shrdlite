@@ -57,10 +57,10 @@ public class Shrdlite {
 				}
 			}
 			result.put("goals", goals);
-DebugFile.start();
-DebugFile.print("Goals:"+goals.size()+" ");
-DebugFile.print(""+goals);
-DebugFile.stop();
+         DebugFile.start();
+         DebugFile.print("Goals:"+goals.size()+" ");
+         DebugFile.print(""+goals);
+         DebugFile.stop();
 			if (goals.isEmpty()) {
 				result.put("output", "Interpretation error!");
 			} else if (goals.size() > 1) {

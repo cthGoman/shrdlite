@@ -10,7 +10,7 @@ public class State{
    
    public State(JSONArray worldIn, String holdingIn){
       holding = holdingIn;
-      robotPos = 0;
+      robotPos = -1;
       world = new ArrayList<ArrayList<String>>(worldIn.size());
       for(int k=0;k<worldIn.size();k++){
          world.add(new ArrayList((JSONArray)worldIn.get(k)));

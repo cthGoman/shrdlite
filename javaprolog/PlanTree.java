@@ -44,7 +44,7 @@ public class PlanTree{
 //                currentState.setEvaluated(true, maxCost());
 //                currentState = currentState.getParent();
 //             }            
-            else if(maxCost()-1 > currentState.getBestUnevaluatedChild().getHeuristic().getCost()+currentState.getBestUnevaluatedChild().getDepth()){
+            else if(maxCost() > currentState.getBestUnevaluatedChild().getHeuristic().getCost()+currentState.getBestUnevaluatedChild().getDepth()){
                currentState = currentState.getBestUnevaluatedChild();
                if(currentState.getChildren().size()<1)
                   generateChildren(currentState);
@@ -84,27 +84,30 @@ public class PlanTree{
    private void generateChildren(PlanTreeState treeState){
       
       for(int i=0; i < treeState.getState().getWorld().size(); i++){ //loop over every column for pick/drop
-         State tempState = new State(treeState.getState());
-         String tempMove;
-         tempMove = tempState.pickDropColumn(i); 
-
-         if(!containState(tempState)){ //check if the PlanTree already contains the state
-            if(Constraints2.isWorldAllowed(tempState, objects)){
-               PlanTreeState tempPlanTreeState = new PlanTreeState(tempState, treeState, goal, objects, tempMove, maxCost()); //add it if not
-               stateMap.put(tempState,tempPlanTreeState);
-               if(tempPlanTreeState.isSolution()){
-   //                System.out.println("New solution: "+tempPlanTreeState.getDepth());
-                  solutions.add(tempPlanTreeState);
+         if(i!=currentState.getState().getRobotPos()){
+            State tempState = new State(treeState.getState());
+            String tempMove;
+            tempMove = tempState.pickDropColumn(i); 
+   
+            if(!containState(tempState)){ //check if the PlanTree already contains the state
+               if(Constraints.isWorldAllowed(tempState, objects)){
+                  PlanTreeState tempPlanTreeState = new PlanTreeState(tempState, treeState, goal, objects, tempMove, maxCost()); //add it if not
+                  stateMap.put(tempState,tempPlanTreeState);
+                  if(tempPlanTreeState.isSolution()){
+      //                System.out.println("New solution: "+tempPlanTreeState.getDepth());
+                     solutions.add(tempPlanTreeState);
+                  }
                }
             }
-         }
-         else if(treeState.getDepth()<stateMap.get(tempState).getDepth()){ //add it if it previously was in a deeper layer
-            int before = stateMap.size();
-            stateMap.get(tempState).setParent(treeState, maxCost());
-            stateMap.get(tempState).setMove(tempMove);
-            if(stateMap.get(tempState).getDepth()+stateMap.get(tempState).getHeuristic().getCost()<maxCost()-1){
-               if(!stateMap.get(tempState).isSolution()){
-                  stateMap.get(tempState).setEvaluated(false, maxCost());
+            else if(treeState.getDepth()<stateMap.get(tempState).getDepth()){ //add it if it previously was in a deeper layer
+               int before = stateMap.size();
+               PlanTreeState tempPlanTreeState = stateMap.get(tempState);
+               tempPlanTreeState.setParent(treeState, maxCost());
+               tempPlanTreeState.setMove(tempMove);
+               if(tempPlanTreeState.getDepth()+tempPlanTreeState.getHeuristic().getCost()<maxCost()){
+                  if(!tempPlanTreeState.isSolution()){
+                     tempPlanTreeState.setEvaluated(false, maxCost());
+                  }
                }
             }
          }
@@ -146,7 +149,7 @@ public class PlanTree{
 //                   nrOfFives++;
 //             }
          }
-         return solution.getDepth();
+         return solution.getDepth()-1;
       }
       else{
          previousMaxCost = 10000;
