@@ -20,7 +20,7 @@ public class PlanTreeState{
       hasParent = false;
       stateHeu = new Heuristic3(inState);
       childrenStates = new HashSet<PlanTreeState>();
-      if (Constraints2.isWorldAllowed(inState, objects)){
+      if (Constraints.isWorldAllowed(inState, objects)){
          stateHeu = new Heuristic3(inState, goal, objects);
          isAllowed = true;
          if(goal.fulfilled(state)){
@@ -46,7 +46,7 @@ public class PlanTreeState{
       setParent(parentState, maxCost);
       stateHeu = new Heuristic3(inState);
       childrenStates = new HashSet<PlanTreeState>();
-      if (Constraints2.isWorldAllowed(inState, objects)){
+      if (Constraints.isWorldAllowed(inState, objects)){
          stateHeu = new Heuristic3(inState, goal, objects);
          isAllowed = true;
          if(goal.fulfilled(state)){

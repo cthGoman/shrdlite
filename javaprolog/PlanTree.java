@@ -90,7 +90,7 @@ public class PlanTree{
             tempMove = tempState.pickDropColumn(i); 
    
             if(!containState(tempState)){ //check if the PlanTree already contains the state
-               if(Constraints2.isWorldAllowed(tempState, objects)){
+               if(Constraints.isWorldAllowed(tempState, objects)){
                   PlanTreeState tempPlanTreeState = new PlanTreeState(tempState, treeState, goal, objects, tempMove, maxCost()); //add it if not
                   stateMap.put(tempState,tempPlanTreeState);
                   if(tempPlanTreeState.isSolution()){
@@ -140,7 +140,7 @@ public class PlanTree{
       PlanTreeState solution = getBestSolution();
       if(solution.isSolution()){
          if(solution.getDepth()!=previousMaxCost){
-            System.out.println("Lowered Max cost: "+solution.getDepth()+" Current Nr of States: " + stateMap.size());
+//             System.out.println("Lowered Max cost: "+solution.getDepth()+" Current Nr of States: " + stateMap.size());
             previousMaxCost = solution.getDepth();
             
 //             int nrOfFives=0;
