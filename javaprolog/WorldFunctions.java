@@ -19,6 +19,25 @@ public class WorldFunctions{
       return tempWorld;
    }
    
+   public static ArrayList<String> getAllObjectsInWorld(JSONArray world,String holding){
+      
+      ArrayList<String> listOfObjects = new ArrayList<String>();
+      
+      for(int k=0;k<world.size();k++){
+         JSONArray goalColTemp= new JSONArray();
+         goalColTemp.addAll((JSONArray) world.get(k));
+         for(int i=0; i<((JSONArray)world.get(k)).size();i++){
+      
+            listOfObjects.add((String)goalColTemp.get(i));
+         }
+         
+      
+      }
+      if (!holding.isEmpty())
+         listOfObjects.add(holding);
+      return listOfObjects;
+   }
+   
    public static String getTopObjectWorldColumn(JSONArray world, int column){
      return (String) ((JSONArray) world.get(column)).get(((JSONArray) world.get(column)).size()-1);
    }
@@ -196,6 +215,63 @@ public class WorldFunctions{
                   bestPick=currPick;
                   pickFrom[0]=j;
                   dropIn[0]=i;
+               }
+            }     
+         }
+         
+       }
+      
+      return bestUnvisitedWorld;
+   }
+   
+   
+   public static JSONArray getBestUnvisitedWorld3(JSONArray world,Goal goal, Set<JSONArray> visitedWorlds, JSONObject objectsIn, int[] pickFrom, int[] dropIn,String holding, int[] cost){
+      
+      
+      JSONArray bestUnvisitedWorld = null;
+      Heuristic3 bestPick = new Heuristic3(world, "");
+      
+      for (int j=0;j<world.size();j++){
+         //Loop over columns
+         
+         
+         
+         JSONArray tempWorld = WorldFunctions.copy(world);
+         String movedObject = "";
+         
+         if (((JSONArray) tempWorld.get(j)).size()>0) {
+            //If current column has an object
+            
+            //Pick up the top object in column j
+            movedObject= WorldFunctions.getTopObjectWorldColumn(tempWorld,j);
+            WorldFunctions.removeTopObjectWorldColumn(tempWorld,j);
+            
+            for (int i=0;i<world.size();i++){
+            
+               JSONArray strippedWorld = WorldFunctions.copy(tempWorld);
+               //Place the object in each column and test
+               WorldFunctions.addObjectWorldColumn(movedObject,strippedWorld,i);
+               
+               
+               //Calculate the cost for the current pick
+               Heuristic3 currPick = new Heuristic3(strippedWorld,"",goal,objectsIn);
+               
+               // if (currPick.getCost()==0){
+//                   pickFrom[0]=j;
+//                   dropIn[0]=-1;
+//                   holding=movedObject;
+//                   return strippedWorld;
+//                }
+      
+               // System.out.println("strippedWorld " + strippedWorld);
+//                System.out.println("cost " + currPick.getCost());
+               //Check if the current pick is the best
+               if (currPick.isBetter(bestPick) && !visitedWorlds.contains(strippedWorld) && Constraints.isWorldAllowed(strippedWorld,"",objectsIn)){
+                  bestUnvisitedWorld=strippedWorld;
+                  bestPick=currPick;
+                  pickFrom[0]=j;
+                  dropIn[0]=i;
+                  cost[0]=bestPick.getCost();
                }
             }     
          }

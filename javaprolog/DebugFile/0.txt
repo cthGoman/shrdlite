@@ -1,0 +1,7 @@
+move(basic_entity(the,object(table,large,-)),relative(ontop,basic_entity(the,object(brick,large,-))))
+g 
+goalList1 []
+goal1 [[[ontop, g, a]]]
+[ontop, g, a] 
+1
+goalList2 [[[[ontop, g, a]]]]

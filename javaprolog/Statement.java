@@ -2,16 +2,14 @@
 import java.util.*;
 
 public class Statement extends ArrayList<String>{
-
-	
+// One should protect this file form the use of the inherited methods of ArrayList.
+// but since this file isn't ment to be used by others we dont't fix this.
 	public Statement(String spatialOperator,String arg1,String arg2){
       super.add(spatialOperator);
 		super.add(arg1);
 		super.add(arg2);
 	}
-	// This prevents anyone from adding an additional string to the statement.
-	// Should also be done for a lot of other methods in arraylist, but nevermind
-	public boolean add(String s){
-		return false;
+	public Object clone(){
+		return new Statement(get(0),get(1),get(2));
 	}
 }
