@@ -2,6 +2,22 @@ import java.io.*;
 import java.util.*;
 
 public class QuestionFile{
+	public static void writeQuestion(String s){
+		write(s);
+	}
+	public static void reset(){
+		write("what can I do for you today?");
+		PrintWriter writer;
+		try{
+			File f = new File("Question" + File.separator + "QuestionInfo.txt");
+			writer = new PrintWriter(f, "UTF-8");
+			writer.println(0);
+			writer.flush();
+			writer.close();
+		}catch(Exception e){
+			javax.swing.JOptionPane.showMessageDialog(null,e);
+		}
+	}
 	private static void write(String s){
 		PrintWriter writer;
 		try{
@@ -14,22 +30,64 @@ public class QuestionFile{
 			javax.swing.JOptionPane.showMessageDialog(null,e);
 		}
 	}
-	public static void writeQuestion(String s){
-		write(s);
-	}
-	public static void reset(){
-		write("what can I do for you today?");
-	}
 	public static boolean haveQuestion(){
-		return true;
+		try{
+			Scanner sc = new Scanner(new File("Question" + File.separator + "QuestionInfo.txt"));
+			String s = sc.nextLine();
+			return s.charAt(0) == '1';
+		}catch(Exception e){
+			javax.swing.JOptionPane.showMessageDialog(null,e);
+		}
+		return false;
 	}
 	public static ArrayList<String> getYesList(){
-		return new ArrayList<String>();
+		ArrayList<String> yesList = new ArrayList<String>();
+		try{
+			Scanner sc = new Scanner(new File("Question" + File.separator + "QuestionInfo.txt"));
+			while(sc.hasNext()){
+				if(sc.next().equals("Yes:")){
+					for(int i = sc.nextInt() ; i > 0 ; i--){
+						yesList.add(sc.nextLine());
+					}
+					break;
+				}
+			}
+		}catch(Exception e){
+			javax.swing.JOptionPane.showMessageDialog(null,e);
+		}
+		return yesList;
 	}
 	public static ArrayList<String> getNoList(){
-		return new ArrayList<String>();
+		ArrayList<String> noList = new ArrayList<String>();
+		try{
+			Scanner sc = new Scanner(new File("Question" + File.separator + "QuestionInfo.txt"));
+			while(sc.hasNext()){
+				if(sc.next().equals("No:")){
+					for(int i = sc.nextInt() ; i > 0 ; i--){
+						noList.add(sc.nextLine());
+					}
+					break;
+				}
+			}
+		}catch(Exception e){
+			javax.swing.JOptionPane.showMessageDialog(null,e);
+		}
+		return noList;
 	}
 	public static void saveInfo(ArrayList<String> yesList, ArrayList<String> noList){
-		
+		PrintWriter writer;
+		try{
+			File f = new File("Question" + File.separator + "QuestionInfo.txt");
+			writer = new PrintWriter(f, "UTF-8");
+			writer.println(1);
+			writer.println("Yes: "+yesList.size());
+			for(String s:yesList){writer.println(1);}
+			writer.println("No: "+yesList.size());
+			for(String s:noList){writer.println(1);}
+			writer.flush();
+			writer.close();
+		}catch(Exception e){
+			javax.swing.JOptionPane.showMessageDialog(null,e);
+		}
 	}
 }
