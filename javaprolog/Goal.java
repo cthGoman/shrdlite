@@ -33,63 +33,63 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
 	public void addCondition(ArrayList<Statement> newCondition){
 		add(newCondition);
 	}
-   public boolean fulfilled(JSONArray world, String holding){
+   public boolean fulfilled(State worldState){
       for (ArrayList<Statement> listOfStatement : this){//Loop over all rows 
          boolean tempFulfilled = true;
          for (Statement statement : listOfStatement) {//Loop over every statement in row
             if ("ontop".equals(statement.get(0).toLowerCase()) || "inside".equals(statement.get(0).toLowerCase())){
-               int column = WorldFunctions.getColumnNumber(world,statement.get(1));
-               int place = WorldFunctions.getPlaceInColumn(world,statement.get(1));
-               if (!WorldFunctions.getObjectBelow(world,statement.get(1)).equals(statement.get(2))){
+               int column = worldState.getColumnNumber(statement.get(1));
+               int place = worldState.getPlaceInColumn(statement.get(1));
+               if (!worldState.getObjectBelow(statement.get(1)).equals(statement.get(2))){
                   tempFulfilled = false;
                }
             }
             else if ("above".equals(statement.get(0).toLowerCase())){
-               int column = WorldFunctions.getColumnNumber(world,statement.get(1));
-               int place = WorldFunctions.getPlaceInColumn(world,statement.get(1));
-               int placeSecondObject=WorldFunctions.getPlaceInColumn(world,statement.get(2));
-               int columnSecondObject = WorldFunctions.getColumnNumber(world,statement.get(2));
+               int column = worldState.getColumnNumber(statement.get(1));
+               int place = worldState.getPlaceInColumn(statement.get(1));
+               int placeSecondObject=worldState.getPlaceInColumn(statement.get(2));
+               int columnSecondObject = worldState.getColumnNumber(statement.get(2));
                if (placeSecondObject<0 || place<=placeSecondObject || column!=columnSecondObject){
                  tempFulfilled = false; 
                }
             }
             else if ("under".equals(statement.get(0).toLowerCase())){
-               int column = WorldFunctions.getColumnNumber(world,statement.get(1));
-               int place = WorldFunctions.getPlaceInColumn(world,statement.get(1));
-               int placeSecondObject=WorldFunctions.getPlaceInColumn(world,statement.get(2));
-               int columnSecondObject = WorldFunctions.getColumnNumber(world,statement.get(2));
+               int column = worldState.getColumnNumber(statement.get(1));
+               int place = worldState.getPlaceInColumn(statement.get(1));
+               int placeSecondObject=worldState.getPlaceInColumn(statement.get(2));
+               int columnSecondObject = worldState.getColumnNumber(statement.get(2));
                if (placeSecondObject<0 || place>=placeSecondObject || column!=columnSecondObject){
                  tempFulfilled = false; 
                }
             }
             else if ("beside".equals(statement.get(0).toLowerCase())){
-               int column = WorldFunctions.getColumnNumber(world,statement.get(1));
-               int secondColumn=WorldFunctions.getColumnNumber(world,statement.get(2));
+               int column = worldState.getColumnNumber(statement.get(1));
+               int secondColumn=worldState.getColumnNumber(statement.get(2));
                if (column!=(secondColumn-1) && column!=(secondColumn+1) || column==-1 || secondColumn==-1){
                  tempFulfilled = false; 
                }
             }
             else if ("leftof".equals(statement.get(0).toLowerCase())){
-               int column = WorldFunctions.getColumnNumber(world,statement.get(1));             
-               int secondColumn=WorldFunctions.getColumnNumber(world,statement.get(2));
+               int column = worldState.getColumnNumber(statement.get(1));             
+               int secondColumn=worldState.getColumnNumber(statement.get(2));
                if (column>=secondColumn || column==-1 || secondColumn==-1){
                  tempFulfilled = false; 
                }
             }
             else if ("rightof".equals(statement.get(0).toLowerCase())){
-               int column = WorldFunctions.getColumnNumber(world,statement.get(1));
-               int secondColumn=WorldFunctions.getColumnNumber(world,statement.get(2));
+               int column = worldState.getColumnNumber(statement.get(1));
+               int secondColumn=worldState.getColumnNumber(statement.get(2));
                if (column<=secondColumn || column==-1 || secondColumn==-1){
                  tempFulfilled = false; 
                }
             }
             else if ("hold".equals(statement.get(0).toLowerCase())){
-               if (!holding.equals(statement.get(2))){
+               if (!worldState.getHolding().equals(statement.get(2))){
                  tempFulfilled = false; 
                }
             }
             else if ("drop".equals(statement.get(0).toLowerCase())){
-               if (holding.equals(statement.get(1))){
+               if (worldState.getHolding().equals(statement.get(1))){
                  tempFulfilled = false; 
                }
             }                
@@ -99,5 +99,11 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
          }         
       }
       return false;
+   }
+   
+   public boolean fulfilled(JSONArray worldIn, String holdingIn){
+   
+      return fulfilled(new State(worldIn,holdingIn));
+   
    }
 }

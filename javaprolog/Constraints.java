@@ -23,8 +23,24 @@ public class Constraints{
 		
 	}
    
+   public static boolean isWorldAllowed(State worldState, JSONObject objects) {
+
+      if(!(worldState.getHolding()==null || worldState.getHolding().length()<2)){
+         return false;
+      }
+      
+      for(ArrayList<String> column : worldState.getWorld()){
+         if(column.size()>1){
+            if(!isColumnAllowed(column, objects)){
+               return false;
+            }
+         }
+      } 
+      return true;
+		
+	}
    
-   public static boolean isColumnAllowed(JSONArray column, JSONObject objects){
+    public static boolean isColumnAllowed(ArrayList<String> column, JSONObject objects){
    
       for(int j=0; j<column.size(); j++){
                String object = (String) column.get(j);
