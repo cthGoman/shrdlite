@@ -9,20 +9,6 @@ public class State{
    private int robotPos;
    private int hashCode;
    
-   public State(JSONArray worldIn, String holdingIn){
-      if (holdingIn==null)
-         holding = "";
-      else   
-         holding = holdingIn;
-         
-      robotPos = -1;
-      world = new ArrayList<ArrayList<String>>(worldIn.size());
-      for(int k=0;k<worldIn.size();k++){
-         world.add(new ArrayList((JSONArray)worldIn.get(k)));
-      }
-
-   }
-   
    public State(JSONArray worldIn, String holdingIn, int robotPosIn){
       if (holdingIn==null)
          holding = "";
@@ -35,6 +21,12 @@ public class State{
       }
       
    }
+   
+   public State(JSONArray worldIn, String holdingIn){
+
+      this(worldIn, holdingIn,-1);
+   }
+
    
    public State(State stateIn){
       holding = stateIn.getHolding();
