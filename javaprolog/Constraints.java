@@ -165,19 +165,19 @@ public class Constraints{
             //System.out.println("fail 5");
             return false;
          }
-         if(formA.equals("box") && !(formB.equals("table") || formB.equals("plank") || formB.equals("brick")) || formB.contains("floor") ){
+         if(formA.equals("box") && !(formB.equals("table") || formB.equals("plank") || formB.equals("brick") || formB.contains("floor")) ){
             return false;      
          }   
          
-         if(formB.equals("box") && formA.equals("table") && (!sizeA.equals(sizeB)) ){
+         if(formA.equals("box") && formB.equals("table") && (!sizeA.equals(sizeB)) ){
             //System.out.println("fail 6");
             return false;
          }         
-         if(formB.equals("box") && formA.equals("plank") && (!sizeA.equals(sizeB)) ){
+         if(formA.equals("box") && formB.equals("plank") && (!sizeA.equals(sizeB)) ){
             //System.out.println("fail 7");
             return false;
          }
-         if(formB.equals("box") && formA.equals("brick") && (!sizeA.equals(sizeB)) && (!sizeA.equals("large")) ){
+         if(formA.equals("box") && formB.equals("brick") && (!sizeA.equals(sizeB)) && (!sizeB.equals("large")) ){
             //System.out.println("fail 8");
             return false;
          }                            
