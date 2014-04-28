@@ -7,7 +7,25 @@ var ExampleNames = ["small","medium","orginal"];
 var ExamplesFolder = "examples";
 
 // What the system says when it has nothing to do:
-var SystemPromptText = "What can I do for you today?";
+var SystemPromptText = readTextFile("javaprolog/Question/QuestionFile.txt");
+// "What can I do for you today?";
+function readTextFile(file)
+{
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, true);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+                alert(allText);
+            }
+        }
+    }
+    rawFile.send(null);
+}
 
 // Constants that you can play around with:
 var DialogueHistory = 100;    // max nr. utterances
