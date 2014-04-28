@@ -3,29 +3,11 @@
 var AjaxScript = "cgi-bin/ajaxwrapper.py";
 
 // List of the JSON files that contain example worlds:
-var ExampleNames = ["small","medium","orginal"];
+var ExampleNames = ["small","medium","complex"];
 var ExamplesFolder = "examples";
 
 // What the system says when it has nothing to do:
-var SystemPromptText = readTextFile("javaprolog/Question/QuestionFile.txt");
-// "What can I do for you today?";
-function readTextFile(file)
-{
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file, true);
-    rawFile.onreadystatechange = function ()
-    {
-        if(rawFile.readyState === 4)
-        {
-            if(rawFile.status === 200 || rawFile.status == 0)
-            {
-                var allText = rawFile.responseText;
-                alert(allText);
-            }
-        }
-    }
-    rawFile.send(null);
-}
+var SystemPromptText = "What can I do for you today?";
 
 // Constants that you can play around with:
 var DialogueHistory = 100;    // max nr. utterances
@@ -383,6 +365,8 @@ function systemPrompt(timeout) {
     if (timeout) {
         setTimeout(systemPrompt, 1000*timeout);
     } else {
+
+
         sayUtterance("system", SystemPromptText);
         enableInput();
     }
