@@ -39,7 +39,6 @@ public class FindObject{
    public static ArrayList<String> relatedObject(ArrayList<String> relativeObjects, String relation,ArrayList<String> BasicObjects, ArrayList<ArrayList<String>> world){
       ArrayList<String> fulfillingObjects = new ArrayList<String>();
       for(String bo:BasicObjects){
-DebugFile.println("bo: " + bo);
 			boolean added = false;
          int c = -1;
          int r = -1;
@@ -124,31 +123,26 @@ DebugFile.println("bo: " + bo);
 						break;
 					case "beside":
 						for(String ro:relativeObjects){
-DebugFile.println(" ro: " + ro);
 							if(added){break;}
 							if(c + 1 < world.size()){
 								for(int l = 0 ; l < world.get(c + 1).size() ; l++){
-									DebugFile.print(" " + world.get(c + 1).get(l));
-if(world.get(c + 1).get(l).equals(ro)){
+									if(world.get(c + 1).get(l).equals(ro)){
 										fulfillingObjects.add(ro);
 										added = true;
 										break;
 									}
 								}
 							}
-DebugFile.println(" ");
 							if(c - 1 >= 0){
-								for(int l = 0 ; l < world.get(c - 1).size() ; l++){
-DebugFile.print(" " + world.get(c - 1).get(l));
-									if(world.get(c - 1).get(l).equals(ro)){
+								for(int l = 0 ; l < world.get(c + 1).size() ; l++){
+									if(world.get(c + 1).get(l).equals(ro)){
 										fulfillingObjects.add(ro);
 										added = true;
 										break;
 									}
 								}
 							}
-DebugFile.println(" ");
-						}
+						}	
 						break;
                default:
 					break;

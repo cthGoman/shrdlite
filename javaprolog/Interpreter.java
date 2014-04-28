@@ -27,8 +27,8 @@ public class Interpreter{
 	public List<Goal> interpret(Term input){
 DebugFile.start();
 		Tree tree = new Tree(input.toString().replace("(-)","-"));
-DebugFile.println(input.toString().replace("(-)","-"));
 		ArrayList<String> object0 = InitialState.getInitialObjects(tree.getMasterNode(),objects,worldList);
+DebugFile.println(input.toString().replace("(-)","-"));
 for(String s:object0){
 DebugFile.print(s + " ");
 }
