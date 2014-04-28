@@ -166,7 +166,7 @@ public class Constraints{
             return false;
          }
          if(formA.equals("box") && !(formB.equals("table") || formB.equals("plank") || formB.equals("brick")) ){
-            System.out.println("Allvarligt dunderfail");
+
             return false;      
          }   
          
