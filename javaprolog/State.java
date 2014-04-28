@@ -3,7 +3,6 @@ import java.util.*;
 import org.json.simple.JSONArray;
 
 public class State{
-   //private ArrayList world;
    private String holding;
    private ArrayList<ArrayList<String>> world;
    private int robotPos;

@@ -165,7 +165,8 @@ public class Constraints{
             //System.out.println("fail 5");
             return false;
          }
-         if(formB.equals("box") && !(formA.equals("table") || formA.equals("plank") || formA.equals("brick")) ){
+         if(formA.equals("box") && !(formB.equals("table") || formB.equals("plank") || formB.equals("brick")) ){
+            System.out.println("Allvarligt dunderfail");
             return false;      
          }   
          
@@ -212,6 +213,9 @@ public class Constraints{
          }
          if(formA.contains("floor")){        // Floor has to be below everything else
             //System.out.println("fail 14");
+            return false;
+         }
+         if(formB.contains("ball")){        // Balls cannot be under anything else
             return false;
          }
       }
