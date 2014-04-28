@@ -66,20 +66,20 @@ DebugFile.stop();
 			} else if (goals.size() > 1) {
 				result.put("output", "Ambiguity error!");
 			} else {
-				if (holding==null){
-					holding="";
-				}
+// 				if (holding==null){
+// 					holding="";
+// 				}
 				Planner planner = new Planner(world, holding, objects);
 				Plan plan = null;
-            // System.out.println(goals.get(0).get(0).get(0).get(0));
+//             // System.out.println(goals.get(0).get(0).get(0).get(0));
             long endTime   = System.currentTimeMillis();
 			   long totalTime2 = endTime - startTime;
-				if (goals.get(0).get(0).get(0).get(0).equals("hold")){
-					plan = planner.solve(goals.get(0),result);
-               // System.out.println("tjoho");
-				}else{
-					plan = planner.solve3(goals.get(0),result);
-				}
+// 				if (goals.get(0).get(0).get(0).get(0).equals("hold")){
+// 					plan = planner.solve(goals.get(0),result);
+//                // System.out.println("tjoho");
+// 				}else{
+					plan = planner.solve4(goals.get(0),result);
+// 				}
 				result.put("plan", plan);
 				if (plan.isEmpty()) {
 					result.put("output", "Planning error!");

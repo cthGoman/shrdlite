@@ -10,7 +10,11 @@ public class State{
    private int hashCode;
    
    public State(JSONArray worldIn, String holdingIn){
-      holding = holdingIn;
+      if (holdingIn==null)
+         holding = "";
+      else   
+         holding = holdingIn;
+         
       robotPos = -1;
       world = new ArrayList<ArrayList<String>>(worldIn.size());
       for(int k=0;k<worldIn.size();k++){
@@ -20,7 +24,10 @@ public class State{
    }
    
    public State(JSONArray worldIn, String holdingIn, int robotPosIn){
-      holding = holdingIn;
+      if (holdingIn==null)
+         holding = "";
+      else   
+         holding = holdingIn;
       robotPos = robotPosIn;
       world = new ArrayList<ArrayList<String>>(worldIn.size());
       for(int k=0;k<worldIn.size();k++){
