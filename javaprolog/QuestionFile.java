@@ -20,4 +20,16 @@ public class QuestionFile{
 	public static void reset(){
 		write("what can I do for you today?");
 	}
+	public static boolean haveQuestion(){
+		return true;
+	}
+	public static ArrayList<String> getYesList(){
+		return new ArrayList<String>();
+	}
+	public static ArrayList<String> getNoList(){
+		return new ArrayList<String>();
+	}
+	public static void saveInfo(ArrayList<String> yesList, ArrayList<String> noList){
+		
+	}
 }
