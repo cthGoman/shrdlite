@@ -217,6 +217,7 @@ public class Constraints{
          }
          if(formB.contains("ball")){        // Balls cannot be under anything else
             return false;
+         }
       }
       
       // ------------------------ "Under"-statements ------------------------//           
