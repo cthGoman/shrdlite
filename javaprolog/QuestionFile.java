@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class QuestionFile{
-	public static void write(String s){
+	private static void write(String s){
 		PrintWriter writer;
 		try{
 			File f = new File("Question" + File.separator + "QuestionFile.txt");
