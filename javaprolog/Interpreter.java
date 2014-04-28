@@ -10,7 +10,6 @@ public class Interpreter{
 	private JSONObject objects;
 	private ArrayList<ArrayList<String>> worldList = new ArrayList<ArrayList<String>>();
 	Interpreter(JSONArray world, String holding, JSONObject objects){
-DebugFile.start();
 		this.objects = objects;
 		for(int i = 0 ; i < world.size() ; i++){
 			JSONArray column = (JSONArray)world.get(i);
@@ -26,21 +25,39 @@ DebugFile.start();
 		worldList.add(hold);
 	}
 	public List<Goal> interpret(Term input){
+DebugFile.start();
 		Tree tree = new Tree(input.toString().replace("(-)","-"));
 		ArrayList<String> object0 = InitialState.getInitialObjects(tree.getMasterNode(),objects,worldList);
-DebugFile.stop();
-		Goal testGoal = Relations.relation(objects,worldList,tree,object0);
-		if(tree.getMasterNode().getValue().equals("take")){
-			ArrayList<Statement> rob = new ArrayList<Statement>();
-			for(String o:object0){
-				rob.add(new Statement("hold","robot-0",o));
+DebugFile.println(input.toString().replace("(-)","-"));
+for(String s:object0){
+DebugFile.print(s + " ");
+}
+DebugFile.println("");
+		Goal goal = null;
+		if(tree.getMasterNode().getValue().equals("move")){
+			goal = Relations.relation(objects,worldList,tree,object0);
+		}else if(tree.getMasterNode().getValue().equals("take")){
+			goal = new Goal();
+			for(int i = 0 ; i < object0.size() ; i++){
+				goal.addStatement(i, new Statement("hold","robot-0",object0.get(i)));
 			}
-			testGoal.add(0,rob);
 		}
       LinkedList<Goal> goalList = new LinkedList<Goal>();
-      goalList.add(testGoal);
-
-//DebugFile.stop();
+DebugFile.println("goalList1 " + goalList);
+DebugFile.println("goal1 " + goal);
+		if(goal != null && goal.size() != 0){
+			goalList.add(goal);
+for(ArrayList<Statement> als:goal){
+for(Statement s:als){
+DebugFile.print(s + " ");
+}
+DebugFile.println("");
+}
+DebugFile.println(""+goalList.size());
+		}
+DebugFile.println("goalList2 " + goalList);
+DebugFile.stop();
+      
 		return goalList;
 	}
 }

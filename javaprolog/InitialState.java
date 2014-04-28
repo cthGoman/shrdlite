@@ -15,21 +15,9 @@ public class InitialState{
 		currentNode = currentNode.getParent();
 		String relation = currentNode.getChild(0).getValue();
 		currentNode = currentNode.getParent();
-for(String s:oldObjects){
-DebugFile.print(s+" ");
-}
-DebugFile.println("");
 		while(currentNode != null){
 			ArrayList<String> newObjects = FindObject.match(currentNode.createObject(),objectsInformation,world);
-for(String s:newObjects){
-DebugFile.print(s+" ");
-}
-DebugFile.println("");
 			oldObjects = FindObject.relatedObject(newObjects,relation,oldObjects,world);
-for(String s:oldObjects){
-DebugFile.print(s+" ");
-}
-DebugFile.println("");
 			currentNode = currentNode.getParent();
 			relation = currentNode.getChild(0).getValue();
 			currentNode = currentNode.getParent();

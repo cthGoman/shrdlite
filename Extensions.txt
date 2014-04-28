@@ -1,0 +1,8 @@
+---Extension 1---
+"Make the planner handle large worlds and complicated goals." - by implementing branch and bound-search
+
+---Extension 2--- 
+"handle _all_ quantifiers in a sensible manner."
+
+---Extension 3---
+ask clarifying y/n-questions if input is ambiguous.

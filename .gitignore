@@ -1,1 +1,3 @@
-javaprolog/DebugFile.txt
+*.class
+javaprolog/DebugFile/*.txt
+javaprolog/Question/**
