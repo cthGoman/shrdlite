@@ -1,3 +1,0 @@
-move(basic_entity(any,object(ball,-,-)),relative(ontop,relative_entity(the,object(table,-,-),relative(inside,relative_entity(any,object(box,-,-),relative(leftof,relative_entity(any,object(ball,-,-),relative(inside,basic_entity(any,object(box,-,-))))))))))
-e f 
-1
