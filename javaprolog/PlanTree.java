@@ -88,28 +88,30 @@ public class PlanTree{
             State tempState = new State(treeState.getState());
             String tempMove;
             tempMove = tempState.pickDropColumn(i); 
+            
+            if(Constraints.isWorldAllowed(tempState, objects)){
    
-            if(!containState(tempState)){ //check if the PlanTree already contains the state
-               if(Constraints.isWorldAllowed(tempState, objects)){
+               if(!containState(tempState)){ //check if the PlanTree already contains the state
                   PlanTreeState tempPlanTreeState = new PlanTreeState(tempState, treeState, goal, objects, tempMove, maxCost()); //add it if not
                   stateMap.put(tempState,tempPlanTreeState);
                   if(tempPlanTreeState.isSolution()){
       //                System.out.println("New solution: "+tempPlanTreeState.getDepth());
                      solutions.add(tempPlanTreeState);
                   }
+                  
                }
-            }
-            else if(treeState.getDepth()<stateMap.get(tempState).getDepth()){ //add it if it previously was in a deeper layer
-               int before = stateMap.size();
-               PlanTreeState tempPlanTreeState = stateMap.get(tempState);
-               tempPlanTreeState.setParent(treeState, maxCost());
-               tempPlanTreeState.setMove(tempMove);
-               if(tempPlanTreeState.getDepth()+tempPlanTreeState.getHeuristic().getCost()<maxCost()){
-                  if(!tempPlanTreeState.isSolution()){
-                     tempPlanTreeState.setEvaluated(false, maxCost());
+               else if(treeState.getDepth()<stateMap.get(tempState).getDepth()){ //add it if it previously was in a deeper layer
+                  int before = stateMap.size();
+                  PlanTreeState tempPlanTreeState = stateMap.get(tempState);
+                  tempPlanTreeState.setParent(treeState, maxCost());
+                  tempPlanTreeState.setMove(tempMove);
+                  if(tempPlanTreeState.getDepth()+tempPlanTreeState.getHeuristic().getCost()<maxCost()){
+                     if(!tempPlanTreeState.isSolution()){
+                        tempPlanTreeState.setEvaluated(false, maxCost());
+                     }
                   }
                }
-            }
+            }   
          }
       }
    }
