@@ -7,7 +7,7 @@ var ExampleNames = ["small","medium","complex"];
 var ExamplesFolder = "examples";
 
 // What the system says when it has nothing to do:
-var SystemPromptText = "What can I do for you today?";
+// "What can I do for you today?"; 
 
 // Constants that you can play around with:
 var DialogueHistory = 100;    // max nr. utterances
@@ -365,11 +365,27 @@ function systemPrompt(timeout) {
     if (timeout) {
         setTimeout(systemPrompt, 1000*timeout);
     } else {
-
-
-        sayUtterance("system", SystemPromptText);
-        enableInput();
+		readTextFile("javaprolog/Question/QuestionFile.txt");
+//        sayUtterance("system", SystemPromptText);
+//        enableInput();
     }
+}
+
+function readTextFile(file){
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, true);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+				sayUtterance("system", rawFile.responseText);
+				enableInput();
+            }
+        }
+    }
+    rawFile.send(null);
 }
 
 function enableInput() {

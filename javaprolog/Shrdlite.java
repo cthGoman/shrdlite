@@ -64,6 +64,7 @@ DebugFile.stop();
 			if (goals.isEmpty()) {
 				result.put("output", "Interpretation error!");
 			} else if (goals.size() > 1) {
+				QuestionFile.writeQuestion("Put Question Here?");
 				result.put("output", "Ambiguity error!");
 			} else {
 // 				if (holding==null){
