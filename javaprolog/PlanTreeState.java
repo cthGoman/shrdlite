@@ -18,6 +18,7 @@ public class PlanTreeState{
       state = inState;
       depth = 0;
       hasParent = false;
+      parentState = this;
       stateHeu = new Heuristic3(inState);
       childrenStates = new HashSet<PlanTreeState>();
       if (Constraints.isWorldAllowed(inState, objects)){

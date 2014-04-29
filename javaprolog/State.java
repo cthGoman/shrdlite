@@ -48,6 +48,10 @@ public class State{
       return robotPos;
    }
    
+   public void setRobotPos(int newPos){
+      robotPos=newPos;
+   }
+   
    public void pickColumn(int columnNr){
       if(holding.isEmpty() && world.get(columnNr).size()>0){
          holding = world.get(columnNr).get(world.get(columnNr).size()-1); //put the top object in column columnNr in holding

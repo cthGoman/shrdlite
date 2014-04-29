@@ -86,7 +86,14 @@ public class Heuristic3{
                   }
                }
                else if(columnNr1==-1){//obj 1 in holding
-                  rowStateCost.dropObj(obj1);
+                  ArrayList<String> column2 = worldState.getWorld().get(columnNr2);
+                  column2.add(obj1);
+                  if(Constraints.isColumnAllowed(column2,objects)){
+                     rowStateCost.dropObj(obj1);
+                  }
+                  else{
+                     rowStateCost.dropMoveObj(obj1);
+                  }   
                }
                else if(columnNr2==-1){//obj 2 in holding
                   ArrayList<String> column1 = worldState.getWorld().get(columnNr1);
