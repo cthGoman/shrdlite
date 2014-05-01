@@ -229,6 +229,10 @@ public class Constraints{
             //System.out.println("fail 16");
             return false;
          }
+         if(formA.contains("ball")){        // Balls cannot be under anything else
+            return false;
+         }
+         
       }
       
       // ------------------------ "Beside"-statements ------------------------//           
