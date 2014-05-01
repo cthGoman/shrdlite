@@ -73,14 +73,24 @@ DebugFile.println("lengthLongestList" + lengthLongestList);
                   nonMatchingFound = true;
                   break;
               }
+            }else{
+               nonMatchingRelation = testRelation;
+               nonMatchingObject1 =  testObject1;
+               nonMatchingObject2 =  testObject2;
+               questionIndex = i;
+               nonMatchingFound = true;
+               break;
             }
          }
       }
 DebugFile.println("nonMatchingRelation: " + nonMatchingRelation);      
 DebugFile.println("nonMatchingObject1: " + nonMatchingObject1);
-DebugFile.println("nonMatchingObject2: " + nonMatchingObject2);      
+DebugFile.println("nonMatchingObject2: " + nonMatchingObject2);
+DebugFile.println("");
+DebugFile.println("questionIndex: " + questionIndex);
 		//sort add lists to yes and no lists
       for(int i = 0;i < objectList.size() ;i++){
+         if(objectList.get(i).size() - 1 > questionIndex){
          compareRelation = relationList.get(i).get(questionIndex);
          compareObject1 = objectList.get(i).get(questionIndex);
          compareObject2 = objectList.get(i).get(questionIndex+1);
@@ -88,12 +98,13 @@ DebugFile.println("nonMatchingObject2: " + nonMatchingObject2);
          DebugFile.println("compareRelation: " + compareRelation); 
          DebugFile.println("compareObject1: " + compareObject1); 
          DebugFile.println("compareObject2: " + compareObject2); 
-          if(!compareStatement(nonMatchingRelation,nonMatchingObject1,nonMatchingObject2,
+          if(compareStatement(nonMatchingRelation,nonMatchingObject1,nonMatchingObject2,
                                    compareRelation,compareObject1,compareObject2)){
             yesList.add(treeStrings.get(i));  
           }else{
             noList.add(treeStrings.get(i));
           }
+          }else{noList.add(treeStrings.get(i));}
       }
 DebugFile.println("yesList: " + yesList);
 DebugFile.println("noList: " + noList);      
@@ -137,27 +148,10 @@ DebugFile.stop(); //debuggfile
       boolean typeSame;
       boolean sizeSame;
       boolean colorSame;   
-      if((object1.get(0).equals("anyform") || object2.get(0).equals("anyform"))){  // if the size are not explained in one of the objects they could be the same
-         sizeSame = true;
-      } 
-      else{
-         sizeSame = object1.get(0).equals(object2.get(0));
-      }  
-      typeSame = object1.get(0).equals(object2.get(0));
-      if((object1.get(1).equals("-") || object2.get(1).equals("-"))){  // if the size are not explained in one of the objects they could be the same
-         sizeSame = true;
-      } 
-      else{
+      
+         typeSame = object1.get(0).equals(object2.get(0));
          sizeSame = object1.get(1).equals(object2.get(1));
-      }
-      
-      if((object1.get(2).equals("-") || object2.get(2).equals("-"))){  // if the size are not explained in one of the objects they could be the same
-         colorSame = true;
-      } 
-      else{
          colorSame = object1.get(2).equals(object2.get(2));
-      }
-      
       
       return typeSame && sizeSame && colorSame;
    }  
