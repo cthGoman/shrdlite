@@ -2,25 +2,33 @@ import java.util.*;
 
 public class Ask{
 	public static String question(ArrayList<String> treeStrings){
-   
+DebugFile.start(); //debuggfile
       ArrayList<String> yesList = new ArrayList<String>();
 		ArrayList<String> noList = new ArrayList<String>();
       
-      LinkedList<String> object0 = new LinkedList<String>(); //temp
+DebugFile.println("treeStrings" + treeStrings);     
 		ArrayList<LinkedList<LinkedList<String>>> objectList = new ArrayList<LinkedList<LinkedList<String>>>();
       ArrayList<LinkedList<String>> relationList = new ArrayList<LinkedList<String>>();
-
+      Tree tree = new Tree(treeStrings.get(0));
       for(int i = 0;i < treeStrings.size();i++){
-         Tree tree = new Tree(treeStrings.get(i));
-         tree.getMasterNode().createObjects(objectList.get(i),relationList.get(i));
+         tree = new Tree(treeStrings.get(i));
+         LinkedList<LinkedList<String>> emptyObject = new LinkedList<LinkedList<String>>();
+         LinkedList<String> emptyRelationList = new LinkedList<String>();
+         
+         tree.getMasterNode().createObjects(emptyObject,emptyRelationList);
+         objectList.add(emptyObject);
+         relationList.add(emptyRelationList);
       }
+      
+      LinkedList<String> object0 = new LinkedList<String>(tree.getMasterNode().getChild(0).createObject());
+DebugFile.println("object0: " + object0);       
       int indexOfLongestList = 0;
       int lengthLongestList = 0;
       for(LinkedList<LinkedList<String>> list : objectList){
          list.addFirst(object0); //add the 0 object to the first element of the list
          if(list.size() >= lengthLongestList){
             lengthLongestList = list.size();
-            indexOfLongestList = relationList.indexOf(list);
+            indexOfLongestList = objectList.indexOf(list);
          }
       }
       boolean questionFound = false;
@@ -40,6 +48,8 @@ public class Ask{
       int questionIndex = -1;
       boolean nonMatchingFound = false;
       //find a non matching statement
+DebugFile.println("indexOfLongestList" + indexOfLongestList);
+DebugFile.println("lengthLongestList" + lengthLongestList);
       for(int i = 0;i < lengthLongestList-1;i++){
          if(nonMatchingFound){
             break;
@@ -49,10 +59,11 @@ public class Ask{
          testObject2 = objectList.get(indexOfLongestList).get(i+1);
          
          for(int j = 0;j < objectList.size() ;j++){
-            if(objectList.get(j).size() > i){  
+            if(objectList.get(j).size()-1 > i){  
                compareRelation = relationList.get(j).get(i);
                compareObject1 = objectList.get(j).get(i);
-               compareObject2 = objectList.get(j).get(i);
+               compareObject2 = objectList.get(j).get(i+1);
+              
                if(!compareStatement(testRelation,testObject1,testObject2,
                                    compareRelation,compareObject1,compareObject2)){
                   nonMatchingRelation = testRelation;
@@ -65,13 +76,18 @@ public class Ask{
             }
          }
       }
-      
-      
+DebugFile.println("nonMatchingRelation: " + nonMatchingRelation);      
+DebugFile.println("nonMatchingObject1: " + nonMatchingObject1);
+DebugFile.println("nonMatchingObject2: " + nonMatchingObject2);      
 		//sort add lists to yes and no lists
       for(int i = 0;i < objectList.size() ;i++){
          compareRelation = relationList.get(i).get(questionIndex);
          compareObject1 = objectList.get(i).get(questionIndex);
-         compareObject2 = objectList.get(i).get(questionIndex);
+         compareObject2 = objectList.get(i).get(questionIndex+1);
+         DebugFile.println("");
+         DebugFile.println("compareRelation: " + compareRelation); 
+         DebugFile.println("compareObject1: " + compareObject1); 
+         DebugFile.println("compareObject2: " + compareObject2); 
           if(!compareStatement(nonMatchingRelation,nonMatchingObject1,nonMatchingObject2,
                                    compareRelation,compareObject1,compareObject2)){
             yesList.add(treeStrings.get(i));  
@@ -79,7 +95,8 @@ public class Ask{
             noList.add(treeStrings.get(i));
           }
       }
-      
+DebugFile.println("yesList: " + yesList);
+DebugFile.println("noList: " + noList);      
 		QuestionFile.saveInfo(yesList,noList);
       String movingObject;
       String RelativeObject;
@@ -91,7 +108,7 @@ public class Ask{
       if(nonMatchingObject1.get(0).equals("anyform")){
          RelativeObject = "object";
       }else{
-      RelativeObject = nonMatchingObject1.get(0);
+      RelativeObject = nonMatchingObject2.get(0);
       }
       if(!nonMatchingObject1.get(2).equals("-")){
          movingObject = nonMatchingObject1.get(2) + " " + movingObject;
@@ -105,7 +122,9 @@ public class Ask{
       if(!nonMatchingObject2.get(1).equals("-")){
          RelativeObject = nonMatchingObject2.get(1) + " " + RelativeObject;
       }
-		return "Should i put the " + movingObject + " " + nonMatchingRelation + " the " + RelativeObject;
+DebugFile.println("question: " + "Should i put the " + movingObject + " " + nonMatchingRelation + " the " + RelativeObject +"?");           
+DebugFile.stop(); //debuggfile
+		return "Should i put the " + movingObject + " " + nonMatchingRelation + " the " + RelativeObject + "?";
       
 	}
    private static boolean compareStatement(String relation1,LinkedList<String> object11,LinkedList<String> object12,
@@ -115,11 +134,10 @@ public class Ask{
       
    }
    private static boolean compareObject(LinkedList<String> object1,LinkedList<String> object2){
-      
       boolean typeSame;
       boolean sizeSame;
-      boolean colorSame;
-      if((object1.get(0).equals("anyform") || object2.get(1).equals("anyform"))){  // if the size are not explained in one of the objects they could be the same
+      boolean colorSame;   
+      if((object1.get(0).equals("anyform") || object2.get(0).equals("anyform"))){  // if the size are not explained in one of the objects they could be the same
          sizeSame = true;
       } 
       else{

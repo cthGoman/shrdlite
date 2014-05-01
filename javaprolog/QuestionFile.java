@@ -81,9 +81,9 @@ public class QuestionFile{
 			writer = new PrintWriter(f, "UTF-8");
 			writer.println(1);
 			writer.println("Yes: "+yesList.size());
-			for(String s:yesList){writer.println(1);}
-			writer.println("No: "+yesList.size());
-			for(String s:noList){writer.println(1);}
+			for(String s:yesList){writer.println(s);}
+			writer.println("No: "+noList.size());
+			for(String s:noList){writer.println(s);}
 			writer.flush();
 			writer.close();
 		}catch(Exception e){

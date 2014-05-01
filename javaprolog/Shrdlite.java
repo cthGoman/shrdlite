@@ -67,15 +67,15 @@ public class Shrdlite {
 			for (String tree : tstrs) {
 				for (Goal goal : interpreter.interpret(tree)) {
 					goals.add(goal);
-					treesWithGoal.add(tree); //max one goal per tree possible, so this is ok.
+					treesWithGoal.add(tree.replace("(-)","-")); //max one goal per tree possible, so this is ok.
 				}
 			}
 			result.put("goals", goals);
 			if (goals.isEmpty()) {
 				result.put("output", "Interpretation error!");
 			} else if (goals.size() > 1) {
-				Ask.question(treesWithGoal);
-				QuestionFile.writeQuestion("Put Question Here?");
+				String question = Ask.question(treesWithGoal);
+				QuestionFile.writeQuestion(question);
 				result.put("output", "Ambiguity error!");
 			} else {
 // 				if (holding==null){

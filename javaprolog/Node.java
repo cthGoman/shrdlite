@@ -68,6 +68,8 @@ public class Node{
 		}
 		if(value.equals("floor")){
 			object.add(value);
+         object.add("-");
+         object.add("-");
 		}
 	return object;
 	}
