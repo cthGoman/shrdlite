@@ -20,6 +20,6 @@ for i=1:length(c{1})
     end
         
 end
-%m(:,5)=m(:,1)-m(:,2);
+m(:,5)=m(:,1)-m(:,2);
 m
-save=[save;mean(m(:,4)) mean(m(:,3))]
+save=[save;mean(m(:,5)) mean(m(:,4)) mean(m(:,3))]
