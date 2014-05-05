@@ -49,10 +49,16 @@ public class Shrdlite {
 			}
 		}else{
 			List<Term> answer = parser.parseSentence("answer", utterance);
-			if(answer.get(0).toString().equals("yes")){
-				tstrs = QuestionFile.getYesList();
-			}else if(answer.get(0).toString().equals("no")){
-				tstrs = QuestionFile.getNoList();
+			if(answer.size() > 0){
+				if(answer.get(0).toString().equals("yes")){
+					tstrs = QuestionFile.getYesList();
+					QuestionFile.reset();
+				}else if(answer.get(0).toString().equals("no")){
+					tstrs = QuestionFile.getNoList();
+					QuestionFile.reset();
+				}else{
+					result.put("output", "That's not a yes or no answer!");
+				}
 			}else{
 				result.put("output", "That's not a yes or no answer!");
 			}
