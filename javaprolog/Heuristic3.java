@@ -4,14 +4,15 @@ import java.util.*;
 
 public class Heuristic3{
    private StateCost stateCost;
+   private State worldState;
    
    public Heuristic3(State worldState){
       stateCost = new StateCost(worldState, -1);
       
    }
 
-	public Heuristic3(State worldState, Goal goal, JSONObject objects) {
-		
+	public Heuristic3(State stateIn, Goal goal, JSONObject objects) {
+		worldState = stateIn;
       stateCost = new StateCost(worldState, -1);
       
     for (ArrayList<Statement> listOfStatement : goal){//Loop over all rows 
@@ -78,57 +79,61 @@ public class Heuristic3{
                }
             }
             else if ("above".equals(statement.get(0).toLowerCase())){
-               
-               if(columnNr1==columnNr2){//in the same column
-                  if (place1<place2){//But object 1 is below
-                     ArrayList<String> column1 = worldState.getWorld().get(columnNr1);
-                     rowStateCost.move(obj1,column1);
-                  }
-               }
-               else if(columnNr1==-1){//obj 1 in holding
-                  ArrayList<String> column2 = worldState.getWorld().get(columnNr2);
-                  column2.add(obj1);
-                  if(Constraints.isColumnAllowed(column2,objects)){
-                     rowStateCost.dropObj(obj1);
-                  }
-                  else{
-                     rowStateCost.dropMoveObj(obj1);
-                  }
-                  column2.remove(obj1);   
-               }
-               else if(columnNr2==-1){//obj 2 in holding
-                  ArrayList<String> column1 = worldState.getWorld().get(columnNr1);
-                  rowStateCost.dropObj(obj2);
-                  rowStateCost.move(obj1,column1);
-               } 
-               else{//objects are in different columns
-                  ArrayList<String> column1 = worldState.getWorld().get(columnNr1);
-                  rowStateCost.move(obj1,column1);
-               }
+               evaluateAbove(obj1,obj2,objects,rowStateCost,columnNr1,columnNr2,place1,place2);
+
+//                if(columnNr1==columnNr2){//in the same column
+//                   if (place1<place2){//But object 1 is below
+//                      ArrayList<String> column1 = worldState.getWorld().get(columnNr1);
+//                      rowStateCost.move(obj1,column1);
+//                   }
+//                }
+//                else if(columnNr1==-1){//obj 1 in holding
+//                   ArrayList<String> column2 = worldState.getWorld().get(columnNr2);
+//                   column2.add(obj1);
+//                   if(Constraints.isColumnAllowed(column2,objects)){
+//                      column2.remove(obj1); 
+//                      rowStateCost.dropObj(obj1);
+//                   }
+//                   else{
+//                      column2.remove(obj1); 
+//                      rowStateCost.dropMoveObj(obj1);
+//                   }
+//                     
+//                }
+//                else if(columnNr2==-1){//obj 2 in holding
+//                   ArrayList<String> column1 = worldState.getWorld().get(columnNr1);
+//                   rowStateCost.dropObj(obj2);
+//                   rowStateCost.move(obj1,column1);
+//                } 
+//                else{//objects are in different columns
+//                   ArrayList<String> column1 = worldState.getWorld().get(columnNr1);
+//                   rowStateCost.move(obj1,column1);
+//                }
             }
             else if ("under".equals(statement.get(0).toLowerCase())){
+               evaluateAbove(obj2,obj1,objects,rowStateCost,columnNr2,columnNr1,place2,place1);
                
-               if(columnNr2==columnNr1){//in the same column
-                  ArrayList<String> column2 = worldState.getWorld().get(columnNr2);
-                  if (place2<place1){//But object 2 is below
-                     rowStateCost.move(obj2,column2);
-                  }
-            
-               }
-               else if(columnNr2==-1){//obj 2 in holding
-                  
-                  rowStateCost.dropObj(obj2);
-                  
-               }
-               else if(columnNr1==-1){//obj 1 in holding
-                  ArrayList<String> column2 = worldState.getWorld().get(columnNr2);
-                  rowStateCost.dropObj(obj1);
-                  rowStateCost.move(obj2,column2);
-               } 
-               else{//objects are in different columns
-                  ArrayList<String> column2 = worldState.getWorld().get(columnNr2);
-                  rowStateCost.move(obj2,column2);
-               }
+//                if(columnNr2==columnNr1){//in the same column
+//                   ArrayList<String> column2 = worldState.getWorld().get(columnNr2);
+//                   if (place2<place1){//But object 2 is below
+//                      rowStateCost.move(obj2,column2);
+//                   }
+//             
+//                }
+//                else if(columnNr2==-1){//obj 2 in holding
+//                   
+//                   rowStateCost.dropObj(obj2);
+//                   
+//                }
+//                else if(columnNr1==-1){//obj 1 in holding
+//                   ArrayList<String> column2 = worldState.getWorld().get(columnNr2);
+//                   rowStateCost.dropObj(obj1);
+//                   rowStateCost.move(obj2,column2);
+//                } 
+//                else{//objects are in different columns
+//                   ArrayList<String> column2 = worldState.getWorld().get(columnNr2);
+//                   rowStateCost.move(obj2,column2);
+//                }
             }
             else if ("beside".equals(statement.get(0).toLowerCase())){
                
@@ -261,6 +266,129 @@ public class Heuristic3{
    
    
    }
+   
+   private void evaluateAbove(String obj1, String obj2, JSONObject objects, StateCost currentCost, int columnNr1, int columnNr2, int place1, int place2){
+      ArrayList<String> allObjects = worldState.getAllObjectsInWorld();
+      HashMap<String,ArrayList<String>> objectsAllowedBelow = new HashMap();
+      
+      if(columnNr1==columnNr2){//in the same column
+         if (place1<place2){//But object 1 is below
+            ArrayList<String> column1 = worldState.getWorld().get(columnNr1);
+            currentCost.move(obj1,column1);
+         }
+      }
+      else if(columnNr1==-1){//obj 1 in holding
+         ArrayList<String> column2 = worldState.getWorld().get(columnNr2);
+         column2.add(obj1);
+         if(Constraints.isColumnAllowed(column2,objects)){
+            column2.remove(obj1); 
+            currentCost.dropObj(obj1);
+         }
+         else{
+            column2.remove(obj1); 
+            currentCost.dropMoveObj(obj1);
+         }
+           
+      }
+      else if(columnNr2==-1){//obj 2 in holding
+         ArrayList<String> column1 = worldState.getWorld().get(columnNr1);
+         currentCost.dropObj(obj2);
+         currentCost.move(obj1,column1);
+      } 
+      else{//objects are in different columns
+         ArrayList<String> column1 = worldState.getWorld().get(columnNr1);
+         currentCost.move(obj1,column1);
+      }
+      
+      for(String currentObj: allObjects){
+         
+         ArrayList<String> currentAllowedBelow = new ArrayList<String>();
+
+         for(String currentBelow: allObjects){
+            if(!currentObj.equals(currentBelow)){
+               ArrayList<String> currentPair = new ArrayList<String>();
+               currentPair.add(currentBelow);
+               currentPair.add(currentObj);
+               if(Constraints.isColumnAllowed(currentPair,objects))
+                  currentAllowedBelow.add(currentBelow);
+            }
+         }
+         objectsAllowedBelow.put(currentObj,currentAllowedBelow);
+      }
+      ArrayList<String> allowedObjects = findAllowedBetween(obj1, obj2, objectsAllowedBelow, new ArrayList<String>(), new ArrayList<String>());
+      ArrayList<ArrayList<String>> sequences = findAllowedSequences(obj1, obj2, objectsAllowedBelow, new ArrayList<ArrayList<String>>(), new ArrayList<String>());
+//       System.out.println("Sequences: "+sequences);
+      Goal ontopGoal = generateGoal(sequences);
+      Heuristic3 ontopHeu = new Heuristic3(worldState, ontopGoal, objects);
+      currentCost.mergeCosts(ontopHeu.getStateCost());
+      
+//       if(!worldState.getHolding().equals(obj2)){
+//          ArrayList<String> column2 = worldState.getColumn(columnNr2);
+//          boolean tempBool = true;
+//          for(int i=column2.indexOf(obj2)+1; i<column2.size() && tempBool; i++){
+//             if(!allowedObjects.contains(column2.get(i))){
+//                currentCost.move(column2.get(i),column2);
+//                tempBool = false;
+//             }
+//          }
+//       }     
+   }
+   
+   private ArrayList<String> findAllowedBetween(String objAbove, String objBelow, HashMap<String,ArrayList<String>> objectsAllowedBelow, ArrayList<String> allowedObjects, ArrayList<String> evaluatedObjects){
+      evaluatedObjects.add(objAbove);
+      boolean allowed = false;
+      if(objectsAllowedBelow.get(objAbove).contains(objBelow))
+         allowed = true;
+         
+      
+      for(String objAllowedBelow : objectsAllowedBelow.get(objAbove)){
+         if(!evaluatedObjects.contains(objAllowedBelow) && !objAllowedBelow.equals(objBelow)){
+            allowedObjects = findAllowedBetween(objAllowedBelow, objBelow, objectsAllowedBelow, allowedObjects, evaluatedObjects);
+            if(allowedObjects.contains(objAllowedBelow))
+               allowed = true;
+         }
+      }
+      if(allowed)
+         allowedObjects.add(objAbove);
+         
+      return allowedObjects;
+   }
+   
+   private ArrayList<ArrayList<String>> findAllowedSequences(String objAbove, String objBelow, HashMap<String,ArrayList<String>> objectsAllowedBelow, ArrayList<ArrayList<String>> allowedSequences, ArrayList<String> currentSequence){
+      currentSequence.add(objAbove);
+
+      if(objectsAllowedBelow.get(objAbove).contains(objBelow) && !allowedSequences.contains(currentSequence)){
+         currentSequence.add(objBelow);
+         allowedSequences.add(new ArrayList<String>(currentSequence));
+         currentSequence.remove(objBelow);
+      }
+         
+      
+      for(String objAllowedBelow : objectsAllowedBelow.get(objAbove)){
+         if(!currentSequence.contains(objAllowedBelow) && !objAllowedBelow.equals(objBelow)){
+            allowedSequences = findAllowedSequences(objAllowedBelow, objBelow, objectsAllowedBelow, allowedSequences, currentSequence);
+         }
+      }
+      
+      currentSequence.remove(objAbove);   
+      return allowedSequences;
+   }
+   
+   private Goal generateGoal(ArrayList<ArrayList<String>> sequences){
+      Goal goal = new Goal();
+      for(int i = 0; i<sequences.size();i++){
+         for(int j = 1; j<sequences.get(i).size(); j++){
+            goal.addStatement(i, new Statement("ontop",sequences.get(i).get(j-1),sequences.get(i).get(j)));
+         }
+      }
+      return goal;
+   } 
+   
+   public StateCost getStateCost(){
+      return stateCost;
+   }
+   
+   //----------------------------------------------------------------------------------//
    private class StateCost{
       HashMap<String, Integer> costMap;
          
@@ -376,6 +504,19 @@ public class Heuristic3{
             cost += value;
          }
          return cost;
+      }
+      
+      public void mergeCosts(StateCost costIn){
+         HashMap<String,Integer> costMapIn = costIn.getCostMap();
+         for(String obj : costMap.keySet()){
+            if (costMapIn.get(obj)>costMap.get(obj)){
+               costMap.put(obj,costMapIn.get(obj));
+            }
+         }
+      }
+      
+      public HashMap<String,Integer> getCostMap(){
+         return costMap;
       }
    }
 }

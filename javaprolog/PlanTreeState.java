@@ -49,6 +49,7 @@ public class PlanTreeState{
       childrenStates = new HashSet<PlanTreeState>();
       if (Constraints.isWorldAllowed(inState, objects)){
          stateHeu = new Heuristic3(inState, goal, objects);
+//          System.out.println("State: "+state+" cost: "+stateHeu.getCost());
          isAllowed = true;
          if(goal.fulfilled(state)){
             isSolution = true;
