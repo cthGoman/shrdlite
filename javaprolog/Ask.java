@@ -133,7 +133,7 @@ DebugFile.println("noList: " + noList);
       if(!nonMatchingObject2.get(1).equals("-")){
          RelativeObject = nonMatchingObject2.get(1) + " " + RelativeObject;
       }
-DebugFile.println("question: " + "Should i put the " + movingObject + " " + nonMatchingRelation + " the " + RelativeObject +"?");           
+DebugFile.println("question: " + "Should I put the " + movingObject + " " + nonMatchingRelation + " the " + RelativeObject +"?");           
 DebugFile.stop(); //debuggfile
 		return "Should i put the " + movingObject + " " + nonMatchingRelation + " the " + RelativeObject + "?";
       
