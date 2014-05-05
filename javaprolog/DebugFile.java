@@ -4,10 +4,12 @@ import java.util.*;
 /**Creats files in the DebugFile folder with prints from the program.<br>
 *This class shouldn't be used anywhere in the final version.*/
 public class DebugFile{
+	/**An internal int that keeps track of which file that the information should be written to.*/
 	private static int active = 0;
+	/**All PrintWriters currently in use.*/
 	private static LinkedList<PrintWriter> writers = new LinkedList<PrintWriter>();
 	/**Initalize a new file to write to.<br>
-	*only one can be open at a time*/
+	*Only one can be open at a time*/
 	public static void start(){
 		try{
 			active = writers.size();
