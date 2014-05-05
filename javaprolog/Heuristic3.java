@@ -93,7 +93,8 @@ public class Heuristic3{
                   }
                   else{
                      rowStateCost.dropMoveObj(obj1);
-                  }   
+                  }
+                  column2.remove(obj1);   
                }
                else if(columnNr2==-1){//obj 2 in holding
                   ArrayList<String> column1 = worldState.getWorld().get(columnNr1);
