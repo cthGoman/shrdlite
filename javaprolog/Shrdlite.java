@@ -68,7 +68,7 @@ DebugFile.stop();
 				result.put("output", "Ambiguity error!");
 			} else {
          
-            int solveMode=3;     // Switch between solve3 and 4
+            int solveMode=4;     // Switch between solve3 and 4
             
 				if (holding==null & solveMode==3){     
 					holding="";          
