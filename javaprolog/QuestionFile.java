@@ -6,7 +6,7 @@ public class QuestionFile{
 		write(s);
 	}
 	public static void reset(){
-		write("what can I do for you today?");
+		write("What can I do for you today?");
 		PrintWriter writer;
 		try{
 			File f = new File("Question" + File.separator + "QuestionInfo.txt");
