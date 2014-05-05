@@ -7,7 +7,7 @@ var ExampleNames = ["small","medium","complex"];
 var ExamplesFolder = "examples";
 
 // What the system says when it has nothing to do:
-// "What can I do for you today?"; 
+// var SystemPromptText = "What can I do for you today?"; 
 
 // Constants that you can play around with:
 var DialogueHistory = 100;    // max nr. utterances
@@ -373,7 +373,7 @@ function systemPrompt(timeout) {
 
 function readTextFile(file){
     var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file, false);
+    rawFile.open("GET", file, true);
     rawFile.onreadystatechange = function ()
     {
         if(rawFile.readyState === 4)

@@ -72,11 +72,11 @@ public class Shrdlite {
 			}
 			result.put("goals", goals);
 			if (goals.isEmpty()) {
-				result.put("output", "Interpretation error!");
+				result.put("output", "Impossible task!");
 			} else if (goals.size() > 1) {
 				String question = Ask.question(treesWithGoal);
 				QuestionFile.writeQuestion(question);
-				result.put("output", "Ambiguity error!");
+				result.put("output", "Ambiguity!");
 			} else {
 // 				if (holding==null){
 // 					holding="";

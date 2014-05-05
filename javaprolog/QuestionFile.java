@@ -46,8 +46,11 @@ public class QuestionFile{
 			Scanner sc = new Scanner(new File("Question" + File.separator + "QuestionInfo.txt"));
 			while(sc.hasNext()){
 				if(sc.next().equals("Yes:")){
-					for(int i = sc.nextInt() ; i > 0 ; i--){
-						yesList.add(sc.nextLine());
+					int j = sc.nextInt();
+					sc.nextLine();
+					for(int i = j ; i > 0 ; i--){
+						String s=sc.nextLine();
+						yesList.add(s);
 					}
 					break;
 				}
@@ -63,7 +66,9 @@ public class QuestionFile{
 			Scanner sc = new Scanner(new File("Question" + File.separator + "QuestionInfo.txt"));
 			while(sc.hasNext()){
 				if(sc.next().equals("No:")){
-					for(int i = sc.nextInt() ; i > 0 ; i--){
+					int j = sc.nextInt();
+					sc.nextLine();
+					for(int i = j ; i > 0 ; i--){
 						noList.add(sc.nextLine());
 					}
 					break;
