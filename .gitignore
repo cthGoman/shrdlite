@@ -1,7 +1,3 @@
 *.class
-<<<<<<< HEAD
-javaprolog/DebugFile/*.txt
-=======
 javaprolog/DebugFile/**
->>>>>>> origin/Interpreter
 javaprolog/Question/**

@@ -40,15 +40,6 @@ public class Shrdlite {
       //String form = (String) objectinfo.get("form");
 		
 		DCGParser parser = new DCGParser("shrdlite_grammar.pl");
-<<<<<<< HEAD
-		List<Term> trees = parser.parseSentence("command", utterance);
-		List tstrs = new ArrayList();
-		result.put("trees", tstrs);
-		for (Term t : trees) {
-			tstrs.add(t.toString());
-		}
-		if (trees.isEmpty()) {
-=======
 		ArrayList<String> tstrs = new ArrayList<String>();
 		if(!QuestionFile.haveQuestion()){
 			List<Term> trees = parser.parseSentence("command", utterance);
@@ -74,28 +65,10 @@ public class Shrdlite {
 			result.put("trees", tstrs);
 		}
 		if (tstrs.isEmpty()) {
->>>>>>> origin/Interpreter
 			result.put("output", "Parse error!");
 		} else {
 			List<Goal> goals = new ArrayList<Goal>();
 			Interpreter interpreter = new Interpreter(world, holding, objects);
-<<<<<<< HEAD
-			for (Term tree : trees) {
-				for (Goal goal : interpreter.interpret(tree)) {
-					goals.add(goal);
-				}
-			}
-			result.put("goals", goals);
-DebugFile.start();
-DebugFile.print("Goals:"+goals.size()+" ");
-DebugFile.print(""+goals);
-DebugFile.stop();
-			if (goals.isEmpty()) {
-				result.put("output", "Interpretation error!");
-			} else if (goals.size() > 1) {
-				QuestionFile.writeQuestion("Put Question Here?");
-				result.put("output", "Ambiguity error!");
-=======
 			ArrayList<String> treesWithGoal = new ArrayList<String>();
 			for (String tree : tstrs) {
 				for (Goal goal : interpreter.interpret(tree)) {
@@ -110,8 +83,6 @@ DebugFile.stop();
 				String question = Ask.question(treesWithGoal);
 				QuestionFile.writeQuestion(question);
 				result.put("output", "Ambiguity!");
-//				result.put("output", question);
->>>>>>> origin/Interpreter
 			} else {
          
             int solveMode=4;     // Switch between solve3 and 4

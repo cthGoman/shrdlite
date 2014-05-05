@@ -2,8 +2,6 @@ import java.io.*;
 import java.util.*;
 
 public class QuestionFile{
-<<<<<<< HEAD
-=======
 	public static void writeQuestion(String s){
 		write(s);
 	}
@@ -20,7 +18,6 @@ public class QuestionFile{
 			javax.swing.JOptionPane.showMessageDialog(null,e);
 		}
 	}
->>>>>>> origin/Interpreter
 	private static void write(String s){
 		PrintWriter writer;
 		try{
@@ -33,13 +30,6 @@ public class QuestionFile{
 			javax.swing.JOptionPane.showMessageDialog(null,e);
 		}
 	}
-<<<<<<< HEAD
-	public static void writeQuestion(String s){
-		write(s);
-	}
-	public static void reset(){
-		write("what can I do for you today?");
-=======
 	public static boolean haveQuestion(){
 		try{
 			Scanner sc = new Scanner(new File("Question" + File.separator + "QuestionInfo.txt"));
@@ -104,6 +94,5 @@ public class QuestionFile{
 		}catch(Exception e){
 			javax.swing.JOptionPane.showMessageDialog(null,e);
 		}
->>>>>>> origin/Interpreter
 	}
 }
