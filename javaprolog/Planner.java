@@ -9,6 +9,7 @@ public class Planner{
    private JSONArray world;
    private String holding;
    private JSONObject objects;
+   public static int instances;
 
 	public Planner(JSONArray worldIn, String holdingIn, JSONObject objectsIn){
 		world=worldIn;
@@ -398,6 +399,7 @@ public class Planner{
          if (loopPlan.size()<plan.size())
             plan=loopPlan;
       }
+      instances = visitedWorlds.size();
       return plan;
    }   
    public Plan solve4(Goal goal,JSONObject result){

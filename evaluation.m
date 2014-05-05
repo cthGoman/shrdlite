@@ -13,12 +13,13 @@ for i=1:length(c{1})
     if(all(isstrprop(c{1}{i},'digit')))
         m(k,j)=str2num(c{1}{i});
         j=j+1;
-        if(j>3)
+        if(j>4)
             j=1;
             k=k+1;
         end
     end
         
 end
-m(:,4)=m(:,1)-m(:,2);
+%m(:,5)=m(:,1)-m(:,2);
+m
 save=[save;mean(m(:,4)) mean(m(:,3))]
