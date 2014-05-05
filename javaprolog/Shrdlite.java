@@ -83,7 +83,7 @@ public class Shrdlite {
 				String question = Ask.question(treesWithGoal);
 				QuestionFile.writeQuestion(question);
 				result.put("output", "Ambiguity!");
-				result.put("output", question);
+//				result.put("output", question);
 			} else {
 // 				if (holding==null){
 // 					holding="";

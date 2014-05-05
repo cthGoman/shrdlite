@@ -365,13 +365,13 @@ function systemPrompt(timeout) {
     if (timeout) {
         setTimeout(systemPrompt, 1000*timeout);
     } else {
-//		readTextFile("javaprolog/Question/QuestionFile.txt");
-        sayUtterance("system", SystemPromptText);
-        enableInput();
+		readTextFile("javaprolog/Question/QuestionFile.txt");
+//        sayUtterance("system", SystemPromptText);
+//        enableInput();
     }
 }
 
-/*function readTextFile(file){
+function readTextFile(file){
     var rawFile = new XMLHttpRequest();
     rawFile.open("GET", file, true);
     rawFile.onreadystatechange = function ()
@@ -387,7 +387,7 @@ function systemPrompt(timeout) {
     }
     rawFile.send(null);
 }
-*/
+
 
 function enableInput() {
     $("#inputexamples").prop('disabled', false).val(''); 
