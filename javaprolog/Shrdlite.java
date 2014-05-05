@@ -29,7 +29,7 @@ public class Shrdlite {
 		JSONArray  world     = (JSONArray)  jsinput.get("world");
 		String     holding   = (String)     jsinput.get("holding");
 		JSONObject objects   = (JSONObject) jsinput.get("objects");
-		
+      		
 		JSONObject result = new JSONObject();
 		result.put("utterance", utterance);
 		
@@ -113,27 +113,40 @@ DebugFile.stop();
 //				result.put("output", question);
 >>>>>>> origin/Interpreter
 			} else {
-// 				if (holding==null){
-// 					holding="";
-// 				}
+         
+            int solveMode=4;     // Switch between solve3 and 4
+            
+				if (holding==null & solveMode==3){     
+					holding="";          
+				}                       
+            
+            
 				Planner planner = new Planner(world, holding, objects);
 				Plan plan = null;
-//             // System.out.println(goals.get(0).get(0).get(0).get(0));
             long endTime   = System.currentTimeMillis();
 			   long totalTime2 = endTime - startTime;
-// 				if (goals.get(0).get(0).get(0).get(0).equals("hold")){
-// 					plan = planner.solve(goals.get(0),result);
-//                // System.out.println("tjoho");
-// 				}else{
-					plan = planner.solve4(goals.get(0),result);
-// 				}
-				result.put("plan", plan);
+				
+            if(solveMode==3){
+            
+               if (goals.get(0).get(0).get(0).get(0).equals("hold")){   
+					   plan = planner.solve(goals.get(0),result);            
+				   }                                                        
+               else{                                                   
+					   plan = planner.solve3(goals.get(0),result);      
+				   }                                                        
+            }
+            else if(solveMode==4){
+               plan = planner.solve4(goals.get(0),result);
+            }
+            
+            
+				result.put("plan", plan);                       
 				if (plan.isEmpty()) {
 					result.put("output", "Planning error!");
 				} else {
 					endTime   = System.currentTimeMillis();
 					long totalTime = endTime - startTime;
-					result.put("output", "Success! " + totalTime + " "+ totalTime2 + " " + plan.size());
+					result.put("output", "Success! " + totalTime + " "+ totalTime2 + " " + plan.size() + " ");
 				}
 			}
 		}

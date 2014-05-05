@@ -48,6 +48,10 @@ public class State{
       return robotPos;
    }
    
+   public void setRobotPos(int newPos){
+      robotPos=newPos;
+   }
+   
    public void pickColumn(int columnNr){
       if(holding.isEmpty() && world.get(columnNr).size()>0){
          holding = world.get(columnNr).get(world.get(columnNr).size()-1); //put the top object in column columnNr in holding
@@ -67,7 +71,7 @@ public class State{
    public String pickDropColumn(int columnNr){
       if(holding.isEmpty() && world.get(columnNr).size()>0){
          holding = world.get(columnNr).get(world.get(columnNr).size()-1); //put the top object in column columnNr in holding
-         world.get(columnNr).remove(world.get(columnNr).get(world.get(columnNr).size()-1)); //remove the top object in column columnNr
+         world.get(columnNr).remove(holding); //remove the top object in column columnNr
          robotPos = columnNr;
          return ("pick "+columnNr);
          }
