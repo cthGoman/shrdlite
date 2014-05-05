@@ -16,4 +16,5 @@ for i=1:length(c{1})
     end
         
 end
-m
+m(:,4)=m(:,1)-m(:,2);
+[mean(m(:,4)) mean(m(:,3))]

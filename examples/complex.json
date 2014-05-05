@@ -17,7 +17,7 @@
         "m": { "form":"box",     "size":"small",  "color":"blue"  }
     },
     "utterance": 
-        ["put","a","box","in","a","box"],
+        ["put","the","green","plank","in","the","yellow","box"],
     "examples": [
         ["put","a","box","in","a","box"],
         ["put","all","balls","on","the","floor"],
