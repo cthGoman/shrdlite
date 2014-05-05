@@ -24,11 +24,18 @@ public class Interpreter{
 		}
 		worldList.add(hold);
 	}
+<<<<<<< HEAD
 	public List<Goal> interpret(Term input){
 DebugFile.start();
 		Tree tree = new Tree(input.toString().replace("(-)","-"));
 		ArrayList<String> object0 = InitialState.getInitialObjects(tree.getMasterNode(),objects,worldList);
 DebugFile.println(input.toString().replace("(-)","-"));
+=======
+	public List<Goal> interpret(String input){
+DebugFile.start();
+		Tree tree = new Tree(input.replace("(-)","-"));
+		ArrayList<String> object0 = InitialState.getInitialObjects(tree.getMasterNode(),objects,worldList);
+>>>>>>> origin/Interpreter
 for(String s:object0){
 DebugFile.print(s + " ");
 }

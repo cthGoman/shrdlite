@@ -46,6 +46,8 @@ public class Node{
       }else if(value.equals("floor")){
          LinkedList<String> object = new LinkedList<String>();
          object.add(value);
+         object.add("-");
+         object.add("-");
          objects.add(object); 
          
 		}else{
@@ -66,6 +68,8 @@ public class Node{
 		}
 		if(value.equals("floor")){
 			object.add(value);
+         object.add("-");
+         object.add("-");
 		}
 	return object;
 	}

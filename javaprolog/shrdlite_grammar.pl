@@ -7,6 +7,9 @@ command : Cmd --->
     opt_will_you, opt_please,
     basic_command : Cmd,
     opt_please.
+answer : Ans --->
+	basic_answer : Ans,
+	opt_please.
 
 basic_command : take(Entity) ---> take, entity:Entity.
 basic_command : put(Location) ---> move, it, location:Location.
@@ -70,6 +73,8 @@ form(pl) : box ---> [boxes].
 form(sg) : table ---> [table].
 form(pl) : table ---> [tables].
 
+basic_answer : yes ---> [yes].
+basic_answer : no ---> [no];[nope].
 %% Lexicon (without semantic content)
 
 the_floor ---> [the,floor].
