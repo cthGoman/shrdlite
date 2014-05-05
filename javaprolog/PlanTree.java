@@ -144,7 +144,7 @@ public class PlanTree{
       PlanTreeState solution = getBestSolution();
       if(solution.isSolution()){
          if(solution.getDepth()!=previousMaxCost){
-            System.out.println("Lowered Max cost: "+solution.getDepth()+" Current Nr of States: " + stateMap.size());
+//             System.out.println("Lowered Max cost: "+solution.getDepth()+" Current Nr of States: " + stateMap.size());
             previousMaxCost = solution.getDepth();
             
 //             int nrOfFives=0;
