@@ -1,5 +1,9 @@
 clc
-clear all
+clear m
+
+clear save  % comment
+save = [];  % comment
+
 f=fopen('javaprolog\evaluation.txt');
 c=textscan(f,'%s');
 fclose(f);
@@ -17,4 +21,4 @@ for i=1:length(c{1})
         
 end
 m(:,4)=m(:,1)-m(:,2);
-[mean(m(:,4)) mean(m(:,3))]
+save=[save;mean(m(:,4)) mean(m(:,3))]

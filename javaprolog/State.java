@@ -7,8 +7,10 @@ public class State{
    private ArrayList<ArrayList<String>> world;
    private int robotPos;
    private int hashCode;
+   public static int instances = 0;
    
    public State(JSONArray worldIn, String holdingIn, int robotPosIn){
+      instances++;
       if (holdingIn==null)
          holding = "";
       else   
@@ -28,6 +30,8 @@ public class State{
 
    
    public State(State stateIn){
+      instances++;
+      
       holding = stateIn.getHolding();
       robotPos = stateIn.getRobotPos();
       world = new ArrayList<ArrayList<String>>(stateIn.getWorld().size());
@@ -35,6 +39,8 @@ public class State{
          world.add(new ArrayList(column));
       }
    }
+   
+
    
    public ArrayList<ArrayList<String>> getWorld(){
       return world;

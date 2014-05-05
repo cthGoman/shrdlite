@@ -117,7 +117,7 @@ public class Shrdlite {
 				} else {
 					endTime   = System.currentTimeMillis();
 					long totalTime = endTime - startTime;
-					result.put("output", "Success! " + totalTime + " "+ totalTime2 + " " + plan.size() + " ");
+					result.put("output", "Success! " + totalTime + " "+ totalTime2 + " " + plan.size() + " " + State.instances + " ");
 				}
 			}
 		}
