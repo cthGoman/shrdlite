@@ -1,0 +1,13 @@
+
+complex - put the yellow brick on the red plank
+epsilon = 0 => 21830 245 26 39746
+epsilon = 1 => 4892 273 28 17471
+epsilon = 2 => 1167 253 28 7046
+
+small - put the white ball in a box that is on a table to the right of the black ball that is in a box to the left of a box
+epsilon = 0 => 379 314 8 151
+epsilon = 2 => 377 312 8 251
+
+medium - put the white ball in a box that is on a table to the right of the black ball that is in a box to the left of a box
+epsilon = 0 => 8635 324 12 14031
+epsilon = 2 => 422 282 14 401
