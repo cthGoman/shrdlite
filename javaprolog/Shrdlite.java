@@ -85,7 +85,7 @@ public class Shrdlite {
 				result.put("output", "Ambiguity!");
 			} else {
          
-            int solveMode=4;     // Switch between solve3 and 4
+            int solveMode=5;     // Switch between solve3 - 5
             
 				if (holding==null & solveMode==3){     
 					holding="";          
@@ -108,6 +108,9 @@ public class Shrdlite {
             }
             else if(solveMode==4){
                plan = planner.solve4(goals.get(0),result);
+            }
+            else if(solveMode==5){
+               plan = planner.solve5(goals.get(0),result);
             }
             
             

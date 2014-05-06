@@ -409,5 +409,13 @@ public class Planner{
    Plan plan = planningTree.getPlan();
    return plan;   
    }
+   
+   public Plan solve5(Goal goal,JSONObject result){
+
+   State startState = new State(world,holding);
+   PlanTree2 planningTree = new PlanTree2(startState, goal, objects);
+   Plan plan = planningTree.getPlan();
+   return plan;   
+   }
 }
 
