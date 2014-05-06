@@ -1,31 +1,20 @@
-move(basic_entity(any,object(ball,-,-)),relative(inside,relative_entity(any,object(box,-,-),relative(ontop,floor))))
-e f 
-goalList1 []
-goal1 [[[inside, e, l], [ontop, l, floor-0]], [[inside, e, l], [ontop, l, floor-1]], [[inside, e, l], [ontop, l, floor-2]], [[inside, e, l], [ontop, l, floor-3]], [[inside, e, l], [ontop, l, floor-4]], [[inside, e, k], [ontop, k, floor-0]], [[inside, e, k], [ontop, k, floor-1]], [[inside, e, k], [ontop, k, floor-2]], [[inside, e, k], [ontop, k, floor-3]], [[inside, e, k], [ontop, k, floor-4]], [[inside, f, l], [ontop, l, floor-0]], [[inside, f, l], [ontop, l, floor-1]], [[inside, f, l], [ontop, l, floor-2]], [[inside, f, l], [ontop, l, floor-3]], [[inside, f, l], [ontop, l, floor-4]], [[inside, f, k], [ontop, k, floor-0]], [[inside, f, k], [ontop, k, floor-1]], [[inside, f, k], [ontop, k, floor-2]], [[inside, f, k], [ontop, k, floor-3]], [[inside, f, k], [ontop, k, floor-4]], [[inside, f, m], [ontop, m, floor-0]], [[inside, f, m], [ontop, m, floor-1]], [[inside, f, m], [ontop, m, floor-2]], [[inside, f, m], [ontop, m, floor-3]], [[inside, f, m], [ontop, m, floor-4]]]
-[inside, e, l] [ontop, l, floor-0] 
-[inside, e, l] [ontop, l, floor-1] 
-[inside, e, l] [ontop, l, floor-2] 
-[inside, e, l] [ontop, l, floor-3] 
-[inside, e, l] [ontop, l, floor-4] 
-[inside, e, k] [ontop, k, floor-0] 
-[inside, e, k] [ontop, k, floor-1] 
-[inside, e, k] [ontop, k, floor-2] 
-[inside, e, k] [ontop, k, floor-3] 
-[inside, e, k] [ontop, k, floor-4] 
-[inside, f, l] [ontop, l, floor-0] 
-[inside, f, l] [ontop, l, floor-1] 
-[inside, f, l] [ontop, l, floor-2] 
-[inside, f, l] [ontop, l, floor-3] 
-[inside, f, l] [ontop, l, floor-4] 
-[inside, f, k] [ontop, k, floor-0] 
-[inside, f, k] [ontop, k, floor-1] 
-[inside, f, k] [ontop, k, floor-2] 
-[inside, f, k] [ontop, k, floor-3] 
-[inside, f, k] [ontop, k, floor-4] 
-[inside, f, m] [ontop, m, floor-0] 
-[inside, f, m] [ontop, m, floor-1] 
-[inside, f, m] [ontop, m, floor-2] 
-[inside, f, m] [ontop, m, floor-3] 
-[inside, f, m] [ontop, m, floor-4] 
-1
-goalList2 [[[[inside, e, l], [ontop, l, floor-0]], [[inside, e, l], [ontop, l, floor-1]], [[inside, e, l], [ontop, l, floor-2]], [[inside, e, l], [ontop, l, floor-3]], [[inside, e, l], [ontop, l, floor-4]], [[inside, e, k], [ontop, k, floor-0]], [[inside, e, k], [ontop, k, floor-1]], [[inside, e, k], [ontop, k, floor-2]], [[inside, e, k], [ontop, k, floor-3]], [[inside, e, k], [ontop, k, floor-4]], [[inside, f, l], [ontop, l, floor-0]], [[inside, f, l], [ontop, l, floor-1]], [[inside, f, l], [ontop, l, floor-2]], [[inside, f, l], [ontop, l, floor-3]], [[inside, f, l], [ontop, l, floor-4]], [[inside, f, k], [ontop, k, floor-0]], [[inside, f, k], [ontop, k, floor-1]], [[inside, f, k], [ontop, k, floor-2]], [[inside, f, k], [ontop, k, floor-3]], [[inside, f, k], [ontop, k, floor-4]], [[inside, f, m], [ontop, m, floor-0]], [[inside, f, m], [ontop, m, floor-1]], [[inside, f, m], [ontop, m, floor-2]], [[inside, f, m], [ontop, m, floor-3]], [[inside, f, m], [ontop, m, floor-4]]]]
+treeStrings[move(basic_entity(any,object(ball,-,-)),relative(inside,relative_entity(any,object(box,small,-),relative(inside,basic_entity(any,object(box,large,-)))))), move(relative_entity(any,object(ball,-,-),relative(inside,basic_entity(any,object(box,small,-)))),relative(inside,basic_entity(any,object(box,large,-))))]
+object0: [ball, -, -]
+indexOfLongestList0
+lengthLongestList3
+nonMatchingRelation: inside
+nonMatchingObject1: [ball, -, -]
+nonMatchingObject2: [box, small, -]
+
+questionIndex: 0
+
+compareRelation: inside
+compareObject1: [ball, -, -]
+compareObject2: [box, small, -]
+
+compareRelation: inside
+compareObject1: [ball, -, -]
+compareObject2: [box, large, -]
+yesList: [move(basic_entity(any,object(ball,-,-)),relative(inside,relative_entity(any,object(box,small,-),relative(inside,basic_entity(any,object(box,large,-))))))]
+noList: [move(relative_entity(any,object(ball,-,-),relative(inside,basic_entity(any,object(box,small,-)))),relative(inside,basic_entity(any,object(box,large,-))))]
+question: Should I put the ball inside the small box?

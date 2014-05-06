@@ -123,7 +123,7 @@ public class Shrdlite {
                if(solveMode==3){
                   result.put("output", "Success! " + totalTime + " "+ totalTime2 + " " + plan.size() + " " + Planner.instances + " ");
                }
-               else if(solveMode==4){
+               else if(solveMode==4 || solveMode==5){
                   result.put("output", "Success! " + totalTime + " "+ totalTime2 + " " + plan.size() + " " + State.instances + " ");
                }
             }
