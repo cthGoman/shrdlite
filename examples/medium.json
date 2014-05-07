@@ -16,8 +16,7 @@
         "l": { "form":"box",     "size":"large",  "color":"red"   },
         "m": { "form":"box",     "size":"small",  "color":"blue"  }
     },
-    "utterance": 
-        ["put","the","white","ball","above","the","yellow","pyramid"],
+    "utterance":  ["put","a","ball","above","a","table","below","a","small","box","right","of","the","yellow","box","above","a","pyramid","below","a","ball"],
     "examples": [
         ["put","the","brick","that","is","to","the","left","of","a","pyramid","in","a","box"],
         ["put","the","white","ball","in","a","box","on","the","floor"],
@@ -28,6 +27,6 @@
         ["put","all","boxes","on","the","floor"],
         ["put","the","large","plank","under","the","blue","brick"],
         ["move","all","bricks","on","a","table"],
-        ["move","all","balls","inside","a","large","box"]
+        ["move","all","balls","inside","a","large","box"]	["put","a","ball","above","a","table","below","a","small","box","right","of","the","yellow","box","above","a","pyramid","below","a","ball"]
     ]
 }

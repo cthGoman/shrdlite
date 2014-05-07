@@ -31,7 +31,7 @@ public class PlanTree2{
 //          int maxDepth = 100;
 
          while(unevaluatedStates.first().getDepth()+unevaluatedStates.first().getHeuristic().getCost() < maxCost()){
-//             System.out.println("Depth: "+ unevaluatedStates.first().getDepth()+ " Cost: "+ unevaluatedStates.first().getHeuristic().getCost()+" maxCost: "+maxCost());
+            System.out.println("Depth: "+ unevaluatedStates.first().getDepth()+ " Cost: "+ unevaluatedStates.first().getHeuristic().getCost()+" maxCost: "+maxCost());
 //             System.out.println("currentState: "+unevaluatedStates.first().getState());
             PlanTreeState2 tempState = unevaluatedStates.first();
             generateChildren(unevaluatedStates.pollFirst());
@@ -129,7 +129,7 @@ public class PlanTree2{
       PlanTreeState2 solution = getBestSolution();
       if(solution.isSolution()){
          if(solution.getDepth()!=previousMaxCost){
-//             System.out.println("Lowered Max cost: "+solution.getDepth()+" Current Nr of States: " + stateMap.size());
+            System.out.println("Lowered Max cost: "+solution.getDepth()+" Current Nr of States: " + stateMap.size());
             previousMaxCost = solution.getDepth();
             
 //             int nrOfFives=0;
