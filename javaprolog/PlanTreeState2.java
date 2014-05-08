@@ -14,6 +14,7 @@ public class PlanTreeState2 implements Comparable<PlanTreeState2>{
    private boolean isSolution;
    private boolean hasParent;
    
+   
    public PlanTreeState2(State inState, Goal goal, JSONObject objects){
       state = inState;
       depth = 0;
@@ -229,18 +230,29 @@ public class PlanTreeState2 implements Comparable<PlanTreeState2>{
          return -1;
       }
       else if(depth+stateHeu.getCost() == stateIn.getDepth()+stateIn.getHeuristic().getCost()){
-         if(depth==stateIn.getDepth()){
-            if(state.hashCode()<stateIn.getState().hashCode())
-               return -1;
-            else if(state.hashCode()>stateIn.getState().hashCode())
-               return 1;
-            else if(stateIn.getState().equals(state))
-               return 0;
+         if(depth==stateIn.getDepth() && moveDist()==stateIn.moveDist()){
+            
+               if(state.hashCode()<stateIn.getState().hashCode())
+                  return -1;
+               else if(state.hashCode()>stateIn.getState().hashCode())
+                  return 1;
+               else if(stateIn.getState().equals(state))
+                  return 0;
+         }
+         else if(depth==stateIn.getDepth() && moveDist()<stateIn.moveDist()){
+            return -1;
+         }
+         else if(depth==stateIn.getDepth() && moveDist()>stateIn.moveDist()){
+            return 1;
          }
          else if(depth>stateIn.getDepth()){
             return -1;
          }
       }
       return 1;
+   }
+   
+   public int moveDist(){
+      return Math.abs(parentState.getState().getRobotPos()-state.getRobotPos());
    }
 }
