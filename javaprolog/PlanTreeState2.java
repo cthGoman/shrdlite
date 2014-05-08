@@ -255,4 +255,13 @@ public class PlanTreeState2 implements Comparable<PlanTreeState2>{
    public int moveDist(){
       return Math.abs(parentState.getState().getRobotPos()-state.getRobotPos());
    }
+   public int getTotMoveDist(){
+      int totMoveDist = 0;
+      PlanTreeState2 currentState = this;
+      while(currentState.hasParent()){
+         totMoveDist +=currentState.moveDist();
+         currentState = currentState.getParent();
+      }
+      return totMoveDist;
+   }
 }
