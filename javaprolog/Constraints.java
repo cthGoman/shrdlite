@@ -276,9 +276,19 @@ public class Constraints{
          relationAB[i]=goalRow.get(i).get(0);
          idObjectA[i]=goalRow.get(i).get(1);
          idObjectB[i]=goalRow.get(i).get(2);
+         for(int j=0;j<i;j++){
+            if(idObjectA[i].contains(idObjectA[j]) || idObjectB[i].contains(idObjectB[j])){
+               return false;
+            }
+         }
+      }
+      if(idObjectA[goalRow.size()-1].equals(idObjectB[0]) || idObjectB[goalRow.size()-1].equals(idObjectA[0])){
+         return false;
       }
 
       for(int i=0;i<goalRow.size();i++){
+
+      
          // ------------------------ "On top of"-statements ------------------------//          
          if(relationAB[i].contains("ontop")){
             for(int j=0;j<goalRow.size();j++){

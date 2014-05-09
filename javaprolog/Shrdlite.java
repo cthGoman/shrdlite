@@ -76,6 +76,21 @@ public class Shrdlite {
 					treesWithGoal.add(tree.replace("(-)","-")); //max one goal per tree possible, so this is ok.
 				}
 			}
+DebugFile.start();
+if(goals.size()>0){
+for(int i=0;i<goals.get(0).size();i++){
+   for(int j=0;j<goals.get(0).get(i).size();j++){
+      DebugFile.print(goals.get(0).get(i).get(j).get(0));
+      DebugFile.print(",");
+      DebugFile.print(goals.get(0).get(i).get(j).get(1));
+      DebugFile.print(",");
+      DebugFile.println(goals.get(0).get(i).get(j).get(2));     
+   }
+   DebugFile.println(" ");
+}   
+}
+DebugFile.stop();
+         
 			result.put("goals", goals);
 			if (goals.isEmpty()) {
 				result.put("output", "Impossible task!");
