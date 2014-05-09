@@ -404,18 +404,28 @@ public class Planner{
    }   
    public Plan solve4(Goal goal,JSONObject result){
 
-   State startState = new State(world,holding);
-   PlanTree planningTree = new PlanTree(startState, goal, objects);
-   Plan plan = planningTree.getPlan();
-   return plan;   
+      State startState = new State(world,holding);
+      PlanTree planningTree = new PlanTree(startState, goal, objects);
+      Plan plan = planningTree.getPlan();
+      return plan;   
    }
    
    public Plan solve5(Goal goal,JSONObject result){
 
-   State startState = new State(world,holding);
-   PlanTree2 planningTree = new PlanTree2(startState, goal, objects);
-   Plan plan = planningTree.getPlan();
-   return plan;   
+      State startState = new State(world,holding);
+      // System.out.println("goal: "+goal);
+      PlanTree2 planningTree = new PlanTree2(startState, goal, objects);
+      Plan plan = planningTree.getPlan();
+      return plan;   
+   }
+   
+   public Plan solve6(Goal goal,JSONObject result){
+
+      State startState = new State(world,holding);
+      // System.out.println("goal: "+goal);
+      PlanTree3 planningTree = new PlanTree3(startState, goal, objects);
+      Plan plan = planningTree.getPlan();
+      return plan;   
    }
 }
 

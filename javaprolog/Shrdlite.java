@@ -100,7 +100,7 @@ DebugFile.stop();
 				result.put("output", "Ambiguity!");
 			} else {
          
-            int solveMode=5;     // Switch between solve3 - 5
+            int solveMode=6;     // Switch between solve3 - 6
             
 				if (holding==null & solveMode==3){     
 					holding="";          
@@ -127,6 +127,9 @@ DebugFile.stop();
             else if(solveMode==5){
                plan = planner.solve5(goals.get(0),result);
             }
+            else if(solveMode==6){
+               plan = planner.solve6(goals.get(0),result);
+            }
             
             
 				result.put("plan", plan);                       
@@ -138,7 +141,7 @@ DebugFile.stop();
                if(solveMode==3){
                   result.put("output", "Success! " + totalTime + " "+ totalTime2 + " " + plan.size() + " " + Planner.instances + " ");
                }
-               else if(solveMode==4 || solveMode==5){
+               else if(solveMode==4 || solveMode==5 || solveMode==6){
                   result.put("output", "Success! " + totalTime + " "+ totalTime2 + " " + plan.size() + " " + State.instances + " ");
                }
             }
