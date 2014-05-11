@@ -74,6 +74,32 @@ public class Node{
 	return object;
 	}
 	public int getPositionOfAll(){
+		if(children.get(0).children.size()!=0){
+			if(children.get(0).children.get(0).value.equals("all")){
+				return 0;
+			}
+		}
+		int pos = -1;
+		for(int i = 1 ; i < children.size() ; i++ ){
+			pos = children.get(i).checkForAll(1);
+			if(pos != -1){
+				return pos;
+			}
+		}
+		return pos;
+	}
+	private int checkForAll(int depth){
+		if(value.contains("entity")){
+			if(children.get(0).value.equals("all")){
+				return depth/2;
+			}
+		}
+		for(Node child:children){
+			int pos = child.checkForAll(depth + 1);
+			if(pos != -1){
+				return pos;
+			}
+		}
 		return -1;
 	}
 }
