@@ -14,10 +14,10 @@ public class Heuristic4{
 	public Heuristic4(State stateIn, Goal goal, JSONObject objects) {
 		worldState = stateIn;
       stateCost = new StateCost(worldState, -1);
-      int bestRow = 0;
-      int i = 0;
-    for (ArrayList<Statement> listOfStatement : goal){//Loop over all rows 
-
+      
+    for (int i = goal.size()-1; i>=0; i--){//Loop over all rows 
+         
+         ArrayList<Statement> listOfStatement = goal.get(i);
          StateCost rowStateCost = new StateCost(worldState);
          for(int j=0; j<listOfStatement.size(); j++){//Loop over every statement in row
          Statement statement = listOfStatement.get(j);
@@ -187,6 +187,7 @@ public class Heuristic4{
             
             
          }
+
          if(rowStateCost.sum()>0){
             if(!worldState.getHolding().isEmpty()){
                rowStateCost.dropObj(worldState.getHolding());
@@ -195,22 +196,27 @@ public class Heuristic4{
          
          if(rowStateCost.sum()<stateCost.sum()){
             stateCost=rowStateCost;
-            bestRow = i;
+               
+               while(goal.size()-1>i){
+                  goal.remove(i+1);   
+               }
+         }
+         else if(rowStateCost.sum()>stateCost.sum()){
+            goal.remove(i);
          }
           
-         i++;
          
       }
-      if(goal.size()>1){
-         for(int j = goal.size()-1; j >= 0; j--){
-            if(j!=bestRow){
-               goal.remove(j);
-            }
-         } 
-//          System.out.println("goal storlek: "+goal.size());
-//          System.out.println("bästa raden: "+goal.get(0));
-//          System.out.println("Cost: "+getCost());
-      }
+//       if(goal.size()>1){
+//          for(int j = goal.size()-1; j >= 0; j--){
+//             if(j!=bestRow){
+//                goal.remove(j);
+//             }
+//          } 
+// //          System.out.println("goal storlek: "+goal.size());
+// //          System.out.println("bästa raden: "+goal.get(0));
+// //          System.out.println("Cost: "+getCost());
+//       }
 	}
    
    public int getCost(){
@@ -290,7 +296,13 @@ public class Heuristic4{
       ArrayList<ArrayList<String>> sequences = findAllowedSequences(obj1, obj2, objectsAllowedBelow, new ArrayList<ArrayList<String>>(), new ArrayList<String>());
 //       System.out.println("Sequences: "+sequences);
       Goal ontopGoal = generateGoal(sequences, goalRow, statementIdx);
-
+      if (ontopGoal.isEmpty()){
+         StateCost noSolutionCost = new StateCost(worldState, 100);
+         currentCost.mergeCosts(noSolutionCost);
+         // System.out.println("ingen lösning-----------");
+         return;
+      }
+      
       Heuristic4 ontopHeu = new Heuristic4(worldState, ontopGoal, objects);
       goalRow.clear();
       goalRow.addAll(ontopGoal.get(0));
@@ -351,19 +363,16 @@ public class Heuristic4{
    private Goal generateGoal(ArrayList<ArrayList<String>> sequences, ArrayList<Statement> goalRow, int statementIdx){
       Goal goal = new Goal();
       
-//       System.out.println("goalRow: "+goalRow);
-//       if(!Constraints.isGoalRowAllowed(goalRow))
-//          System.out.println("Inte tillåten!!--------------------");
 
       goalRow.remove(statementIdx);
+      
       for(int i = 0; i<sequences.size();i++){
          ArrayList<Statement> tempRow = new ArrayList<Statement>(goalRow);
          for(int j = 1; j<sequences.get(i).size(); j++){
             tempRow.add(statementIdx+j-1, new Statement("ontop",sequences.get(i).get(j-1),sequences.get(i).get(j)));
          }
-         if(Constraints.isGoalRowAllowed(tempRow))
+         if(isGoalRowAllowed(tempRow))
             goal.add(tempRow);
-       //      System.out.println("goalRow Efter: "+tempRow);
       }
 
       return goal;
@@ -371,6 +380,50 @@ public class Heuristic4{
    
    public StateCost getStateCost(){
       return stateCost;
+   }
+   
+   private boolean isGoalRowAllowed(ArrayList<Statement> goalRow){
+
+      HashMap<String,Integer> objRecurring = new HashMap<String,Integer>();
+//       System.out.println("ny goalRow: "+goalRow);
+      for(Statement tempStatement : goalRow){
+         if(!objRecurring.containsKey(tempStatement.get(1))){
+            objRecurring.put(tempStatement.get(1),1);
+//             System.out.println("add"+tempStatement.get(1));
+         }
+         else{
+            Integer timesInRow = objRecurring.get(tempStatement.get(1));
+//             System.out.println("multiple times"+tempStatement.get(1)+ " timesInRow: "+(timesInRow+1));
+            timesInRow++;
+            objRecurring.put(tempStatement.get(1),timesInRow);
+//             System.out.println("multiple times"+tempStatement.get(1)+ " timesInRow: "+objRecurring.get(tempStatement.get(1)));
+         }
+            
+         if(!objRecurring.containsKey(tempStatement.get(2))){
+            objRecurring.put(tempStatement.get(2),1);
+//             System.out.println("add"+tempStatement.get(2));
+         }   
+         else{
+            Integer timesInRow = objRecurring.get(tempStatement.get(2));
+//             System.out.println("multiple times"+tempStatement.get(2)+ " timesInRow: "+(timesInRow+1));
+            timesInRow++;
+            objRecurring.put(tempStatement.get(2),timesInRow);
+//             System.out.println("multiple times"+tempStatement.get(2)+ " timesInRow: "+objRecurring.get(tempStatement.get(2)));
+         }   
+      }
+      int ones = 0;
+      
+      for(int timesInRow: objRecurring.values()){
+         if(timesInRow>2)
+            return false;
+         else if(timesInRow == 1)
+            ones++;
+      }
+      if(ones!=2){
+         return false;
+      }
+//       System.out.println("Return true");
+      return true;
    }
    
    //----------------------------------------------------------------------------------//

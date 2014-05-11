@@ -277,12 +277,12 @@ public class Constraints{
          idObjectA[i]=goalRow.get(i).get(1);
          idObjectB[i]=goalRow.get(i).get(2);
          for(int j=0;j<i;j++){
-            if(idObjectA[i].contains(idObjectA[j]) || idObjectB[i].contains(idObjectB[j])){
+            if(idObjectA[i].equals(idObjectA[j]) || idObjectB[i].equals(idObjectB[j])){
                return false;
             }
          }
       }
-      if(idObjectA[goalRow.size()-1].equals(idObjectB[0]) || idObjectB[goalRow.size()-1].equals(idObjectA[0])){
+      if((idObjectA[goalRow.size()-1].equals(idObjectB[0]) && goalRow.size()>2) || idObjectB[goalRow.size()-1].equals(idObjectA[0])){
          return false;
       }
 
