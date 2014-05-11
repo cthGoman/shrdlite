@@ -73,4 +73,7 @@ public class Node{
 		}
 	return object;
 	}
+	public int getPositionOfAll(){
+		return -1;
+	}
 }

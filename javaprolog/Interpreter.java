@@ -29,7 +29,7 @@ public class Interpreter{
 		ArrayList<String> object0 = InitialState.getInitialObjects(tree.getMasterNode(),objects,worldList);
 		Goal goal = null;
 		if(tree.getMasterNode().getValue().equals("move")){
-			goal = Relations.relation(objects,worldList,tree,object0);
+			goal = Relations.relation(objects,worldList,tree,object0,tree.getMasterNode().getPositionOfAll());
 		}else if(tree.getMasterNode().getValue().equals("take")){
 			goal = new Goal();
 			for(int i = 0 ; i < object0.size() ; i++){
