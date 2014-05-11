@@ -40,39 +40,5 @@ public class CombineStatements{
       return goal;
    
    }
-   static public ArrayList<ArrayList<Statement>> testStatement(){
-      ArrayList<ArrayList<Statement>> testList = new ArrayList<ArrayList<Statement>>();
-      ArrayList<Statement> state1 = new ArrayList<Statement>();
-      state1.add(new Statement("R","hold","A"));
-      state1.add(new Statement("R","hold","B"));
-        
-      ArrayList<Statement> state2 = new ArrayList<Statement>();
-      state2.add(new Statement("A","on","C"));
-      state2.add(new Statement("A","on","D"));
-      state2.add(new Statement("B","on","C"));
-      state2.add(new Statement("B","on","D"));
-        
-      ArrayList<Statement> state3 = new ArrayList<Statement>();
-      state3.add(new Statement("C","on","E"));
-      state3.add(new Statement("C","on","F"));
-      state3.add(new Statement("D","on","E"));
-      state3.add(new Statement("D","on","F"));
-        
-      ArrayList<Statement> state4 = new ArrayList<Statement>();
-      state4.add(new Statement("E","on","T"));
-      state4.add(new Statement("F","on","T"));
-        
-      testList.add(state1);
-      testList.add(state2);
-      testList.add(state3);
-      testList.add(state4);
-      return testList;
-      
-   }
-   static public ArrayList<String> testObject0(){
-       ArrayList<String> testObject = new ArrayList<String>();   
-       
-       testObject.add("e");
-       return testObject;   
-   }
+
 }
