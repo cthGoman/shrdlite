@@ -32,9 +32,9 @@ public class PlanTree3{
 //          int maxDepth = 100;
 
          while(unevaluatedStates.first().getDepth()+unevaluatedStates.first().getHeuristic().getCost(unevaluatedStates.first().getDepth(),maxCost()) < maxCost()){
-            System.out.println("Depth: "+ unevaluatedStates.first().getDepth()+ " Cost: "+ unevaluatedStates.first().getHeuristic().getCost(unevaluatedStates.first().getDepth(),maxCost())+" maxCost: "+maxCost());
             System.out.println("Goal:"+goal);
-//             System.out.println("currentState: "+unevaluatedStates.first().getState());
+            System.out.println("Depth: "+ unevaluatedStates.first().getDepth()+ " Cost: "+ unevaluatedStates.first().getHeuristic().getCost(unevaluatedStates.first().getDepth(),maxCost())+" maxCost: "+maxCost());
+            System.out.println("currentState: "+unevaluatedStates.first().getState());
 //             System.out.println("MoveDist: "+unevaluatedStates.first().moveDist());
             PlanTreeState3 tempState = unevaluatedStates.first();
             generateChildren(unevaluatedStates.pollFirst());
