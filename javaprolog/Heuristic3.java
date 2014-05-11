@@ -250,7 +250,7 @@ public class Heuristic3{
 	}
    
    public int getCost(){
-      int epsilon=1;
+      int epsilon=0;
       
       return (1+epsilon)*stateCost.sum();
    }

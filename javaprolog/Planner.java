@@ -422,7 +422,6 @@ public class Planner{
    public Plan solve6(Goal goal,JSONObject result){
 
       State startState = new State(world,holding);
-      // System.out.println("goal: "+goal);
       PlanTree3 planningTree = new PlanTree3(startState, goal, objects);
       Plan plan = planningTree.getPlan();
       return plan;   

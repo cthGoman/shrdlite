@@ -5,17 +5,21 @@ import java.util.*;
 public class Heuristic4{
    private StateCost stateCost;
    private State worldState;
+   private Goal goal;
+   private HashMap<String,ArrayList<String>> objectsAllowedBelow;
    
    public Heuristic4(State worldState){
       stateCost = new StateCost(worldState, -1);
       
    }
 
-	public Heuristic4(State stateIn, Goal goal, JSONObject objects) {
-		worldState = stateIn;
+	public Heuristic4(State stateIn, Goal goalIn, JSONObject objects) {
+		goal = goalIn;
+      worldState = stateIn;
       stateCost = new StateCost(worldState, -1);
+      ArrayList<Integer> rowCosts = new ArrayList<Integer>();
       
-    for (int i = goal.size()-1; i>=0; i--){//Loop over all rows 
+    for (int i = 0; i<goal.size(); i++){//Loop over all rows 
          
 
          StateCost rowStateCost = new StateCost(worldState);
@@ -35,13 +39,15 @@ public class Heuristic4{
                int place2 = worldState.getPlaceInColumn(obj2);
                
                if ("above".equals(statement.get(0).toLowerCase())){
-                  evaluateAbove(obj1,obj2,objects,rowStateCost,columnNr1,columnNr2,place1,place2, goal.get(i), goal.get(i).indexOf(statement));
+                  evaluateAbove(obj1,obj2,objects,rowStateCost,columnNr1,columnNr2,place1,place2, i, goal.get(i).indexOf(statement));
    
                }
                else if ("under".equals(statement.get(0).toLowerCase())){
-                  evaluateAbove(obj2,obj1,objects,rowStateCost,columnNr2,columnNr1,place2,place1, goal.get(i), goal.get(i).indexOf(statement));
+                  evaluateAbove(obj2,obj1,objects,rowStateCost,columnNr2,columnNr1,place2,place1, i, goal.get(i).indexOf(statement));
                }
+               
             }
+            rowCosts.add(1000);
          }
          else{ //If the goal row doesn't contain above or under
             ArrayList<Statement> listOfStatements = goal.get(i);   
@@ -222,37 +228,29 @@ public class Heuristic4{
                unevaluatedStatements.remove(0);
             
             }
+            if(rowStateCost.sum()>0){
+               if(!worldState.getHolding().isEmpty()){
+                  rowStateCost.dropObj(worldState.getHolding());
+               }
+            }
+            
+            if(rowStateCost.sum()<stateCost.sum()){
+               stateCost=rowStateCost;
+            }
+            rowCosts.add(rowStateCost.sum());
+
          }
 
-         if(rowStateCost.sum()>0){
-            if(!worldState.getHolding().isEmpty()){
-               rowStateCost.dropObj(worldState.getHolding());
-            }
-         }
          
-         if(rowStateCost.sum()<stateCost.sum()){
-            stateCost=rowStateCost;
-               
-               while(goal.size()-1>i){
-                  goal.remove(i+1);   
-               }
-         }
-         else if(rowStateCost.sum()>stateCost.sum()){
-            goal.remove(i);
-         }
           
-         
       }
-//       if(goal.size()>1){
-//          for(int j = goal.size()-1; j >= 0; j--){
-//             if(j!=bestRow){
-//                goal.remove(j);
-//             }
-//          } 
-// //          System.out.println("goal storlek: "+goal.size());
-// //          System.out.println("bästa raden: "+goal.get(0));
-// //          System.out.println("Cost: "+getCost());
-//       }
+//       System.out.println("goal.size(): "+goal.size());
+      for(int i = goal.size()-1; i>=0; i--){
+         if(rowCosts.get(i)>(stateCost.sum()))
+            goal.remove(i);
+      }
+
+         
 	}
    
    public int getCost(){
@@ -262,9 +260,10 @@ public class Heuristic4{
    }
    
    public double getCost(int depth, int maxCost){
+      int mySum = stateCost.sum();
       double epsilon = 0;
-//       System.out.println("Cost: "+(1+epsilon*(1-(double)depth/(double)maxCost))*getCost());
-      return (1+epsilon*(1-(double)depth/(double)maxCost))*getCost();
+   
+      return (1+epsilon)*stateCost.sum();
    }
    
    public boolean isBetter(Heuristic4 compHeu){
@@ -290,52 +289,41 @@ public class Heuristic4{
       return false;
    }
    
-   private void evaluateAbove(String obj1, String obj2, JSONObject objects, StateCost currentCost, int columnNr1, int columnNr2, int place1, int place2, ArrayList<Statement> goalRow, int statementIdx){
-      ArrayList<String> allObjects = worldState.getAllObjectsInWorld();
-      HashMap<String,ArrayList<String>> objectsAllowedBelow = new HashMap();
-     
+   private void evaluateAbove(String obj1, String obj2, JSONObject objects, StateCost currentCost, int columnNr1, int columnNr2, int place1, int place2, int goalRowIdx, int statementIdx){
       
-      for(String currentObj: allObjects){
+      ArrayList<Statement> goalRow = new ArrayList<Statement>(goal.get(goalRowIdx));
+      if(objectsAllowedBelow == null){
+         objectsAllowedBelow = new HashMap();
+         ArrayList<String> allObjects = worldState.getAllObjectsInWorld();
          
-         ArrayList<String> currentAllowedBelow = new ArrayList<String>();
-
-         for(String currentBelow: allObjects){
-            if(!currentObj.equals(currentBelow)){
-               ArrayList<String> currentPair = new ArrayList<String>();
-               currentPair.add(currentBelow);
-               currentPair.add(currentObj);
-               if(Constraints.isColumnAllowed(currentPair,objects))
-                  currentAllowedBelow.add(currentBelow);
+         for(String currentObj: allObjects){
+            
+            ArrayList<String> currentAllowedBelow = new ArrayList<String>();
+   
+            for(String currentBelow: allObjects){
+               if(!currentObj.equals(currentBelow)){
+                  ArrayList<String> currentPair = new ArrayList<String>();
+                  currentPair.add(currentBelow);
+                  currentPair.add(currentObj);
+                  if(Constraints.isColumnAllowed(currentPair,objects))
+                     currentAllowedBelow.add(currentBelow);
+               }
             }
+            objectsAllowedBelow.put(currentObj,currentAllowedBelow);
          }
-         objectsAllowedBelow.put(currentObj,currentAllowedBelow);
-      }
+      }   
       ArrayList<String> allowedObjects = findAllowedBetween(obj1, obj2, objectsAllowedBelow, new ArrayList<String>(), new ArrayList<String>());
       ArrayList<ArrayList<String>> sequences = findAllowedSequences(obj1, obj2, objectsAllowedBelow, new ArrayList<ArrayList<String>>(), new ArrayList<String>());
 //       System.out.println("Sequences: "+sequences);
       Goal ontopGoal = generateGoal(sequences, goalRow, statementIdx);
+      
       if (ontopGoal.isEmpty()){
-         StateCost noSolutionCost = new StateCost(worldState, 100);
-         currentCost.mergeCosts(noSolutionCost);
-         // System.out.println("ingen lösning-----------");
          return;
       }
-      
-      Heuristic4 ontopHeu = new Heuristic4(worldState, ontopGoal, objects);
-      goalRow.clear();
-      goalRow.addAll(ontopGoal.get(0));
-      currentCost.mergeCosts(ontopHeu.getStateCost());
-      
-//       if(!worldState.getHolding().equals(obj2)){
-//          ArrayList<String> column2 = worldState.getColumn(columnNr2);
-//          boolean tempBool = true;
-//          for(int i=column2.indexOf(obj2)+1; i<column2.size() && tempBool; i++){
-//             if(!allowedObjects.contains(column2.get(i))){
-//                currentCost.move(column2.get(i),column2);
-//                tempBool = false;
-//             }
-//          }
-//       }     
+//       System.out.println("ontopGoal.size(): "+ontopGoal.size()+" example: "+ontopGoal.get(0));
+//       System.out.println("goal.size(): "+goal.size());
+      goal.addAll(ontopGoal);
+      // System.out.print(" goal.size() efter: "+goal.size());  
    }
    
    private ArrayList<String> findAllowedBetween(String objAbove, String objBelow, HashMap<String,ArrayList<String>> objectsAllowedBelow, ArrayList<String> allowedObjects, ArrayList<String> evaluatedObjects){
@@ -379,7 +367,7 @@ public class Heuristic4{
    }
    
    private Goal generateGoal(ArrayList<ArrayList<String>> sequences, ArrayList<Statement> goalRow, int statementIdx){
-      Goal goal = new Goal();
+      Goal tempGoal = new Goal();
       
 
       goalRow.remove(statementIdx);
@@ -390,10 +378,10 @@ public class Heuristic4{
             tempRow.add(statementIdx+j-1, new Statement("ontop",sequences.get(i).get(j-1),sequences.get(i).get(j)));
          }
          if(isGoalRowAllowed(tempRow))
-            goal.add(tempRow);
+            tempGoal.add(tempRow);
       }
 
-      return goal;
+      return tempGoal;
    } 
    
    public StateCost getStateCost(){
@@ -462,6 +450,13 @@ public class Heuristic4{
       	   costMap.put(obj, new Integer(initCost));
             statementMap.put(obj, new ArrayList<Integer>(3));
       	}
+         
+         for(int i=0; i<stateIn.getWorld().size(); i++){
+            statementMap.put("floor-"+i,new ArrayList<Integer>(2));
+            costMap.put("floor-"+i,new Integer(0));
+         }
+         statementMap.put("robot-"+0,new ArrayList<Integer>(2));
+         costMap.put("robot-"+0,0);
       }
       
       public void addStatementIndices(String obj1, String obj2, Integer i){

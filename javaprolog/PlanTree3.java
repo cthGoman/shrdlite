@@ -32,15 +32,15 @@ public class PlanTree3{
 //          int maxDepth = 100;
 
          while(unevaluatedStates.first().getDepth()+unevaluatedStates.first().getHeuristic().getCost(unevaluatedStates.first().getDepth(),maxCost()) < maxCost()){
-            System.out.println("Goal:"+goal);
-            System.out.println("Depth: "+ unevaluatedStates.first().getDepth()+ " Cost: "+ unevaluatedStates.first().getHeuristic().getCost(unevaluatedStates.first().getDepth(),maxCost())+" maxCost: "+maxCost());
-            System.out.println("currentState: "+unevaluatedStates.first().getState());
+//             System.out.println("Goal:"+goal.size());
+//             System.out.println(" Depth: "+ unevaluatedStates.first().getDepth()+ " Cost: "+ unevaluatedStates.first().getHeuristic().getCost(unevaluatedStates.first().getDepth(),maxCost())+" maxCost: "+maxCost());
+//             System.out.println("currentState: "+unevaluatedStates.first().getState());
 //             System.out.println("MoveDist: "+unevaluatedStates.first().moveDist());
             PlanTreeState3 tempState = unevaluatedStates.first();
             generateChildren(unevaluatedStates.pollFirst());
             
          }
-         
+//          System.out.println("Goal:"+goal);
          generatePlan();
       }
       
@@ -132,7 +132,7 @@ public class PlanTree3{
       PlanTreeState3 solution = getBestSolution();
       if(solution.isSolution()){
          if(solution.getDepth()!=previousMaxCost){
-            System.out.println("Lowered Max cost: "+solution.getDepth()+" Current Nr of States: " + stateMap.size());
+//             System.out.println("Lowered Max cost: "+solution.getDepth()+" Current Nr of States: " + stateMap.size());
             previousMaxCost = solution.getDepth();
             
 //             int nrOfFives=0;
@@ -144,8 +144,8 @@ public class PlanTree3{
          return solution.getDepth()-1;
       }
       else{
-         previousMaxCost = 10000;
-         return 10000;
+         previousMaxCost = 1000;
+         return 1000;
       }
    }
    
