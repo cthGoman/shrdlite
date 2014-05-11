@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Relations{
 
 
-   public static Goal relation(JSONObject objects,ArrayList<ArrayList<String>> world,Tree tree, ArrayList<String> object0){
+   public static Goal relation(JSONObject objects,ArrayList<ArrayList<String>> world,Tree tree, ArrayList<String> object0, int allAt){
       if(object0.size() == 0){
          return null;
       }
