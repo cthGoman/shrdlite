@@ -274,11 +274,15 @@ public class Constraints{
       String[] relationAB = new String[goalRow.size()];
       String[] idObjectA = new String[goalRow.size()];
       String[] idObjectB = new String[goalRow.size()];
+      String[] formObjectA = new String[goalRow.size()];
+      String[] formObjectB = new String[goalRow.size()];
       
       for(int i=0;i<goalRow.size();i++){
          relationAB[i]=goalRow.get(i).get(0);
          idObjectA[i]=goalRow.get(i).get(1);
          idObjectB[i]=goalRow.get(i).get(2);
+         //formObjectA[i]=
+         
          for(int j=0;j<i;j++){
             if(idObjectA[i].equals(idObjectA[j]) || idObjectB[i].equals(idObjectB[j])){
                return false;
