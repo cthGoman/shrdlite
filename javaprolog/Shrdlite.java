@@ -146,14 +146,24 @@ DebugFile.stop();
 					endTime   = System.currentTimeMillis();
 					long totalTime = endTime - startTime;
                if(solveMode==2){
-                  result.put("output", "Success! " + totalTime + " "+ totalTime2 + " " + plan.size() + " " + Planner.instances + " ");
+                  result.put("output", "Success! It took a total of " + totalTime + " milliseconds to calculate this, and the interpreter needed "+ totalTime2 + " milliseconds. I need " + plan.size() + " moves to perform the plan and " + Planner.instances + " states were generated to calculate the plan.");
                }
                if(solveMode==3){
-                  result.put("output", "Success! " + totalTime + " "+ totalTime2 + " " + plan.size() + " " + Planner.instances + " ");
+                  result.put("output", "Success! It took a total of " + totalTime + " milliseconds to calculate this, and the interpreter needed "+ totalTime2 + " milliseconds. I need " + plan.size() + " moves to perform the plan and " + Planner.instances + " states were generated to calculate the plan.");
                }
                else if(solveMode==4 || solveMode==5 || solveMode==6){
-                  result.put("output", "Success! " + totalTime + " "+ totalTime2 + " " + plan.size() + " " + State.instances + " ");
+                  result.put("output", "Success! It took a total of " + totalTime + " milliseconds to calculate this, and the interpreter needed "+ totalTime2 + " milliseconds. I need " + plan.size() + " moves to perform the plan and " + State.instances + " states were generated to calculate the plan.");
                }
+ //               if(solveMode==2){
+//                   result.put("output", "Success! " + totalTime + " "+ totalTime2 + " " + plan.size() + " " + Planner.instances + " ");
+//                }
+//                if(solveMode==3){
+//                   result.put("output", "Success! " + totalTime + " "+ totalTime2 + " " + plan.size() + " " + Planner.instances + " ");
+//                }
+//                else if(solveMode==4 || solveMode==5 || solveMode==6){
+//                   result.put("output", "Success! " + totalTime + " "+ totalTime2 + " " + plan.size() + " " + State.instances + " ");
+//                }
+               
             }
 			}
 		}
