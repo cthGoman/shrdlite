@@ -269,7 +269,7 @@ public class Constraints{
       return true;      // All checks passed
    }
    
-   public static boolean isGoalRowAllowed(List<Statement> goalRow){
+   public static boolean isGoalRowAllowed(List<Statement> goalRow, JSONObject objects){
       
       String[] relationAB = new String[goalRow.size()];
       String[] idObjectA = new String[goalRow.size()];
@@ -382,7 +382,7 @@ public class Constraints{
    }
    
    
-   public static boolean isCombinedGoalRowAllowed(List<Statement> goalRow){
+   public static boolean isCombinedGoalRowAllowed(List<Statement> goalRow, JSONObject objects){
       
       String[] relationAB = new String[goalRow.size()];
       String[] idObjectA = new String[goalRow.size()];
