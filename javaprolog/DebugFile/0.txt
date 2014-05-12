@@ -1,20 +1,30 @@
-treeStrings[move(basic_entity(any,object(ball,-,-)),relative(inside,relative_entity(any,object(box,small,-),relative(inside,basic_entity(any,object(box,large,-)))))), move(relative_entity(any,object(ball,-,-),relative(inside,basic_entity(any,object(box,small,-)))),relative(inside,basic_entity(any,object(box,large,-))))]
-object0: [ball, -, -]
-indexOfLongestList0
-lengthLongestList3
-nonMatchingRelation: inside
-nonMatchingObject1: [ball, -, -]
-nonMatchingObject2: [box, small, -]
-
-questionIndex: 0
-
-compareRelation: inside
-compareObject1: [ball, -, -]
-compareObject2: [box, small, -]
-
-compareRelation: inside
-compareObject1: [ball, -, -]
-compareObject2: [box, large, -]
-yesList: [move(basic_entity(any,object(ball,-,-)),relative(inside,relative_entity(any,object(box,small,-),relative(inside,basic_entity(any,object(box,large,-))))))]
-noList: [move(relative_entity(any,object(ball,-,-),relative(inside,basic_entity(any,object(box,small,-)))),relative(inside,basic_entity(any,object(box,large,-))))]
-question: Should I put the ball inside the small box?
+above,e,a
+above,a,floor-0
+ 
+above,e,a
+above,a,floor-1
+ 
+above,e,a
+above,a,floor-2
+ 
+above,e,a
+above,a,floor-3
+ 
+above,e,a
+above,a,floor-4
+ 
+above,e,a
+above,a,floor-5
+ 
+above,e,a
+above,a,floor-6
+ 
+above,e,a
+above,a,floor-7
+ 
+above,e,a
+above,a,floor-8
+ 
+above,e,a
+above,a,floor-9
+ 

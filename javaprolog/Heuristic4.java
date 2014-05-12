@@ -38,12 +38,19 @@ public class Heuristic4{
                int columnNr2 = worldState.getColumnNumber(obj2);
                int place2 = worldState.getPlaceInColumn(obj2);
                
-               if ("above".equals(statement.get(0).toLowerCase())){
+               if ("above".equals(statement.get(0).toLowerCase()) && !statement.get(2).contains("floor")){
                   evaluateAbove(obj1,obj2,objects,rowStateCost,columnNr1,columnNr2,place1,place2, i, goal.get(i).indexOf(statement));
    
                }
                else if ("under".equals(statement.get(0).toLowerCase())){
                   evaluateAbove(obj2,obj1,objects,rowStateCost,columnNr2,columnNr1,place2,place1, i, goal.get(i).indexOf(statement));
+               }
+               else if(statement.get(2).contains("floor")){
+                  // System.out.println("above the floor: "+statement);
+                  listOfStatement.remove(statement);
+                  if(!containsAboveOrUnder(listOfStatement)){
+                     goal.add(listOfStatement);
+                  }
                }
                
             }
@@ -228,7 +235,7 @@ public class Heuristic4{
                unevaluatedStatements.remove(0);
             
             }
-            if(rowStateCost.sum()>0){
+            if(rowStateCost.sum()>2){
                if(!worldState.getHolding().isEmpty()){
                   rowStateCost.dropObj(worldState.getHolding());
                }
