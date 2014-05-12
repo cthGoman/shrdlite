@@ -3,6 +3,9 @@ clear m
 
 % clear runTimes  % comment
 % runTimes = [];  % comment
+if(~exist('runTimes'))
+    runTimes = []; 
+end
 
 f=fopen('javaprolog\evaluation.txt');
 c=textscan(f,'%s');
