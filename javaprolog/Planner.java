@@ -40,8 +40,6 @@ public class Planner{
       
       boolean foundDrop = true;
       while (!(actWorld.equals(goalWorld) && actHolding.equals(goalHolding) )){
-         
-         
             
          if (!foundDrop){
             plan.remove(plan.size()-1);
@@ -71,15 +69,13 @@ public class Planner{
                   
                   //Calculate the cost for the current pick
                   Heuristic currPick = new Heuristic(tempWorld,tempHolding,goalWorld,goalHolding);
-   
-                  
+
                   //Check if the current pick is the best
                   if (currPick.isBetter(bestPick)){
                      bestPickColumn=j;
                      bestPick=currPick;
                   }  
                }
-               
              }
              
              //Update the world according to the best pick
@@ -94,42 +90,29 @@ public class Planner{
          if (actWorld.equals(goalWorld) && actHolding.equals(goalHolding)){
             break;
           }
-          
-          
          bestDropColumn = 0;
          Heuristic bestDrop = new Heuristic(100);
          foundDrop = false;
          
          for (int j=0;j<world.size();j++){
             //Loop over columns
-            
-            
             //Check which column to drop
             String tempHolding = actHolding;
             JSONArray tempWorld = WorldFunctions.copy(actWorld);
-
-            
             if (!tempHolding.isEmpty()) {
                //If an object is hold
-               
-               
                WorldFunctions.addObjectWorldColumn(tempHolding,tempWorld,j);
                tempHolding= "";
-               
                Heuristic currDrop = new Heuristic(tempWorld,tempHolding,goalWorld,goalHolding);
-
-               
                if (currDrop.isBetter(bestDrop) && j!=bestPickColumn && Constraints.isWorldAllowed(tempWorld,tempHolding,objects)){
                   bestDropColumn=j;
                   bestDrop=currDrop;
                   foundDrop = true;
                }
-                 
             }
             
           }
-          
-          
+
           if (foundDrop){
              WorldFunctions.addObjectWorldColumn(actHolding,actWorld,bestDropColumn);
              actHolding= "";
@@ -147,8 +130,6 @@ public class Planner{
           }
 
       }
-      
-      
       if (plan.isEmpty()){
          plan.add("No plan needed");
       }
@@ -156,16 +137,6 @@ public class Planner{
 	}
 
 
-
-// This is how to get information about the top object in column 1:
-//JSONArray column1 = (JSONArray) world.get(0);
-//String topobject = (String) column1.get(column1.size() - 1);
-//JSONObject objectinfo = (JSONObject) objects.get(topobject);
-//String form = (String) objectinfo.get("form");
-
-   
-   
-   
    public Plan solve2(Goal goal,JSONObject result){
       Plan plan = new Plan();
       
@@ -178,7 +149,6 @@ public class Planner{
       if (!holding.isEmpty()){
          for (int j=0;j<world.size();j++){
             //Loop over columns
-            
             JSONArray tempWorld = WorldFunctions.copy(world);
             WorldFunctions.addObjectWorldColumn(holding,tempWorld,j);
             if (Constraints.isWorldAllowed(tempWorld,"",objects))
@@ -191,13 +161,8 @@ public class Planner{
 		stateQueue.add(world);
       Set<JSONArray> visitedWorlds = new HashSet<JSONArray>();
       boolean foundGoalstate = false;
-		
 		visitedWorlds.add(world);
-      
-      long endTime   = System.currentTimeMillis();
-      long totalTime = endTime - Shrdlite.startTime;
-      // System.out.println("before BFS " + totalTime);
-      
+
 		while(!stateQueue.isEmpty() && !foundGoalstate) {
          JSONArray state = (JSONArray) stateQueue.remove();
 			JSONArray child=null;
@@ -209,10 +174,7 @@ public class Planner{
                goalWorld = child;
 			}
 		}
-      
-      // System.out.println("number of visited worlds " + visitedWorlds.size());
-      
-      
+
       if (!holding.isEmpty()){
          int bestDropColumn = 0;
          Heuristic bestDrop = new Heuristic(100);
@@ -220,31 +182,20 @@ public class Planner{
          
          for (int j=0;j<world.size();j++){
             //Loop over columns
-            
-            
             //Check which column to drop
             String tempHolding = holding;
             JSONArray tempWorld = WorldFunctions.copy(world);
-
-            
             if (!tempHolding.isEmpty()) {
                //If an object is hold
-               
-               
                WorldFunctions.addObjectWorldColumn(tempHolding,tempWorld,j);
                tempHolding= "";
-               
                Heuristic currDrop = new Heuristic(tempWorld,tempHolding,goalWorld,"");
-
-               
                if (currDrop.isBetter(bestDrop) && Constraints.isWorldAllowed(tempWorld,tempHolding,objects)){
                   bestDropColumn=j;
                   bestDrop=currDrop;
                   foundDrop = true;
                }
-                 
             }
-            
           }
           if (foundDrop){
             plan.add("drop " + bestDropColumn);
@@ -255,10 +206,6 @@ public class Planner{
           }
           
       }
-      
-      endTime   = System.currentTimeMillis();
-      totalTime = endTime - Shrdlite.startTime;
-      // System.out.println("before DFS after BFS " + totalTime);
       //DFS lowest cost first
       Stack stateStack = new Stack();
       Stack planStack = new Stack();
@@ -276,13 +223,11 @@ public class Planner{
 			JSONArray child  = (JSONArray) WorldFunctions.getBestUnvisitedWorld(state,goalWorld,visitedWorlds,objects,pickFrom,dropIn);
          
          foundGoalstate=false;
-         
-         // System.out.println("child " + child);
+        
 			if(child != null) {
             visitedWorlds.add(child);
 				stateStack.push(child);
             foundGoalstate = goal.fulfilled(child,"");
-            // System.out.println("foundGoalstate " + foundGoalstate);
             plan.add("pick " + pickFrom[0]);
             plan.add("drop " + dropIn[0]);
 			}
@@ -290,10 +235,6 @@ public class Planner{
 				stateStack.pop();
 			}
 		}
-      
-      endTime   = System.currentTimeMillis();
-      totalTime = endTime - Shrdlite.startTime;
-      // System.out.println("after DFS " + totalTime);
       
       return plan;
    }
@@ -330,14 +271,10 @@ public class Planner{
       if (goal.fulfilled(world,"")){
          return plan;
       }
-      
-      
-      
+     
       ArrayList<Plan> listOfPlans = new ArrayList<Plan>();
       int numberOfFoundGoalStates = 0;
-      
 
-      
       //DFS lowest cost first
       Stack stateStack = new Stack();
       Stack planStack = new Stack();
@@ -358,12 +295,10 @@ public class Planner{
 			JSONArray child  = (JSONArray) WorldFunctions.getBestUnvisitedWorld2(state,goal,visitedWorlds,objects,pickFrom,dropIn);
          foundGoalstate=false;
          
-         // System.out.println("child " + child);
 			if(child != null) {
             visitedWorlds.add(child);
 				stateStack.push(child);
             foundGoalstate = goal.fulfilled(child,"");
-            // System.out.println("foundGoalstate " + foundGoalstate);
             tempPlan.add("pick " + pickFrom[0]);
             tempPlan.add("drop " + dropIn[0]);
             if (foundGoalstate){
@@ -394,26 +329,16 @@ public class Planner{
       }
       plan = listOfPlans.get(0);
       for (Plan loopPlan : listOfPlans){
-         // System.out.println("lenth of plan "+loopPlan.size());
-//          System.out.println("plan "+loopPlan);
          if (loopPlan.size()<plan.size())
             plan=loopPlan;
       }
       instances = visitedWorlds.size();
       return plan;
    }   
-   public Plan solve4(Goal goal,JSONObject result){
-
-      State startState = new State(world,holding);
-      PlanTree planningTree = new PlanTree(startState, goal, objects);
-      Plan plan = planningTree.getPlan();
-      return plan;   
-   }
    
    public Plan solve5(Goal goal,JSONObject result){
 
       State startState = new State(world,holding);
-      // System.out.println("goal: "+goal);
       PlanTree2 planningTree = new PlanTree2(startState, goal, objects);
       Plan plan = planningTree.getPlan();
       return plan;   

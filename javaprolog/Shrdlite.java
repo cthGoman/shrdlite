@@ -100,7 +100,7 @@ DebugFile.stop();
 				result.put("output", "Ambiguity!");
 			} else {
          
-            int solveMode=6;     // Switch between solve3 - 6
+            int solveMode=6;     // Switch between solve3 - 6, not 4
             
 				if (holding==null & solveMode==3){     
 					holding="";          
@@ -120,9 +120,6 @@ DebugFile.stop();
                else{                                                   
 					   plan = planner.solve3(goals.get(0),result);      
 				   }                                                        
-            }
-            else if(solveMode==4){
-               plan = planner.solve4(goals.get(0),result);
             }
             else if(solveMode==5){
                plan = planner.solve5(goals.get(0),result);
