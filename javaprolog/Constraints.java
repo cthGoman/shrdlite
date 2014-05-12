@@ -400,9 +400,11 @@ public class Constraints{
       }
       return true;
    }
-   
-   
    public static boolean isCombinedGoalRowAllowed(List<Statement> goalRow, JSONObject objects){
+      return isCombinedGoalRowAllowed(goalRow, objects, true);
+   }
+   
+   public static boolean isCombinedGoalRowAllowed(List<Statement> goalRow, JSONObject objects, boolean isOrdered){
       
       String[] relationAB = new String[goalRow.size()];
       String[] idObjectA = new String[goalRow.size()];
@@ -438,7 +440,7 @@ public class Constraints{
             
       }
       
-      if(((idObjectA[goalRow.size()-1].equals(idObjectB[0]) || idObjectB[goalRow.size()-1].equals(idObjectA[0])) && goalRow.size()>2)){
+      if(((idObjectA[goalRow.size()-1].equals(idObjectB[0]) || idObjectB[goalRow.size()-1].equals(idObjectA[0])) && goalRow.size()>2)&& isOrdered ){
          return false;
       }
 
@@ -446,7 +448,7 @@ public class Constraints{
       
          // ------------------------ "On top of"-statements ------------------------//          
          if(relationAB[i].contains("ontop")){
-            if(tabooListA.contains(idObjectA[i]) || tabooListB.contains(idObjectB[i])){
+            if((tabooListA.contains(idObjectA[i]) || tabooListB.contains(idObjectB[i]))&& isOrdered){
                return false;
             }
             if(i==0){

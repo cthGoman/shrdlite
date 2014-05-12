@@ -381,9 +381,9 @@ public class Heuristic4{
          
    
          goalRow.remove(statementIdx);
-         
+         ArrayList<Statement> tempRow;
          for(int i = 0; i<sequences.size();i++){
-            ArrayList<Statement> tempRow = new ArrayList<Statement>(goalRow);
+            tempRow = new ArrayList<Statement>(goalRow);
             for(int j = 1; j<sequences.get(i).size(); j++){
                for(int k = j-1; k>=0; k--){
                   if(tempRow.contains(new Statement("above",sequences.get(i).get(k),sequences.get(i).get(j)))){
@@ -401,10 +401,12 @@ public class Heuristic4{
                if(!tempRow.contains(new Statement("ontop",sequences.get(i).get(j-1),sequences.get(i).get(j))))
                   tempRow.add(new Statement("ontop",sequences.get(i).get(j-1),sequences.get(i).get(j)));
             }
-            if(Constraints.isGoalRowAllowed(tempRow, objects))
-               tempGoal.add(tempRow);
+            // if(Constraints.isCombinedGoalRowAllowed(tempRow, objects, false)){
+               tempGoal.add(new ArrayList<Statement>(tempRow));
+             // }   
+            
          }
-   
+//          System.out.println("tempGoal: "+tempGoal.size());
          return tempGoal;
       } 
       

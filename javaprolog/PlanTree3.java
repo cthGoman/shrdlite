@@ -20,14 +20,16 @@ public class PlanTree3{
       unevaluatedStates = new TreeSet<PlanTreeState3>();
       goal = goalIn;
       objects = objectsIn;
-      PlanTreeState3 initPlanState = new PlanTreeState3(initState, goal, objects, this);
-      stateMap.put(initState,initPlanState);
-      currentState = initPlanState;
-      unevaluatedStates.add(initPlanState);
-      if(initPlanState.isSolution()){
+      if(goal.fulfilled(initState)){
          plan.add("No plan needed");
       }
       else{
+         PlanTreeState3 initPlanState = new PlanTreeState3(initState, goal, objects, this);
+         stateMap.put(initState,initPlanState);
+         currentState = initPlanState;
+         unevaluatedStates.add(initPlanState);
+
+      
 
 //          int maxDepth = 100;
          if(unevaluatedStates.isEmpty()){
@@ -43,7 +45,8 @@ public class PlanTree3{
             generateChildren(unevaluatedStates.pollFirst());
             
          }
-//          System.out.println("Goal:"+goal);
+//          System.out.println("--------------------------------------------------");
+//          System.out.println(goal.get(0));
          generatePlan();
       }
       
