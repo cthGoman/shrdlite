@@ -385,7 +385,21 @@ public class Heuristic4{
          for(int i = 0; i<sequences.size();i++){
             ArrayList<Statement> tempRow = new ArrayList<Statement>(goalRow);
             for(int j = 1; j<sequences.get(i).size(); j++){
-               tempRow.add(statementIdx+j-1, new Statement("ontop",sequences.get(i).get(j-1),sequences.get(i).get(j)));
+               for(int k = j-1; k>=0; k--){
+                  if(tempRow.contains(new Statement("above",sequences.get(i).get(k),sequences.get(i).get(j)))){
+                     tempRow.remove(new Statement("above",sequences.get(i).get(k),sequences.get(i).get(j)));
+                     if(!tempRow.contains(new Statement("ontop",sequences.get(i).get(j-1),sequences.get(i).get(j))))
+                        tempRow.add(new Statement("ontop",sequences.get(i).get(j-1),sequences.get(i).get(j)));
+                  }
+                  else if(tempRow.contains(new Statement("below",sequences.get(i).get(j),sequences.get(i).get(k)))){
+                     tempRow.remove(new Statement("below",sequences.get(i).get(j),sequences.get(i).get(k)));
+                     if(!tempRow.contains(new Statement("ontop",sequences.get(i).get(j-1),sequences.get(i).get(j))))
+                        tempRow.add(new Statement("ontop",sequences.get(i).get(j-1),sequences.get(i).get(j)));
+                  }
+               }   
+               
+               if(!tempRow.contains(new Statement("ontop",sequences.get(i).get(j-1),sequences.get(i).get(j))))
+                  tempRow.add(statementIdx+j-1, new Statement("ontop",sequences.get(i).get(j-1),sequences.get(i).get(j)));
             }
             if(Constraints.isGoalRowAllowed(tempRow, objects))
                tempGoal.add(tempRow);
