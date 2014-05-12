@@ -291,6 +291,9 @@ public class Constraints{
       
          // ------------------------ "On top of"-statements ------------------------//          
          if(relationAB[i].contains("ontop")){
+            if(!idObjectB[i].equals("box")){
+               return false;
+            }
             for(int j=0;j<goalRow.size();j++){
                if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && (relationAB[j].contains("above") || relationAB[j].contains("ontop") || relationAB[j].contains("inside"))){
                   return false;
