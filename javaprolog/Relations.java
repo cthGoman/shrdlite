@@ -12,7 +12,7 @@ public class Relations{
       if(object0.size() == 0){
          return null;
       }
-      //DebugFile.start();   
+DebugFile.start();   
       LinkedList<LinkedList<String>> objectsDescriptionList = new LinkedList<LinkedList<String>>();
       LinkedList<String> relations = new LinkedList<String>();
       tree.getMasterNode().createObjects(objectsDescriptionList,relations);
@@ -60,6 +60,7 @@ public class Relations{
             statementsList.add(statements);
          }
          if(allAt == -1){
+ DebugFile.println("statementsList: " + statementsList.toString());
             Goal prelGoal = CombineStatements.combine(statementsList);
 			   for(ArrayList<Statement> als:prelGoal){
 				   if(Constraints.isGoalRowAllowed(als)){
@@ -78,6 +79,8 @@ public class Relations{
                allObjects = objectsList.get(allAt);
                possibleStatementsForObjects = statementsList.get(allAt-1); 
             }
+ DebugFile.println("allObjects: " + allObjects.toString());
+ DebugFile.println("possibleStatementsForObjects: " + possibleStatementsForObjects.toString());
             ArrayList<Goal> subGoals = new ArrayList<Goal>(); 
             for(int i = 0;i < allObjects.size();i++){
                ArrayList<Statement> StatementsMatchingObject = new ArrayList<Statement>();
@@ -93,27 +96,37 @@ public class Relations{
                      }
                   }
                }
+ DebugFile.println("StatementsMatchingObject: " + StatementsMatchingObject.toString());
+
                ArrayList<ArrayList<Statement>> StatementsForSubgoal = new ArrayList<ArrayList<Statement>>(statementsList);
                if(allAt == 0){
-                  StatementsForSubgoal.add(allAt,StatementsMatchingObject);               
+                  StatementsForSubgoal.set(allAt,StatementsMatchingObject);               
                }
                else{
-                  StatementsForSubgoal.add(allAt-1,StatementsMatchingObject);     
+                  StatementsForSubgoal.set(allAt-1,StatementsMatchingObject);     
                }
                Goal prelsubGoal =  CombineStatements.combine(StatementsForSubgoal);
+DebugFile.println("StatementsForSubgoal: " + StatementsForSubgoal.toString());
+DebugFile.println("prelsubGoal" + prelsubGoal.toString());
                Goal subGoal = new Goal();
                for(ArrayList<Statement> als:prelsubGoal){
 				      if(Constraints.isGoalRowAllowed(als)){
 					      subGoal.addCondition(als);
 				      }
 			      }
+               
+DebugFile.println("subGoal" + subGoal.toString());
                subGoals.add(subGoal);     
             }
-            for(int i = 0;i < subGoals.size();i++){
+DebugFile.println("subGoals" + subGoals.toString());
+            goal = subGoals.get(0);
+            for(int i = 1;i < subGoals.size();i++){
                goal.combineGoals(subGoals.get(i));
             }
          }
       }
+DebugFile.println("goal" + goal.toString());    
+DebugFile.stop();
       return goal; 
    }
    
