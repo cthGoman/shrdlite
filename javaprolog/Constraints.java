@@ -155,6 +155,9 @@ public class Constraints{
             //System.out.println("fail 3");
             return false;
          }
+         if(formB.contains("box")){
+            return false;
+         }
          
          if(formB.equals("ball")){           // Balls cannot support anything
             //System.out.println("fail 4");
@@ -291,6 +294,7 @@ public class Constraints{
       
          // ------------------------ "On top of"-statements ------------------------//          
          if(relationAB[i].contains("ontop")){
+
             for(int j=0;j<goalRow.size();j++){
                if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && (relationAB[j].contains("above") || relationAB[j].contains("ontop") || relationAB[j].contains("inside"))){
                   return false;
