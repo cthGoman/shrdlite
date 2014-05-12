@@ -302,9 +302,140 @@ public class Constraints{
                                      
          }
       
+         // ------------------------ "Above"-statements ------------------------//      
+         else if(relationAB[i].contains("above")){
+            for(int j=0;j<goalRow.size();j++){
+               if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && (relationAB[j].contains("above") || relationAB[j].contains("ontop"))){
+                  return false;
+               }
+               if(idObjectA[i].equals(idObjectA[j]) && idObjectB[i].equals(idObjectB[j]) && relationAB[j].contains("under")){
+                  return false;
+               }                 
+            }      
+         }
+      
+         // ------------------------ "Under"-statements ------------------------//           
+         else if(relationAB[i].contains("under")){
+            for(int j=0;j<goalRow.size();j++){
+               if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && relationAB[j].contains("under")){
+                  return false;
+               }
+               if(idObjectA[i].equals(idObjectA[j]) && idObjectB[i].equals(idObjectB[j]) && (relationAB[j].contains("above") || relationAB[j].contains("ontop"))){
+                  return false;
+               }  
+            }      
+         }
+      
+         // ------------------------ "Beside"-statements ------------------------//           
+         else if(relationAB[i].contains("beside")){
+            for(int j=0;j<goalRow.size();j++){
+               if(idObjectA[i].equals(idObjectA[j]) && idObjectB[i].equals(idObjectB[j]) && (relationAB[j].contains("under") || relationAB[j].contains("above") || relationAB[j].contains("ontop"))){
+                  return false;
+               }
+               if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && (relationAB[j].contains("under") || relationAB[j].contains("above") || relationAB[j].contains("inside") || relationAB[j].contains("ontop"))){
+                  return false;
+               }    
+            }      
+  
+         }
+      
+         // ------------------------ "Left of"-statements ------------------------//           
+         else if(relationAB[i].contains("leftof")){
+            for(int j=0;j<goalRow.size();j++){
+               if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && relationAB[j].contains("leftof")){
+                  return false;
+               }
+               if(idObjectA[i].equals(idObjectA[j]) && idObjectB[i].equals(idObjectB[j]) && (relationAB[j].contains("rightof") || relationAB[j].contains("under") || relationAB[j].contains("above") || relationAB[j].contains("ontop"))){
+                  return false;
+               }
+               if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && (relationAB[j].contains("under") || relationAB[j].contains("above") || relationAB[j].contains("inside") || relationAB[j].contains("ontop"))){
+                  return false;
+               }                                
+            }            
+         }
+        
+         // ------------------------ "Right of"-statements ------------------------//         
+         else if(relationAB[i].contains("rightof")){
+            for(int j=0;j<goalRow.size();j++){
+               if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && relationAB[j].contains("rightof")){
+                  return false;
+               }
+               if(idObjectA[i].equals(idObjectA[j]) && idObjectB[i].equals(idObjectB[j]) && (relationAB[j].contains("leftof") || relationAB[j].contains("under") || relationAB[j].contains("above") || relationAB[j].contains("ontop"))){
+                  return false;
+               }
+               if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && (relationAB[j].contains("under") || relationAB[j].contains("above") || relationAB[j].contains("inside") || relationAB[j].contains("ontop"))){
+                  return false;
+               }                               
+            }            
+         }
+     
+         /////////////ENDS////////////////
+      
+
+         
+      }
+      return true;
+   }
+   
+   
+   public static boolean isCombinedGoalRowAllowed(List<Statement> goalRow){
+      
+      String[] relationAB = new String[goalRow.size()];
+      String[] idObjectA = new String[goalRow.size()];
+      String[] idObjectB = new String[goalRow.size()];
+      ArrayList tabooListA = new ArrayList();
+      ArrayList tabooListB = new ArrayList();
+      
+      for(int i=0;i<goalRow.size();i++){
+         relationAB[i]=goalRow.get(i).get(0);
+         idObjectA[i]=goalRow.get(i).get(1);
+         idObjectB[i]=goalRow.get(i).get(2);
+      }
+      
+      if((idObjectA[goalRow.size()-1].equals(idObjectB[0]) && goalRow.size()>2) || idObjectB[goalRow.size()-1].equals(idObjectA[0])){
+         return false;
+      }
+
+      for(int i=0;i<goalRow.size();i++){
+      
+         // ------------------------ "On top of"-statements ------------------------//          
+         if(relationAB[i].contains("ontop")){
+            if(tabooListA.contains(idObjectA[i]) || tabooListB.contains(idObjectB[i])){
+               return false;
+            }
+            if(i==0){
+               tabooListB.add(idObjectA[i]);
+            }
+            tabooListA.add(idObjectA[i]);
+            tabooListB.add(idObjectB[i]);
+            
+            for(int j=0;j<goalRow.size();j++){
+               if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && (relationAB[j].contains("above") || relationAB[j].contains("ontop") || relationAB[j].contains("inside"))){
+                  return false;
+               }
+               if(idObjectA[i].equals(idObjectA[j]) && idObjectB[i].equals(idObjectB[j]) && relationAB[j].contains("under")){
+                  return false;
+               }      
+            }
+         }
+      
          // ------------------------ "Inside"-statements ------------------------//   
          else if(relationAB[i].contains("inside")){
-        
+         
+            if(tabooListA.contains(idObjectA[i]) || tabooListB.contains(idObjectB[i])){
+               return false;
+            }
+            if(i==0){
+               tabooListB.add(idObjectA[i]);
+            }
+            tabooListA.add(idObjectA[i]);
+            tabooListB.add(idObjectB[i]);
+            
+            for(int j=0;j<goalRow.size();j++){
+               if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && (relationAB[j].contains("inside") || relationAB[j].contains("ontop"))){
+                  return false;
+               }
+            }
          }
       
          // ------------------------ "Above"-statements ------------------------//      
@@ -373,16 +504,11 @@ public class Constraints{
                }                               
             }            
          }
-
-
-     
          /////////////ENDS////////////////
-      
-
          
       }
       return true;
    }
+
+
 }
-
-

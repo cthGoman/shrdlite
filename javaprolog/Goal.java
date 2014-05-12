@@ -39,6 +39,22 @@ public class Goal extends ArrayList<ArrayList<Statement>>{
 	public void addCondition(ArrayList<Statement> newCondition){
 		add(newCondition);
 	}
+   public void combineGoals(Goal goal2){
+      Goal goal1 = (Goal)clone();
+       clear();
+ DebugFile.println("goal1: " + goal1.toString());
+  DebugFile.println("goal2: " + goal2.toString());
+  DebugFile.println("%%%%%%%%%%%%%%%%%%%%%");
+      for(int i = 0;i < goal1.size();i++){
+         for(int j = 0;j < goal2.size();j++){
+            ArrayList<Statement> tempList = new ArrayList<Statement>(goal1.get(i));
+            tempList.addAll(goal2.get(j));
+ DebugFile.println("tempList: " + tempList.toString());           
+            addCondition(tempList);
+         }
+      }
+      DebugFile.println("%%%%%%%%%%%%%%%%%%%%%%");
+   }
    public boolean fulfilled(State worldState){
       for (ArrayList<Statement> listOfStatement : this){//Loop over all rows 
          boolean tempFulfilled = true;

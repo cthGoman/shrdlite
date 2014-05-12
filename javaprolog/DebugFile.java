@@ -20,14 +20,14 @@ public class DebugFile{
 		}
 	}
 	/**Print a String to file without adding new line.
-	*@param s The string to be printed.*/
-	public static void print(String s){
-		writers.get(active).print(s);
+	*@param o The Object that is converted to the printed String.*/
+	public static void print(Object o){
+		writers.get(active).print(o.toString());
 	}
 	/**Print a String to file and adding new line.
-	*@param s The string to be printed.*/
-	public static void println(String s){
-		writers.get(active).println(s);
+	*@param o The Object that is converted to the printed String.*/
+	public static void println(Object o){
+		writers.get(active).println(o.toString());
 	}
 	/**Close a file and makes all output to it.<br>
 	*Must be done before execution is stopped, or no info will appear in the file.*/
