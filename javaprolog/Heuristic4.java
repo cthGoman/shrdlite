@@ -7,13 +7,15 @@ public class Heuristic4{
    private State worldState;
    private Goal goal;
    private HashMap<String,ArrayList<String>> objectsAllowedBelow;
+   private JSONObject objects;
    
    public Heuristic4(State worldState){
       stateCost = new StateCost(worldState, -1);
       
    }
 
-	public Heuristic4(State stateIn, Goal goalIn, JSONObject objects) {
+	public Heuristic4(State stateIn, Goal goalIn, JSONObject objectsIn) {
+      objects = objectsIn;
 		goal = goalIn;
       worldState = stateIn;
       stateCost = new StateCost(worldState, -1);
@@ -385,7 +387,7 @@ public class Heuristic4{
             for(int j = 1; j<sequences.get(i).size(); j++){
                tempRow.add(statementIdx+j-1, new Statement("ontop",sequences.get(i).get(j-1),sequences.get(i).get(j)));
             }
-            if(Constraints.isGoalRowAllowed(tempRow))
+            if(Constraints.isGoalRowAllowed(tempRow, objects))
                tempGoal.add(tempRow);
          }
    
