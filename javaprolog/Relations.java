@@ -113,7 +113,7 @@ DebugFile.println("StatementsForSubgoal: " + StatementsForSubgoal.toString());
 DebugFile.println("prelsubGoal" + prelsubGoal.toString());
                Goal subGoal = new Goal();
                for(ArrayList<Statement> als:prelsubGoal){
-				      if(Constraints.isGoalRowAllowed(als)){
+				      if(Constraints.isGoalRowAllowed(als,objects)){
 					      subGoal.addCondition(als);
 				      }
 			      }
