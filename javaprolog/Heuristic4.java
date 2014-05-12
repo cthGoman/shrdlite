@@ -399,7 +399,7 @@ public class Heuristic4{
                }   
                
                if(!tempRow.contains(new Statement("ontop",sequences.get(i).get(j-1),sequences.get(i).get(j))))
-                  tempRow.add(statementIdx+j-1, new Statement("ontop",sequences.get(i).get(j-1),sequences.get(i).get(j)));
+                  tempRow.add(new Statement("ontop",sequences.get(i).get(j-1),sequences.get(i).get(j)));
             }
             if(Constraints.isGoalRowAllowed(tempRow, objects))
                tempGoal.add(tempRow);
