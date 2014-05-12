@@ -281,12 +281,22 @@ public class Constraints{
          relationAB[i]=goalRow.get(i).get(0);
          idObjectA[i]=goalRow.get(i).get(1);
          idObjectB[i]=goalRow.get(i).get(2);
-   
-         JSONObject objectAInfo = (JSONObject) objects.get(goalRow.get(i).get(1));
-         JSONObject objectBInfo = (JSONObject) objects.get(goalRow.get(i).get(2));
-         
-         formObjectA[i] = (String) objectAInfo.get("form");
-         formObjectB[i] = (String) objectBInfo.get("form");
+
+         if(!(idObjectA[i].contains("floor") || idObjectA[i].contains("robot"))){
+            JSONObject objectAInfo = (JSONObject) objects.get(goalRow.get(i).get(1));
+            formObjectA[i] = (String) objectAInfo.get("form");
+         }
+         else{
+            formObjectA[i] = idObjectA[i].substring(0,5);
+         }
+            
+         if(!(idObjectB[i].contains("floor") || idObjectB[i].contains("robot"))){
+            JSONObject objectBInfo = (JSONObject) objects.get(goalRow.get(i).get(2));
+            formObjectB[i] = (String) objectBInfo.get("form");
+         }
+         else{
+            formObjectB[i] = idObjectB[i].substring(0,5);
+         }         
          
          for(int j=0;j<i;j++){
             if(idObjectA[i].equals(idObjectA[j]) || idObjectB[i].equals(idObjectB[j])){
@@ -409,11 +419,22 @@ public class Constraints{
          relationAB[i]=goalRow.get(i).get(0);
          idObjectA[i]=goalRow.get(i).get(1);
          idObjectB[i]=goalRow.get(i).get(2);
-         JSONObject objectAInfo = (JSONObject) objects.get(goalRow.get(i).get(1));
-         JSONObject objectBInfo = (JSONObject) objects.get(goalRow.get(i).get(2));
-         
-         formObjectA[i] = (String) objectAInfo.get("form");
-         formObjectB[i] = (String) objectBInfo.get("form");         
+
+         if(!(idObjectA[i].contains("floor") || idObjectA[i].contains("robot"))){
+            JSONObject objectAInfo = (JSONObject) objects.get(goalRow.get(i).get(1));
+            formObjectA[i] = (String) objectAInfo.get("form");
+         }
+         else{
+            formObjectA[i] = idObjectA[i].substring(0,5);
+         }
+            
+         if(!(idObjectB[i].contains("floor") || idObjectB[i].contains("robot"))){
+            JSONObject objectBInfo = (JSONObject) objects.get(goalRow.get(i).get(2));
+            formObjectB[i] = (String) objectBInfo.get("form");
+         }
+         else{
+            formObjectB[i] = idObjectB[i].substring(0,5);
+         }         
             
       }
       
