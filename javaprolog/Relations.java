@@ -63,7 +63,7 @@ DebugFile.start();
  DebugFile.println("statementsList: " + statementsList.toString());
             Goal prelGoal = CombineStatements.combine(statementsList);
 			   for(ArrayList<Statement> als:prelGoal){
-				   if(Constraints.isGoalRowAllowed(als)){
+				   if(Constraints.isGoalRowAllowed(als,objects)){
 					   goal.addCondition(als);
 				   }
 			   }
@@ -127,7 +127,7 @@ DebugFile.println("subGoals" + subGoals.toString());
                prelGoal.combineGoals(subGoals.get(i));
             }
 			   for(ArrayList<Statement> als:prelGoal){
-				   if(Constraints.isCombinedGoalRowAllowed(als)){
+				   if(Constraints.isCombinedGoalRowAllowed(als,objects)){
 					   goal.addCondition(als);
 				   }
 			   }
