@@ -438,7 +438,8 @@ public class Constraints{
             
       }
       
-      if((idObjectA[goalRow.size()-1].equals(idObjectB[0]) && goalRow.size()>2) || idObjectB[goalRow.size()-1].equals(idObjectA[0])){
+      if(((idObjectA[goalRow.size()-1].equals(idObjectB[0]) || idObjectB[goalRow.size()-1].equals(idObjectA[0])) && goalRow.size()>2)){
+         System.out.println("Fail 1,");
          return false;
       }
 
@@ -493,7 +494,6 @@ public class Constraints{
                   return false;
                }
 
-            
                if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && (relationAB[j].contains("above") || relationAB[j].contains("ontop"))){
                   return false;
                }
@@ -519,7 +519,7 @@ public class Constraints{
          else if(relationAB[i].contains("beside")){
             for(int j=0;j<goalRow.size();j++){
                if(idObjectA[i].equals(idObjectA[j]) && idObjectB[i].equals(idObjectB[j]) && (relationAB[j].contains("under") || relationAB[j].contains("above") || relationAB[j].contains("ontop"))){
-                  return false;
+                                    return false;
                }
                if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && (relationAB[j].contains("under") || relationAB[j].contains("above") || relationAB[j].contains("inside") || relationAB[j].contains("ontop"))){
                   return false;
