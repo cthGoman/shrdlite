@@ -5,6 +5,12 @@ import org.json.simple.JSONArray;
 
 public class Goal extends ArrayList<ArrayList<Statement>>{  
 	public Goal(){}
+   public Goal(Goal goalIn){
+      for(ArrayList<Statement> goalRow : goalIn){
+         this.add(new ArrayList<Statement>(goalRow));
+      }
+      
+   }
 	public Goal(ArrayList<Statement> newCondition) {
 		add(newCondition);
 	}

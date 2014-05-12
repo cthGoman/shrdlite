@@ -174,7 +174,7 @@ public class Planner{
                goalWorld = child;
 			}
 		}
-
+      instances = visitedWorlds.size();
       if (!holding.isEmpty()){
          int bestDropColumn = 0;
          Heuristic bestDrop = new Heuristic(100);
@@ -287,7 +287,7 @@ public class Planner{
 		visitedWorlds.add(world);
       JSONArray state = world;
 
-		while(!stateStack.isEmpty() && (!foundGoalstate || numberOfFoundGoalStates<10 )) {
+		while(!stateStack.isEmpty() && (!foundGoalstate || numberOfFoundGoalStates<1 )) {
          if (!foundGoalstate)
             state = (JSONArray) stateStack.peek();
          
@@ -336,16 +336,16 @@ public class Planner{
       return plan;
    }   
    
-   public Plan solve5(Goal goal,JSONObject result){
-
+   public Plan solve5(Goal goalIn,JSONObject result){
+      Goal goal = new Goal(goalIn);
       State startState = new State(world,holding);
       PlanTree2 planningTree = new PlanTree2(startState, goal, objects);
       Plan plan = planningTree.getPlan();
       return plan;   
    }
    
-   public Plan solve6(Goal goal,JSONObject result){
-
+   public Plan solve6(Goal goalIn,JSONObject result){
+      Goal goal = new Goal(goalIn);
       State startState = new State(world,holding);
       PlanTree3 planningTree = new PlanTree3(startState, goal, objects);
       Plan plan = planningTree.getPlan();

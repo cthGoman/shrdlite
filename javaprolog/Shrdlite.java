@@ -102,7 +102,7 @@ DebugFile.stop();
          
             int solveMode=6;     // Switch between solve3 - 6, not 4
             
-				if (holding==null & solveMode==3){     
+				if (holding==null){     
 					holding="";          
 				}                       
             
@@ -112,6 +112,16 @@ DebugFile.stop();
             long endTime   = System.currentTimeMillis();
 			   long totalTime2 = endTime - startTime;
 				
+            if(solveMode==2){
+            
+               if (goals.get(0).get(0).get(0).get(0).equals("hold")){   
+   					   plan = planner.solve(goals.get(0),result);            
+   				   }                                                        
+                  else{                                                   
+   					   plan = planner.solve2(goals.get(0),result);      
+   				   }                                                        
+               }
+            
             if(solveMode==3){
             
                if (goals.get(0).get(0).get(0).get(0).equals("hold")){   
@@ -135,6 +145,9 @@ DebugFile.stop();
 				} else {
 					endTime   = System.currentTimeMillis();
 					long totalTime = endTime - startTime;
+               if(solveMode==2){
+                  result.put("output", "Success! " + totalTime + " "+ totalTime2 + " " + plan.size() + " " + Planner.instances + " ");
+               }
                if(solveMode==3){
                   result.put("output", "Success! " + totalTime + " "+ totalTime2 + " " + plan.size() + " " + Planner.instances + " ");
                }
