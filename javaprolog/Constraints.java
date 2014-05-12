@@ -439,7 +439,6 @@ public class Constraints{
       }
       
       if(((idObjectA[goalRow.size()-1].equals(idObjectB[0]) || idObjectB[goalRow.size()-1].equals(idObjectA[0])) && goalRow.size()>2)){
-         System.out.println("Fail 1,");
          return false;
       }
 
