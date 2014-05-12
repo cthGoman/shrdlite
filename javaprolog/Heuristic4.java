@@ -261,14 +261,14 @@ public class Heuristic4{
 	}
    
    public int getCost(){
-      int epsilon=0;
+      int epsilon=1;
       
       return (1+epsilon)*stateCost.sum();
    }
    
    public double getCost(int depth, int maxCost){
       int mySum = stateCost.sum();
-      double epsilon = 0;
+      double epsilon = 1;
    
       return (1+epsilon)*stateCost.sum();
    }
