@@ -53,9 +53,9 @@ public class PlanTree3{
       return plan;
    }
    
-   public ArrayList<Integer> getCosts(){
+   public ArrayList<Double> getCosts(){
       
-      ArrayList<Integer> costList = new ArrayList<Integer>();
+      ArrayList<Double> costList = new ArrayList<Double>();
       PlanTreeState3 currentState = getBestSolution();
       
       if(getBestSolution()!=null){

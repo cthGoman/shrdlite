@@ -259,185 +259,145 @@ public class Heuristic4{
 
          
 	}
-   
-   public int getCost(){
-      int epsilon=2;
       
-      return (1+epsilon)*stateCost.sum();
-   }
-   
-   public double getCost(int depth, int maxCost){
-      int mySum = stateCost.sum();
-      double epsilon = 2;
-   
-      return (1+epsilon)*stateCost.sum();
-   }
-   
-   public boolean isBetter(Heuristic4 compHeu){
-   
-      if (compHeu.getCost()>stateCost.sum()){
-         return true;
+      public double getCost(){
+         int mySum = stateCost.sum();
+         double epsilon = mySum/10;
+               
+         return (1+epsilon)*mySum;
       }
-
-      else{
-         return false;
+      
+      public double getCost(int depth, int maxCost){
+         double mySum = stateCost.sum();
+         double epsilon = mySum/10;
+      
+         return (1+epsilon)*mySum;
       }
-   
-   
-   }
-   
-   private boolean containsAboveOrUnder(ArrayList<Statement> listIn){
-      for(Statement statement : listIn){
-         if("above".equals(statement.get(0).toLowerCase()))
+      
+      public boolean isBetter(Heuristic4 compHeu){
+      
+         if (compHeu.getCost()>stateCost.sum()){
             return true;
-         else if("under".equals(statement.get(0).toLowerCase()))
-            return true;
-      }
-      return false;
-   }
-   
-   private void evaluateAbove(String obj1, String obj2, JSONObject objects, StateCost currentCost, int columnNr1, int columnNr2, int place1, int place2, int goalRowIdx, int statementIdx){
-      
-      ArrayList<Statement> goalRow = new ArrayList<Statement>(goal.get(goalRowIdx));
-      if(objectsAllowedBelow == null){
-         objectsAllowedBelow = new HashMap();
-         ArrayList<String> allObjects = worldState.getAllObjectsInWorld();
-         
-         for(String currentObj: allObjects){
-            
-            ArrayList<String> currentAllowedBelow = new ArrayList<String>();
-   
-            for(String currentBelow: allObjects){
-               if(!currentObj.equals(currentBelow)){
-                  ArrayList<String> currentPair = new ArrayList<String>();
-                  currentPair.add(currentBelow);
-                  currentPair.add(currentObj);
-                  if(Constraints.isColumnAllowed(currentPair,objects))
-                     currentAllowedBelow.add(currentBelow);
-               }
-            }
-            objectsAllowedBelow.put(currentObj,currentAllowedBelow);
          }
-      }   
-      ArrayList<String> allowedObjects = findAllowedBetween(obj1, obj2, objectsAllowedBelow, new ArrayList<String>(), new ArrayList<String>());
-      ArrayList<ArrayList<String>> sequences = findAllowedSequences(obj1, obj2, objectsAllowedBelow, new ArrayList<ArrayList<String>>(), new ArrayList<String>());
-//       System.out.println("Sequences: "+sequences);
-      Goal ontopGoal = generateGoal(sequences, goalRow, statementIdx);
-      
-      if (ontopGoal.isEmpty()){
-         return;
-      }
-//       System.out.println("ontopGoal.size(): "+ontopGoal.size()+" example: "+ontopGoal.get(0));
-//       System.out.println("goal.size(): "+goal.size());
-      goal.addAll(ontopGoal);
-      // System.out.print(" goal.size() efter: "+goal.size());  
-   }
    
-   private ArrayList<String> findAllowedBetween(String objAbove, String objBelow, HashMap<String,ArrayList<String>> objectsAllowedBelow, ArrayList<String> allowedObjects, ArrayList<String> evaluatedObjects){
-      evaluatedObjects.add(objAbove);
-      boolean allowed = false;
-      if(objectsAllowedBelow.get(objAbove).contains(objBelow))
-         allowed = true;
-         
-      
-      for(String objAllowedBelow : objectsAllowedBelow.get(objAbove)){
-         if(!evaluatedObjects.contains(objAllowedBelow) && !objAllowedBelow.equals(objBelow)){
-            allowedObjects = findAllowedBetween(objAllowedBelow, objBelow, objectsAllowedBelow, allowedObjects, evaluatedObjects);
-            if(allowedObjects.contains(objAllowedBelow))
-               allowed = true;
-         }
-      }
-      if(allowed)
-         allowedObjects.add(objAbove);
-         
-      return allowedObjects;
-   }
-   
-   private ArrayList<ArrayList<String>> findAllowedSequences(String objAbove, String objBelow, HashMap<String,ArrayList<String>> objectsAllowedBelow, ArrayList<ArrayList<String>> allowedSequences, ArrayList<String> currentSequence){
-      currentSequence.add(objAbove);
-
-      if(objectsAllowedBelow.get(objAbove).contains(objBelow) && !allowedSequences.contains(currentSequence)){
-         currentSequence.add(objBelow);
-         allowedSequences.add(new ArrayList<String>(currentSequence));
-         currentSequence.remove(objBelow);
-      }
-         
-      
-      for(String objAllowedBelow : objectsAllowedBelow.get(objAbove)){
-         if(!currentSequence.contains(objAllowedBelow) && !objAllowedBelow.equals(objBelow)){
-            allowedSequences = findAllowedSequences(objAllowedBelow, objBelow, objectsAllowedBelow, allowedSequences, currentSequence);
-         }
-      }
-      
-      currentSequence.remove(objAbove);   
-      return allowedSequences;
-   }
-   
-   private Goal generateGoal(ArrayList<ArrayList<String>> sequences, ArrayList<Statement> goalRow, int statementIdx){
-      Goal tempGoal = new Goal();
-      
-
-      goalRow.remove(statementIdx);
-      
-      for(int i = 0; i<sequences.size();i++){
-         ArrayList<Statement> tempRow = new ArrayList<Statement>(goalRow);
-         for(int j = 1; j<sequences.get(i).size(); j++){
-            tempRow.add(statementIdx+j-1, new Statement("ontop",sequences.get(i).get(j-1),sequences.get(i).get(j)));
-         }
-         if(isGoalRowAllowed(tempRow))
-            tempGoal.add(tempRow);
-      }
-
-      return tempGoal;
-   } 
-   
-   public StateCost getStateCost(){
-      return stateCost;
-   }
-   
-   private boolean isGoalRowAllowed(ArrayList<Statement> goalRow){
-
-      HashMap<String,Integer> objRecurring = new HashMap<String,Integer>();
-//       System.out.println("ny goalRow: "+goalRow);
-      for(Statement tempStatement : goalRow){
-         if(!objRecurring.containsKey(tempStatement.get(1))){
-            objRecurring.put(tempStatement.get(1),1);
-//             System.out.println("add"+tempStatement.get(1));
-         }
          else{
-            Integer timesInRow = objRecurring.get(tempStatement.get(1));
-//             System.out.println("multiple times"+tempStatement.get(1)+ " timesInRow: "+(timesInRow+1));
-            timesInRow++;
-            objRecurring.put(tempStatement.get(1),timesInRow);
-//             System.out.println("multiple times"+tempStatement.get(1)+ " timesInRow: "+objRecurring.get(tempStatement.get(1)));
-         }
-            
-         if(!objRecurring.containsKey(tempStatement.get(2))){
-            objRecurring.put(tempStatement.get(2),1);
-//             System.out.println("add"+tempStatement.get(2));
-         }   
-         else{
-            Integer timesInRow = objRecurring.get(tempStatement.get(2));
-//             System.out.println("multiple times"+tempStatement.get(2)+ " timesInRow: "+(timesInRow+1));
-            timesInRow++;
-            objRecurring.put(tempStatement.get(2),timesInRow);
-//             System.out.println("multiple times"+tempStatement.get(2)+ " timesInRow: "+objRecurring.get(tempStatement.get(2)));
-         }   
-      }
-      int ones = 0;
-      
-      for(int timesInRow: objRecurring.values()){
-         if(timesInRow>2)
             return false;
-         else if(timesInRow == 1)
-            ones++;
+         }
+      
+      
       }
-      if(ones!=2){
+      
+      private boolean containsAboveOrUnder(ArrayList<Statement> listIn){
+         for(Statement statement : listIn){
+            if("above".equals(statement.get(0).toLowerCase()))
+               return true;
+            else if("under".equals(statement.get(0).toLowerCase()))
+               return true;
+         }
          return false;
       }
-//       System.out.println("Return true");
-      return true;
-   }
+      
+      private void evaluateAbove(String obj1, String obj2, JSONObject objects, StateCost currentCost, int columnNr1, int columnNr2, int place1, int place2, int goalRowIdx, int statementIdx){
+         
+         ArrayList<Statement> goalRow = new ArrayList<Statement>(goal.get(goalRowIdx));
+         if(objectsAllowedBelow == null){
+            objectsAllowedBelow = new HashMap();
+            ArrayList<String> allObjects = worldState.getAllObjectsInWorld();
+            
+            for(String currentObj: allObjects){
+               
+               ArrayList<String> currentAllowedBelow = new ArrayList<String>();
+      
+               for(String currentBelow: allObjects){
+                  if(!currentObj.equals(currentBelow)){
+                     ArrayList<String> currentPair = new ArrayList<String>();
+                     currentPair.add(currentBelow);
+                     currentPair.add(currentObj);
+                     if(Constraints.isColumnAllowed(currentPair,objects))
+                        currentAllowedBelow.add(currentBelow);
+                  }
+               }
+               objectsAllowedBelow.put(currentObj,currentAllowedBelow);
+            }
+         }   
+         ArrayList<String> allowedObjects = findAllowedBetween(obj1, obj2, objectsAllowedBelow, new ArrayList<String>(), new ArrayList<String>());
+         ArrayList<ArrayList<String>> sequences = findAllowedSequences(obj1, obj2, objectsAllowedBelow, new ArrayList<ArrayList<String>>(), new ArrayList<String>());
+   //       System.out.println("Sequences: "+sequences);
+         Goal ontopGoal = generateGoal(sequences, goalRow, statementIdx);
+         
+         if (ontopGoal.isEmpty()){
+            return;
+         }
+   //       System.out.println("ontopGoal.size(): "+ontopGoal.size()+" example: "+ontopGoal.get(0));
+   //       System.out.println("goal.size(): "+goal.size());
+         goal.addAll(ontopGoal);
+         // System.out.print(" goal.size() efter: "+goal.size());  
+      }
+      
+      private ArrayList<String> findAllowedBetween(String objAbove, String objBelow, HashMap<String,ArrayList<String>> objectsAllowedBelow, ArrayList<String> allowedObjects, ArrayList<String> evaluatedObjects){
+         evaluatedObjects.add(objAbove);
+         boolean allowed = false;
+         if(objectsAllowedBelow.get(objAbove).contains(objBelow))
+            allowed = true;
+            
+         
+         for(String objAllowedBelow : objectsAllowedBelow.get(objAbove)){
+            if(!evaluatedObjects.contains(objAllowedBelow) && !objAllowedBelow.equals(objBelow)){
+               allowedObjects = findAllowedBetween(objAllowedBelow, objBelow, objectsAllowedBelow, allowedObjects, evaluatedObjects);
+               if(allowedObjects.contains(objAllowedBelow))
+                  allowed = true;
+            }
+         }
+         if(allowed)
+            allowedObjects.add(objAbove);
+            
+         return allowedObjects;
+      }
+      
+      private ArrayList<ArrayList<String>> findAllowedSequences(String objAbove, String objBelow, HashMap<String,ArrayList<String>> objectsAllowedBelow, ArrayList<ArrayList<String>> allowedSequences, ArrayList<String> currentSequence){
+         currentSequence.add(objAbove);
+   
+         if(objectsAllowedBelow.get(objAbove).contains(objBelow) && !allowedSequences.contains(currentSequence)){
+            currentSequence.add(objBelow);
+            allowedSequences.add(new ArrayList<String>(currentSequence));
+            currentSequence.remove(objBelow);
+         }
+            
+         
+         for(String objAllowedBelow : objectsAllowedBelow.get(objAbove)){
+            if(!currentSequence.contains(objAllowedBelow) && !objAllowedBelow.equals(objBelow)){
+               allowedSequences = findAllowedSequences(objAllowedBelow, objBelow, objectsAllowedBelow, allowedSequences, currentSequence);
+            }
+         }
+         
+         currentSequence.remove(objAbove);   
+         return allowedSequences;
+      }
+      
+      private Goal generateGoal(ArrayList<ArrayList<String>> sequences, ArrayList<Statement> goalRow, int statementIdx){
+         Goal tempGoal = new Goal();
+         
+   
+         goalRow.remove(statementIdx);
+         
+         for(int i = 0; i<sequences.size();i++){
+            ArrayList<Statement> tempRow = new ArrayList<Statement>(goalRow);
+            for(int j = 1; j<sequences.get(i).size(); j++){
+               tempRow.add(statementIdx+j-1, new Statement("ontop",sequences.get(i).get(j-1),sequences.get(i).get(j)));
+            }
+            if(Constraints.isGoalRowAllowed(tempRow))
+               tempGoal.add(tempRow);
+         }
+   
+         return tempGoal;
+      } 
+      
+      public StateCost getStateCost(){
+         return stateCost;
+      }
+   
+   
+   
    
    //----------------------------------------------------------------------------------//
    private class StateCost{
