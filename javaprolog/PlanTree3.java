@@ -30,6 +30,9 @@ public class PlanTree3{
       else{
 
 //          int maxDepth = 100;
+         if(unevaluatedStates.isEmpty()){
+            return;
+         }
 
          while(unevaluatedStates.first().getDepth()+unevaluatedStates.first().getHeuristic().getCost(unevaluatedStates.first().getDepth(),maxCost()) < maxCost()){
 //             System.out.println("Goal:"+goal.size());
