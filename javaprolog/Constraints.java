@@ -281,7 +281,12 @@ public class Constraints{
          relationAB[i]=goalRow.get(i).get(0);
          idObjectA[i]=goalRow.get(i).get(1);
          idObjectB[i]=goalRow.get(i).get(2);
-         //formObjectA[i]=
+   
+         JSONObject objectAInfo = (JSONObject) objects.get(goalRow.get(i).get(1));
+         JSONObject objectBInfo = (JSONObject) objects.get(goalRow.get(i).get(2));
+         
+         formObjectA[i] = (String) objectAInfo.get("form");
+         formObjectB[i] = (String) objectBInfo.get("form");
          
          for(int j=0;j<i;j++){
             if(idObjectA[i].equals(idObjectA[j]) || idObjectB[i].equals(idObjectB[j])){
@@ -316,6 +321,7 @@ public class Constraints{
                if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && (relationAB[j].contains("above") || relationAB[j].contains("ontop"))){
                   return false;
                }
+                              
                if(idObjectA[i].equals(idObjectA[j]) && idObjectB[i].equals(idObjectB[j]) && relationAB[j].contains("under")){
                   return false;
                }                 
@@ -393,11 +399,22 @@ public class Constraints{
       String[] idObjectB = new String[goalRow.size()];
       ArrayList tabooListA = new ArrayList();
       ArrayList tabooListB = new ArrayList();
+      String[] formObjectA = new String[goalRow.size()];
+      String[] formObjectB = new String[goalRow.size()];
+         
+
+      
       
       for(int i=0;i<goalRow.size();i++){
          relationAB[i]=goalRow.get(i).get(0);
          idObjectA[i]=goalRow.get(i).get(1);
          idObjectB[i]=goalRow.get(i).get(2);
+         JSONObject objectAInfo = (JSONObject) objects.get(goalRow.get(i).get(1));
+         JSONObject objectBInfo = (JSONObject) objects.get(goalRow.get(i).get(2));
+         
+         formObjectA[i] = (String) objectAInfo.get("form");
+         formObjectB[i] = (String) objectBInfo.get("form");         
+            
       }
       
       if((idObjectA[goalRow.size()-1].equals(idObjectB[0]) && goalRow.size()>2) || idObjectB[goalRow.size()-1].equals(idObjectA[0])){
@@ -449,6 +466,13 @@ public class Constraints{
          // ------------------------ "Above"-statements ------------------------//      
          else if(relationAB[i].contains("above")){
             for(int j=0;j<goalRow.size();j++){
+               //System.out.println(idObjectB[j] + "," + idObjectB[i] + "," + formObjectA[j]);
+               if((i!=j) && formObjectA[i].contains("ball") && formObjectA[j].contains("ball") && idObjectB[j].equals(idObjectB[i])){
+                  
+                  return false;
+               }
+
+            
                if(idObjectA[i].equals(idObjectB[j]) && idObjectB[i].equals(idObjectA[j]) && (relationAB[j].contains("above") || relationAB[j].contains("ontop"))){
                   return false;
                }
