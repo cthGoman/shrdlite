@@ -119,10 +119,16 @@ DebugFile.println("subGoal" + subGoal.toString());
                subGoals.add(subGoal);     
             }
 DebugFile.println("subGoals" + subGoals.toString());
-            goal = subGoals.get(0);
+            Goal prelGoal = subGoals.get(0);
             for(int i = 1;i < subGoals.size();i++){
-               goal.combineGoals(subGoals.get(i));
+               prelGoal.combineGoals(subGoals.get(i));
             }
+			   for(ArrayList<Statement> als:prelGoal){
+				   if(Constraints.isCombinedGoalRowAllowed(als)){
+					   goal.addCondition(als);
+				   }
+			   }
+           
          }
       }
 DebugFile.println("goal" + goal.toString());    
