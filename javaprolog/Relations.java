@@ -71,14 +71,17 @@ DebugFile.start();
          else{
             ArrayList<String> allObjects;
             ArrayList<Statement> possibleStatementsForObjects;
+ DebugFile.println("allAt: " + allAt);
+ DebugFile.println("objectsList: " + objectsList.toString());
             if(allAt == 0){
                allObjects = object0;
                possibleStatementsForObjects = statementsList.get(0);
             }
             else{
-               allObjects = objectsList.get(allAt);
+               allObjects = objectsList.get(allAt-1);
                possibleStatementsForObjects = statementsList.get(allAt-1); 
             }
+         
  DebugFile.println("allObjects: " + allObjects.toString());
  DebugFile.println("possibleStatementsForObjects: " + possibleStatementsForObjects.toString());
             ArrayList<Goal> subGoals = new ArrayList<Goal>(); 
