@@ -16,16 +16,22 @@ public class PlanTreeState3 implements Comparable<PlanTreeState3>{
    private PlanTree3 myTree;
    
    public PlanTreeState3(State inState, Goal goal, JSONObject objects, PlanTree3 treeIn){
+      this(inState, goal, objects, treeIn, true);
+   }
+   
+   public PlanTreeState3(State inState, Goal goal, JSONObject objects, PlanTree3 treeIn, boolean withHeu){
       state = inState;
       myTree = treeIn;
       depth = 0;
       hasParent = false;
       parentState = this;
       isSolution = false;
-      stateHeu = new Heuristic4(inState);
+      if(withHeu)
+         stateHeu = new Heuristic4(inState);
       childrenStates = new HashSet<PlanTreeState3>();
       if (Constraints.isWorldAllowed(inState, objects)){
-         stateHeu = new Heuristic4(inState, goal, objects);
+         if(withHeu)
+            stateHeu = new Heuristic4(inState, goal, objects);
          isAllowed = true;
          if(goal.fulfilled(state)){
             isSolution = true;
@@ -43,17 +49,24 @@ public class PlanTreeState3 implements Comparable<PlanTreeState3>{
       }
       
    }
-   public PlanTreeState3(State inState, PlanTreeState3 parentState, Goal goal, JSONObject objects, String move, TreeSet<PlanTreeState3> unevaluatedStates, PlanTree3 treeIn){
+
+   PlanTreeState3(State inState, PlanTreeState3 parentState, Goal goal, JSONObject objects, String move, TreeSet<PlanTreeState3> unevaluatedStates, PlanTree3 treeIn){
+      this(inState, parentState, goal, objects, move, unevaluatedStates, treeIn, true);
+   }
+
+   public PlanTreeState3(State inState, PlanTreeState3 parentState, Goal goal, JSONObject objects, String move, TreeSet<PlanTreeState3> unevaluatedStates, PlanTree3 treeIn, boolean withHeu){
       state = inState;
       myTree = treeIn;
       hasParent = false;
       myMove = move;
       isSolution = false;
-      stateHeu = new Heuristic4(inState);
+      if(withHeu)
+         stateHeu = new Heuristic4(inState);
       setParent(parentState, unevaluatedStates);
       childrenStates = new HashSet<PlanTreeState3>();
       if (Constraints.isWorldAllowed(inState, objects)){
-         stateHeu = new Heuristic4(inState, goal, objects);
+         if(withHeu)
+            stateHeu = new Heuristic4(inState, goal, objects);
 //          System.out.println("State: "+state+" cost: "+stateHeu.getCost());
          isAllowed = true;
          if(goal.fulfilled(state)){
@@ -154,8 +167,11 @@ public class PlanTreeState3 implements Comparable<PlanTreeState3>{
       parentState = newParent;
       parentState.addChild(this);
       hasParent = true;
-      setDepth(parentState.getDepth()+1,unevaluatedStates);
-
+      if (unevaluatedStates!=null){
+         setDepth(parentState.getDepth()+1,unevaluatedStates);
+      }
+      else
+         setDepth(parentState.getDepth()+1);
    }
    
    public void addChild(PlanTreeState3 child){
@@ -176,6 +192,10 @@ public class PlanTreeState3 implements Comparable<PlanTreeState3>{
                childState.setParent(this, unevaluatedStates);
          }
       }
+   }
+   
+   public void setDepth(int newDepth){
+      depth = newDepth;
    }
    
    public void removeChild(PlanTreeState3 child){

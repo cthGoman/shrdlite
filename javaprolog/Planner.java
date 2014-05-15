@@ -144,101 +144,48 @@ public class Planner{
          plan.add("No plan needed");
          return plan;
       }
-      
-      JSONArray goalWorld = new JSONArray();
-      if (!holding.isEmpty()){
+      Set<State> visitedWorlds = new HashSet<State>();
+      Queue stateQueue = new LinkedList<PlanTreeState3>();
+      State initState = new State(world,holding);
+      PlanTreeState3 initTreeState = new PlanTreeState3(initState, goal, objects, null, false);
+      visitedWorlds.add(initState);
+      stateQueue.add(initTreeState);
+      PlanTreeState3 goalState=null;
+      while(!stateQueue.isEmpty() && goalState==null) {
+         PlanTreeState3 currentState = (PlanTreeState3)stateQueue.remove();
          for (int j=0;j<world.size();j++){
             //Loop over columns
-            JSONArray tempWorld = WorldFunctions.copy(world);
-            WorldFunctions.addObjectWorldColumn(holding,tempWorld,j);
-            if (Constraints.isWorldAllowed(tempWorld,"",objects))
-              world=tempWorld;
-          }
-      }
-      
-      // BFS uses Queue data structure     
-		Queue stateQueue = new LinkedList();
-		stateQueue.add(world);
-      Set<JSONArray> visitedWorlds = new HashSet<JSONArray>();
-      boolean foundGoalstate = false;
-		visitedWorlds.add(world);
-
-		while(!stateQueue.isEmpty() && !foundGoalstate) {
-         JSONArray state = (JSONArray) stateQueue.remove();
-			JSONArray child=null;
-			while((child=WorldFunctions.getUnvisitedWorld(state,visitedWorlds,objects))!=null) {
-				visitedWorlds.add(child);
-				stateQueue.add(child);
-            foundGoalstate = goal.fulfilled(child,"");
-            if (foundGoalstate)
-               goalWorld = child;
-			}
-		}
-      instances = visitedWorlds.size();
-      if (!holding.isEmpty()){
-         int bestDropColumn = 0;
-         Heuristic bestDrop = new Heuristic(100);
-         boolean foundDrop = false;
-         
-         for (int j=0;j<world.size();j++){
-            //Loop over columns
-            //Check which column to drop
-            String tempHolding = holding;
-            JSONArray tempWorld = WorldFunctions.copy(world);
-            if (!tempHolding.isEmpty()) {
-               //If an object is hold
-               WorldFunctions.addObjectWorldColumn(tempHolding,tempWorld,j);
-               tempHolding= "";
-               Heuristic currDrop = new Heuristic(tempWorld,tempHolding,goalWorld,"");
-               if (currDrop.isBetter(bestDrop) && Constraints.isWorldAllowed(tempWorld,tempHolding,objects)){
-                  bestDropColumn=j;
-                  bestDrop=currDrop;
-                  foundDrop = true;
+            State tempState = new State(currentState.getState());
+            String tempMove = tempState.pickDropColumn(j);
+            if(!tempState.equals(currentState.getState())){
+               if(Constraints.isWorldAllowed(tempState,objects)){
+                  if(!visitedWorlds.contains(tempState)){
+                     visitedWorlds.add(tempState);
+                     PlanTreeState3 newState = new PlanTreeState3(tempState,currentState, goal, objects, tempMove, null, null, false);
+                     if(newState.isSolution())
+                        goalState = newState;
+                     else
+                        stateQueue.add(newState);
+                  }               
                }
             }
-          }
-          if (foundDrop){
-            plan.add("drop " + bestDropColumn);
-          }
-          else{
-            plan.add("planning error." + goalWorld + " ");
-            return plan;
-          }
-          
+         }
       }
-      //DFS lowest cost first
-      Stack stateStack = new Stack();
-      Stack planStack = new Stack();
-      visitedWorlds = new HashSet<JSONArray>();
-      foundGoalstate = false;
-      int[] pickFrom = {0};
-      int[] dropIn = {0};
-      
-		stateStack.push(world);
-		visitedWorlds.add(world);
-      
-
-		while(!stateStack.isEmpty() && !foundGoalstate) {
-         JSONArray state = (JSONArray) stateStack.peek();
-			JSONArray child  = (JSONArray) WorldFunctions.getBestUnvisitedWorld(state,goalWorld,visitedWorlds,objects,pickFrom,dropIn);
-         
-         foundGoalstate=false;
-        
-			if(child != null) {
-            visitedWorlds.add(child);
-				stateStack.push(child);
-            foundGoalstate = goal.fulfilled(child,"");
-            plan.add("pick " + pickFrom[0]);
-            plan.add("drop " + dropIn[0]);
-			}
-			else {
-				stateStack.pop();
-			}
-		}
-      
+      // BFS uses Queue data structure     
+		
+		if(goalState!=null){
+         plan = new Plan();
+         PlanTreeState3 currentState = goalState;
+         while(currentState.hasParent()){
+//             System.out.print(" "+currentState.getHeuristic().getCost());
+            plan.add(0,currentState.getMove());
+            currentState = currentState.getParent();
+         }
+      }
+      instances = visitedWorlds.size();    
       return plan;
+          
    }
-   
    
    
    public Plan solve3(Goal goal,JSONObject result){

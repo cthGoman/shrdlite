@@ -100,7 +100,7 @@ DebugFile.stop();
 				result.put("output", "Ambiguity!");
 			} else {
          
-            int solveMode=6;     // Switch between solve3 - 6, not 4
+            int solveMode=2;     // Switch between solve3 - 6, not 4
             
 				if (holding==null){     
 					holding="";          
