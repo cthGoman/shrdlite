@@ -145,24 +145,40 @@ public class Planner{
          return plan;
       }
       Set<State> visitedWorlds = new HashSet<State>();
-      Queue stateQueue = new LinkedList<PlanTreeState3>();
+      Queue stateQueue = new LinkedList<TreeState>();
       State initState = new State(world,holding);
-      PlanTreeState3 initTreeState = new PlanTreeState3(initState, goal, objects, null, false);
+      TreeState initTreeState = new TreeState(initState);
       visitedWorlds.add(initState);
       stateQueue.add(initTreeState);
-      PlanTreeState3 goalState=null;
+      TreeState goalState=null;
+      int thousands = 1;
       while(!stateQueue.isEmpty() && goalState==null) {
-         PlanTreeState3 currentState = (PlanTreeState3)stateQueue.remove();
+         TreeState currentState = (TreeState)stateQueue.remove();
          for (int j=0;j<world.size();j++){
             //Loop over columns
             State tempState = new State(currentState.getState());
             String tempMove = tempState.pickDropColumn(j);
+            
+            if(visitedWorlds.size()>1000*thousands){
+               System.out.println("Nr of States: "+1000*thousands);
+               thousands++;
+            }
             if(!tempState.equals(currentState.getState())){
-               if(Constraints.isWorldAllowed(tempState,objects)){
+//                if(tempMove.contains("drop")){
+//                   if(!visitedWorlds.contains(tempState)){
+//                      visitedWorlds.add(tempState);
+//                      TreeState newState = new TreeState(tempState,currentState, tempMove);
+//                      if(goal.fulfilled(tempState))
+//                         goalState = newState;
+//                      else
+//                         stateQueue.add(newState);
+//                   }                
+//                }
+               if(Constraints.isColumnAllowed(tempState.getColumn(j),objects)){
                   if(!visitedWorlds.contains(tempState)){
                      visitedWorlds.add(tempState);
-                     PlanTreeState3 newState = new PlanTreeState3(tempState,currentState, goal, objects, tempMove, null, null, false);
-                     if(newState.isSolution())
+                     TreeState newState = new TreeState(tempState,currentState, tempMove);
+                     if(goal.fulfilled(tempState))
                         goalState = newState;
                      else
                         stateQueue.add(newState);
@@ -174,10 +190,8 @@ public class Planner{
       // BFS uses Queue data structure     
 		
 		if(goalState!=null){
-         plan = new Plan();
-         PlanTreeState3 currentState = goalState;
-         while(currentState.hasParent()){
-//             System.out.print(" "+currentState.getHeuristic().getCost());
+         TreeState currentState = goalState;
+         while(currentState.getParent()!=null){
             plan.add(0,currentState.getMove());
             currentState = currentState.getParent();
          }
@@ -297,6 +311,36 @@ public class Planner{
       PlanTree3 planningTree = new PlanTree3(startState, new Goal(goalIn), objects);
       Plan plan = planningTree.getPlan();
       return plan;   
+   }
+   
+   private class TreeState{
+      private TreeState parent;
+      private String myMove;
+      private State state;
+      
+      private TreeState(State stateIn, TreeState parentIn, String move){
+         state = stateIn;
+         parent = parentIn;
+         myMove = move;      
+      }
+      
+      private TreeState(State stateIn){
+         state = stateIn;
+         parent = null;
+         myMove = null;      
+      }
+      
+      private State getState(){
+         return state;
+      }
+      
+      private String getMove(){
+         return myMove;
+      }
+      
+      private TreeState getParent(){
+         return parent;
+      }
    }
 }
 

@@ -16,7 +16,7 @@
         "l": { "form":"box",     "size":"large",  "color":"red"   },
         "m": { "form":"box",     "size":"small",  "color":"blue"  }
     },
-    "utterance": ["put","the","white","ball","above","the","yellow","pyramid","right","of","the","green","plank","below","the","black","ball"],
+    "utterance": ["put","the","white","ball","in","the","yellow","box"],
     "examples": [
         ["put","the","brick","that","is","to","the","left","of","a","pyramid","in","a","box"],
         ["put","the","white","ball","in","a","box","on","the","floor"],
