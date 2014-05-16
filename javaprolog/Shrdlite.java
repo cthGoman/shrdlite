@@ -100,7 +100,7 @@ DebugFile.stop();
 				result.put("output", "Ambiguity!");
 			} else {
          
-            int solveMode=2;     // Switch between solve3 - 6, not 4
+            int solveMode=6;     // Switch between solve3 - 6, not 4
             
 				if (holding==null){     
 					holding="";          
@@ -152,7 +152,7 @@ DebugFile.stop();
                   result.put("output", "Success! It took a total of " + totalTime + " milliseconds to calculate this, and the interpreter needed "+ totalTime2 + " milliseconds. I need " + plan.size() + " moves to perform the plan and " + Planner.instances + " states were generated to calculate the plan.");
                }
                else if(solveMode==4 || solveMode==5 || solveMode==6){
-                  result.put("output", "Success! It took a total of " + totalTime + " milliseconds to calculate this, and the interpreter needed "+ totalTime2 + " milliseconds. I need " + plan.size() + " moves to perform the plan and " + State.instances + " states were generated to calculate the plan.");
+                  result.put("output", "Success! ");
                }
  //               if(solveMode==2){
 //                   result.put("output", "Success! " + totalTime + " "+ totalTime2 + " " + plan.size() + " " + Planner.instances + " ");

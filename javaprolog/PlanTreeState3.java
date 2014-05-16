@@ -26,8 +26,9 @@ public class PlanTreeState3 implements Comparable<PlanTreeState3>{
       hasParent = false;
       parentState = this;
       isSolution = false;
-      if(withHeu)
+      if(withHeu){
          stateHeu = new Heuristic4(inState);
+      }
       childrenStates = new HashSet<PlanTreeState3>();
       if (Constraints.isWorldAllowed(inState, objects)){
          if(withHeu)
@@ -60,8 +61,9 @@ public class PlanTreeState3 implements Comparable<PlanTreeState3>{
       hasParent = false;
       myMove = move;
       isSolution = false;
-      if(withHeu)
+      if(withHeu){
          stateHeu = new Heuristic4(inState);
+      }
       setParent(parentState, unevaluatedStates);
       childrenStates = new HashSet<PlanTreeState3>();
       if (Constraints.isWorldAllowed(inState, objects)){
